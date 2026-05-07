@@ -458,69 +458,207 @@
 		{
 			display: flex;
 			flex-direction: column;
-			gap: 8px;
+			align-items: flex-start;
+			gap: 2px;
 			margin: 10px 0 16px;
+			overflow-x: auto;
+			overflow-y: visible;
+			padding: 8px 10px 14px 4px;
 		}
 
 		.block-row
 		{
 			display: flex;
-			flex-wrap: wrap;
+			flex-wrap: nowrap;
 			align-items: center;
-			gap: 6px;
+			gap: 0;
+			min-width: max-content;
+			overflow: visible;
 		}
 
 		.st-block
 		{
+			--blockTop: #23a9f4;
+			--blockMid: #0f91dd;
+			--blockBottom: #0575bd;
+			--blockDark: #005c9a;
+			--blockCutout: #f2f2f2;
+
 			display: inline-flex;
-			flex-wrap: wrap;
+			flex-wrap: nowrap;
 			align-items: center;
 			gap: 6px;
-			min-height: 34px;
-			padding: 7px 10px;
-			border-radius: 6px;
+			min-height: 27px;
+			padding: 4px 10px 5px;
 			color: #ffffff;
-			font-weight: bold;
-			font-size: 13px;
-			line-height: 1.15;
-			box-shadow: inset 0 1px 0 rgba(255,255,255,0.18), 0 1px 1px rgba(0,0,0,0.15);
+			font-family: Arial, Helvetica, sans-serif;
+			font-weight: 800;
+			font-size: 12px;
+			line-height: 1;
+			white-space: nowrap;
 			position: relative;
+			vertical-align: middle;
+			background: linear-gradient(to bottom, var(--blockTop) 0%, var(--blockMid) 48%, var(--blockBottom) 100%);
+			border: 1px solid var(--blockDark);
+			border-bottom-color: #004a7c;
+			border-radius: 4px;
+			text-shadow: 0 1px 0 rgba(0,0,0,0.22);
+			box-shadow:
+				inset 0 1px 0 rgba(255,255,255,0.36),
+				inset 0 -1px 0 rgba(0,0,0,0.18),
+				0 1px 0 rgba(0,0,0,0.28);
+		}
+
+		.block-stack .st-block
+		{
+			--blockCutout: #ffffff;
+		}
+
+		.generated-block-preview .st-block
+		{
+			--blockCutout: #f6f6f6;
+		}
+
+		.faq-block-image .st-block
+		{
+			--blockCutout: #fafafa;
 		}
 
 		.st-block::before
 		{
 			content: "";
 			position: absolute;
-			left: 10px;
-			top: -5px;
-			width: 18px;
-			height: 5px;
-			background: rgba(255,255,255,0.14);
-			border-radius: 4px 4px 0 0;
+			left: 32px;
+			top: -1px;
+			width: 28px;
+			height: 8px;
+			background: var(--blockCutout);
+			border-left: 1px solid var(--blockDark);
+			border-right: 1px solid var(--blockDark);
+			border-bottom: 1px solid var(--blockDark);
+			border-radius: 0 0 5px 5px;
+			box-shadow: inset 0 -1px 0 rgba(0,0,0,0.12);
+		}
+
+		.st-block::after
+		{
+			content: "";
+			position: absolute;
+			left: 32px;
+			bottom: -9px;
+			width: 28px;
+			height: 9px;
+			background: linear-gradient(to bottom, var(--blockMid) 0%, var(--blockBottom) 100%);
+			border-left: 1px solid var(--blockDark);
+			border-right: 1px solid var(--blockDark);
+			border-bottom: 1px solid #004a7c;
+			border-radius: 0 0 5px 5px;
+			box-shadow: 0 1px 0 rgba(0,0,0,0.28);
+		}
+
+
+		/* When command blocks are stacked, the upper block's bottom connector should appear inside the lower block's top notch. */
+		.block-stack .block-row + .block-row .st-block::before
+		{
+			background: linear-gradient(to bottom, #0f91dd 0%, #0575bd 100%);
+			border-left-color: #005c9a;
+			border-right-color: #005c9a;
+			border-bottom-color: #004a7c;
+		}
+
+		.block-stack .block-row:has(.st-block.blue) + .block-row .st-block::before
+		{
+			background: linear-gradient(to bottom, #0f91dd 0%, #0575bd 100%);
+			border-left-color: #005c9a;
+			border-right-color: #005c9a;
+			border-bottom-color: #004a7c;
+		}
+
+		.block-stack .block-row:has(.st-block.red) + .block-row .st-block::before
+		{
+			background: linear-gradient(to bottom, #dc555e 0%, #bf3944 100%);
+			border-left-color: #9d2630;
+			border-right-color: #9d2630;
+			border-bottom-color: #862029;
+		}
+
+		.block-stack .block-row:has(.st-block.green) + .block-row .st-block::before
+		{
+			background: linear-gradient(to bottom, #75ad42 0%, #5e9230 100%);
+			border-left-color: #4e7b27;
+			border-right-color: #4e7b27;
+			border-bottom-color: #3f681e;
+		}
+
+		.block-stack .block-row:has(.st-block.gray) + .block-row .st-block::before
+		{
+			background: linear-gradient(to bottom, #808b97 0%, #66717e 100%);
+			border-left-color: #53606c;
+			border-right-color: #53606c;
+			border-bottom-color: #45515c;
 		}
 
 		.st-block.blue
 		{
-			background: linear-gradient(#2798ee, #1f7dcc);
-			border: 1px solid #1569aa;
+			--blockTop: #23a9f4;
+			--blockMid: #0f91dd;
+			--blockBottom: #0575bd;
+			--blockDark: #005c9a;
 		}
 
 		.st-block.red
 		{
-			background: linear-gradient(#e66b73, #d24d57);
-			border: 1px solid #b63b44;
+			--blockTop: #ef737a;
+			--blockMid: #dc555e;
+			--blockBottom: #bf3944;
+			--blockDark: #9d2630;
 		}
 
 		.st-block.green
 		{
-			background: linear-gradient(#8dc45a, #73a742);
-			border: 1px solid #5e8d32;
+			--blockTop: #93cc5d;
+			--blockMid: #75ad42;
+			--blockBottom: #5e9230;
+			--blockDark: #4e7b27;
 		}
 
 		.st-block.gray
 		{
-			background: linear-gradient(#8f98a3, #7c8692);
-			border: 1px solid #67727e;
+			--blockTop: #9aa4af;
+			--blockMid: #808b97;
+			--blockBottom: #66717e;
+			--blockDark: #53606c;
+		}
+
+		.st-block.reporter
+		{
+			min-height: 24px;
+			padding: 4px 11px 5px;
+			border-radius: 14px;
+			box-shadow:
+				inset 0 1px 0 rgba(255,255,255,0.34),
+				inset 0 -1px 0 rgba(0,0,0,0.18),
+				0 1px 0 rgba(0,0,0,0.24);
+		}
+
+		.st-block.reporter::before,
+		.st-block.reporter::after
+		{
+			content: none;
+		}
+
+		.st-block.boolean
+		{
+			min-height: 25px;
+			padding: 4px 18px 5px;
+			border-radius: 0;
+			clip-path: polygon(12px 0, calc(100% - 12px) 0, 100% 50%, calc(100% - 12px) 100%, 12px 100%, 0 50%);
+		}
+
+		.st-block.boolean::before,
+		.st-block.boolean::after
+		{
+			content: none;
 		}
 
 		.st-input,
@@ -530,42 +668,85 @@
 			display: inline-flex;
 			align-items: center;
 			justify-content: center;
-			min-height: 22px;
-			padding: 2px 8px;
-			border-radius: 11px;
-			font-weight: bold;
-			color: #333333;
-			border: 1px solid rgba(0,0,0,0.18);
-			box-shadow: inset 0 1px 0 rgba(255,255,255,0.65);
+			min-height: 21px;
+			padding: 1px 7px;
+			border-radius: 7px;
+			font-weight: 800;
+			color: #222222;
+			border: 1px solid #8a8a8a;
+			box-shadow:
+				inset 0 1px 1px rgba(255,255,255,0.95),
+				0 1px 0 rgba(0,0,0,0.22);
+			vertical-align: middle;
+			text-shadow: none;
+			white-space: nowrap;
 		}
 
 		.st-input
 		{
 			min-width: 26px;
-			background: linear-gradient(#ffffff, #e9eef4);
+			background: linear-gradient(#ffffff, #e8e8e8);
 		}
 
 		.st-dropdown
 		{
-			background: linear-gradient(#fefefe, #dfe6ee);
-			padding-right: 18px;
+			min-width: 36px;
+			background: linear-gradient(#ffffff, #e5e5e5);
+			padding-right: 20px;
 			position: relative;
 		}
 
 		.st-dropdown::after
 		{
-			content: "▼";
-			font-size: 9px;
+			content: "";
 			position: absolute;
 			right: 6px;
 			top: 50%;
-			transform: translateY(-48%);
-			color: #444444;
+			transform: translateY(-35%);
+			width: 0;
+			height: 0;
+			border-left: 5px solid transparent;
+			border-right: 5px solid transparent;
+			border-top: 6px solid #666666;
 		}
 
 		.st-text
 		{
-			background: linear-gradient(#fff3bf, #ffe08a);
+			background: linear-gradient(#fff6c9, #f3d874);
+		}
+
+		.st-input .st-block.reporter,
+		.st-dropdown .st-block.reporter,
+		.st-text .st-block.reporter
+		{
+			margin: -2px -6px;
+		}
+
+		.st-input:has(.st-block.reporter),
+		.st-dropdown:has(.st-block.reporter),
+		.st-text:has(.st-block.reporter)
+		{
+			padding: 0;
+			border: 0;
+			background: transparent;
+			box-shadow: none;
+			min-width: 0;
+		}
+
+		.generated-block-preview,
+		.faq-block-image
+		{
+			overflow-x: auto;
+			overflow-y: visible;
+			padding-bottom: 10px;
+		}
+
+		.generated-block-preview .block-row,
+		.faq-block-image.block-row,
+		.faq-block-image .block-row
+		{
+			flex-wrap: nowrap;
+			min-width: max-content;
 		}
 
 		.block-card
@@ -1495,8 +1676,6 @@ scripts.BittyCameraBlocks.setCameraSize(120, 135, 1);</pre>
 <p><strong>Viewport Coordinates</strong> - Based on the current Display Area size.</p>
 </div>
 </div>
-
-
 <div>
 <h3 id="cat-cameras">Cameras</h3>
 <h4>Setup</h4>
@@ -1850,7 +2029,7 @@ scripts.BittyCameraBlocks.setCameraSize(120, 135, 1);</pre>
 <h3>Get Camera Rotation</h3>
 <div class="block-meta">Cameras → Rotation</div>
 <div class="block-row">
-<div class="st-block blue">
+<div class="st-block blue reporter">
 											Get Camera ID <span class="st-input"></span> Rotation
 										</div>
 </div>
@@ -1889,7 +2068,7 @@ scripts.BittyCameraBlocks.setCameraSize(120, 135, 1);</pre>
 <h3>Camera Exists?</h3>
 <div class="block-meta">Cameras → Properties</div>
 <div class="block-row">
-<div class="st-block blue">
+<div class="st-block blue boolean">
 											Camera with ID <span class="st-input"></span> exists
 										</div>
 </div>
@@ -1908,7 +2087,7 @@ scripts.BittyCameraBlocks.setCameraSize(120, 135, 1);</pre>
 <h3>Camera Is Transitioning?</h3>
 <div class="block-meta">Cameras → Properties</div>
 <div class="block-row">
-<div class="st-block blue">
+<div class="st-block blue boolean">
 											Camera ID <span class="st-input"></span> is transitioning
 										</div>
 </div>
@@ -1927,7 +2106,7 @@ scripts.BittyCameraBlocks.setCameraSize(120, 135, 1);</pre>
 <h3>Get Camera X</h3>
 <div class="block-meta">Cameras → Properties</div>
 <div class="block-row">
-<div class="st-block blue">
+<div class="st-block blue reporter">
 											Get Camera X for Camera ID <span class="st-input"></span>
 </div>
 </div>
@@ -1946,7 +2125,7 @@ scripts.BittyCameraBlocks.setCameraSize(120, 135, 1);</pre>
 <h3>Get Camera Y</h3>
 <div class="block-meta">Cameras → Properties</div>
 <div class="block-row">
-<div class="st-block blue">
+<div class="st-block blue reporter">
 											Get Camera Y for Camera ID <span class="st-input"></span>
 </div>
 </div>
@@ -1965,7 +2144,7 @@ scripts.BittyCameraBlocks.setCameraSize(120, 135, 1);</pre>
 <h3>Get Camera Center X</h3>
 <div class="block-meta">Cameras → Properties</div>
 <div class="block-row">
-<div class="st-block blue">
+<div class="st-block blue reporter">
 											Get Camera Center X for Camera ID <span class="st-input"></span>
 </div>
 </div>
@@ -1984,7 +2163,7 @@ scripts.BittyCameraBlocks.setCameraSize(120, 135, 1);</pre>
 <h3>Get Camera Center Y</h3>
 <div class="block-meta">Cameras → Properties</div>
 <div class="block-row">
-<div class="st-block blue">
+<div class="st-block blue reporter">
 											Get Camera Center Y for Camera ID <span class="st-input"></span>
 </div>
 </div>
@@ -2003,7 +2182,7 @@ scripts.BittyCameraBlocks.setCameraSize(120, 135, 1);</pre>
 <h3>Get Camera Width</h3>
 <div class="block-meta">Cameras → Properties</div>
 <div class="block-row">
-<div class="st-block blue">
+<div class="st-block blue reporter">
 											Get Camera Width for Camera ID <span class="st-input"></span>
 </div>
 </div>
@@ -2022,7 +2201,7 @@ scripts.BittyCameraBlocks.setCameraSize(120, 135, 1);</pre>
 <h3>Get Camera Height</h3>
 <div class="block-meta">Cameras → Properties</div>
 <div class="block-row">
-<div class="st-block blue">
+<div class="st-block blue reporter">
 											Get Camera Height for Camera ID <span class="st-input"></span>
 </div>
 </div>
@@ -2312,7 +2491,7 @@ scripts.BittyCameraBlocks.setCameraSize(120, 135, 1);</pre>
 <h3>Viewport Exists?</h3>
 <div class="block-meta">Viewports → Properties</div>
 <div class="block-row">
-<div class="st-block blue">
+<div class="st-block blue boolean">
 											Viewport ID <span class="st-input"></span> exists
 										</div>
 </div>
@@ -2331,7 +2510,7 @@ scripts.BittyCameraBlocks.setCameraSize(120, 135, 1);</pre>
 <h3>Get Viewport X</h3>
 <div class="block-meta">Viewports → Properties</div>
 <div class="block-row">
-<div class="st-block blue">
+<div class="st-block blue reporter">
 											Get Viewport X for ID <span class="st-input"></span>
 </div>
 </div>
@@ -2350,7 +2529,7 @@ scripts.BittyCameraBlocks.setCameraSize(120, 135, 1);</pre>
 <h3>Get Viewport Y</h3>
 <div class="block-meta">Viewports → Properties</div>
 <div class="block-row">
-<div class="st-block blue">
+<div class="st-block blue reporter">
 											Get Viewport Y for ID <span class="st-input"></span>
 </div>
 </div>
@@ -2369,7 +2548,7 @@ scripts.BittyCameraBlocks.setCameraSize(120, 135, 1);</pre>
 <h3>Get Viewport Width</h3>
 <div class="block-meta">Viewports → Properties</div>
 <div class="block-row">
-<div class="st-block blue">
+<div class="st-block blue reporter">
 											Get Viewport Width for ID <span class="st-input"></span>
 </div>
 </div>
@@ -2388,7 +2567,7 @@ scripts.BittyCameraBlocks.setCameraSize(120, 135, 1);</pre>
 <h3>Get Viewport Height</h3>
 <div class="block-meta">Viewports → Properties</div>
 <div class="block-row">
-<div class="st-block blue">
+<div class="st-block blue reporter">
 											Get Viewport Height for ID <span class="st-input"></span>
 </div>
 </div>
@@ -2524,7 +2703,7 @@ scripts.BittyCameraBlocks.setCameraSize(120, 135, 1);</pre>
 <h3>Has Background Image?</h3>
 <div class="block-meta">Display → Background</div>
 <div class="block-row">
-<div class="st-block blue">
+<div class="st-block blue boolean">
 											Has Background Image
 										</div>
 </div>
@@ -2544,7 +2723,7 @@ scripts.BittyCameraBlocks.setCameraSize(120, 135, 1);</pre>
 <h3>Get Display Area X</h3>
 <div class="block-meta">Display → Properties</div>
 <div class="block-row">
-<div class="st-block blue">
+<div class="st-block blue reporter">
 											Get Display Area X
 										</div>
 </div>
@@ -2563,7 +2742,7 @@ scripts.BittyCameraBlocks.setCameraSize(120, 135, 1);</pre>
 <h3>Get Display Area Y</h3>
 <div class="block-meta">Display → Properties</div>
 <div class="block-row">
-<div class="st-block blue">
+<div class="st-block blue reporter">
 											Get Display Area Y
 										</div>
 </div>
@@ -2582,7 +2761,7 @@ scripts.BittyCameraBlocks.setCameraSize(120, 135, 1);</pre>
 <h3>Get Display Area Width</h3>
 <div class="block-meta">Display → Properties</div>
 <div class="block-row">
-<div class="st-block blue">
+<div class="st-block blue reporter">
 											Get Display Area Width
 										</div>
 </div>
@@ -2601,7 +2780,7 @@ scripts.BittyCameraBlocks.setCameraSize(120, 135, 1);</pre>
 <h3>Get Display Area Height</h3>
 <div class="block-meta">Display → Properties</div>
 <div class="block-row">
-<div class="st-block blue">
+<div class="st-block blue reporter">
 											Get Display Area Height
 										</div>
 </div>
@@ -2679,7 +2858,7 @@ scripts.BittyCameraBlocks.setCameraSize(120, 135, 1);</pre>
 <h3>Get Camera Zoom</h3>
 <div class="block-meta">Effects → Zoom</div>
 <div class="block-row">
-<div class="st-block blue">
+<div class="st-block blue reporter">
 											Get Camera Zoom for Camera ID <span class="st-input"></span>
 </div>
 </div>
@@ -2772,7 +2951,6 @@ scripts.BittyCameraBlocks.setCameraSize(120, 135, 1);</pre>
 </div>
 </div>
 </div>
-
 </div>
 </section>
 <section class="section doc-section" data-search="troubleshooting faq beginner common problems initialize scene viewport too large too small wrong scale wrong size split screen camera zoom background" id="troubleshooting">
@@ -2784,67 +2962,57 @@ scripts.BittyCameraBlocks.setCameraSize(120, 135, 1);</pre>
 	These are the common first-time problems and quick fixes. Start here when something looks wrong before digging into the deep technical cave. The cave has bats. Probably Haxe bats.
 </p>
 <div class="faq-list">
-	<div class="faq-item">
-		<p class="faq-line"><span class="faq-label">Problem:</span> Nothing appears, or the camera system acts like it does not exist.</p>
-		<div class="block-row faq-block-image">
-			<div class="st-block red">Initialize bittyBIG Dynamic Camera System</div>
-		</div>
-		<p class="faq-line"><span class="faq-label">Solution:</span> Begin every scene with this block before using any camera, viewport, display, zoom, rotation, or screenshake blocks.</p>
-	</div>
-
-	<div class="faq-item">
-		<p class="faq-line"><span class="faq-label">Problem:</span> A camera was created, but it is not showing in the right place.</p>
-		<div class="block-row faq-block-image">
-			<div class="st-block blue">
+<div class="faq-item">
+<p class="faq-line"><span class="faq-label">Problem:</span> Nothing appears, or the camera system acts like it does not exist.</p>
+<div class="block-row faq-block-image">
+<div class="st-block red">Initialize bittyBIG Dynamic Camera System</div>
+</div>
+<p class="faq-line"><span class="faq-label">Solution:</span> Begin every scene with this block before using any camera, viewport, display, zoom, rotation, or screenshake blocks.</p>
+</div>
+<div class="faq-item">
+<p class="faq-line"><span class="faq-label">Problem:</span> A camera was created, but it is not showing in the right place.</p>
+<div class="block-row faq-block-image">
+<div class="st-block blue">
 				Render Camera ID
 				<span class="st-input"></span>
 				to Viewport ID
 				<span class="st-input"></span>
-			</div>
-		</div>
-		<p class="faq-line"><span class="faq-label">Solution:</span> Make sure the camera is rendered to a viewport. Use this block after creating the camera and viewport.</p>
-	</div>
-
-	<div class="faq-item">
-		<p class="faq-line"><span class="faq-label">Problem:</span> The viewport is too large, too small, or off-screen.</p>
-		<p class="faq-line"><span class="faq-label">Solution:</span> Use Display Area units. If the Display Area is <span class="inline-code">960x540</span>, a left-half viewport is <span class="inline-code">0, 0, 480, 540</span>. Use the <a href="#interactive-demo">Viewport Tester</a> for help.</p>
-	</div>
-
-	<div class="faq-item">
-		<p class="faq-line"><span class="faq-label">Problem:</span> The camera shows too much or too little of the world.</p>
-		<p class="faq-line"><span class="faq-label">Solution:</span> Change <strong>Camera Size</strong>, not Viewport Size. Camera Size controls how much world the camera sees before zoom.</p>
-	</div>
-
-	<div class="faq-item">
-		<p class="faq-line"><span class="faq-label">Problem:</span> Split-screen math feels wrong.</p>
-		<p class="faq-line"><span class="faq-label">Solution:</span> Split the Display Area, not the screen. For a <span class="inline-code">720x405</span> Display Area, left/right split uses <span class="inline-code">360x405</span> for each viewport.</p>
-	</div>
-
-	<div class="faq-item">
-		<p class="faq-line"><span class="faq-label">Problem:</span> Pixel art looks uneven or blurry.</p>
-		<p class="faq-line"><span class="faq-label">Solution:</span> Use camera sizes that scale evenly into the viewport. Example: <span class="inline-code">320x180</span> into <span class="inline-code">1920x1080</span> gives a clean 6x scale.</p>
-	</div>
-
-	<div class="faq-item">
-		<p class="faq-line"><span class="faq-label">Problem:</span> Zoom looks broken or crops more than expected.</p>
-		<p class="faq-line"><span class="faq-label">Solution:</span> Remember that zoom changes how much world the camera sees. Higher zoom means closer view. Set the camera base size first, then apply zoom.</p>
-	</div>
-
-	<div class="faq-item">
-		<p class="faq-line"><span class="faq-label">Problem:</span> The camera follows the wrong actor or crashes when centering.</p>
-		<p class="faq-line"><span class="faq-label">Solution:</span> Make sure the actor variable exists before using it in the block. In the Quick Start example, <span class="inline-code">player</span> means your own actor variable.</p>
-	</div>
-
-	<div class="faq-item">
-		<p class="faq-line"><span class="faq-label">Problem:</span> A viewport background or border does not appear.</p>
-		<p class="faq-line"><span class="faq-label">Solution:</span> Check that the viewport exists first and that alpha is above <span class="inline-code">0</span>. For a fully visible color, use <span class="inline-code">100</span> percent alpha.</p>
-	</div>
-
-
-	<div class="faq-item">
-		<p class="faq-line"><span class="faq-label">Problem:</span> The display area is smaller than the screen and there is empty space around it.</p>
-		<p class="faq-line"><span class="faq-label">Solution:</span> That can be correct. The Display Area is where the camera output appears. Use background color or background image blocks to control what appears behind it.</p>
-	</div>
+</div>
+</div>
+<p class="faq-line"><span class="faq-label">Solution:</span> Make sure the camera is rendered to a viewport. Use this block after creating the camera and viewport.</p>
+</div>
+<div class="faq-item">
+<p class="faq-line"><span class="faq-label">Problem:</span> The viewport is too large, too small, or off-screen.</p>
+<p class="faq-line"><span class="faq-label">Solution:</span> Use Display Area units. If the Display Area is <span class="inline-code">960x540</span>, a left-half viewport is <span class="inline-code">0, 0, 480, 540</span>. Use the <a href="#interactive-demo">Viewport Tester</a> for help.</p>
+</div>
+<div class="faq-item">
+<p class="faq-line"><span class="faq-label">Problem:</span> The camera shows too much or too little of the world.</p>
+<p class="faq-line"><span class="faq-label">Solution:</span> Change <strong>Camera Size</strong>, not Viewport Size. Camera Size controls how much world the camera sees before zoom.</p>
+</div>
+<div class="faq-item">
+<p class="faq-line"><span class="faq-label">Problem:</span> Split-screen math feels wrong.</p>
+<p class="faq-line"><span class="faq-label">Solution:</span> Split the Display Area, not the screen. For a <span class="inline-code">720x405</span> Display Area, left/right split uses <span class="inline-code">360x405</span> for each viewport.</p>
+</div>
+<div class="faq-item">
+<p class="faq-line"><span class="faq-label">Problem:</span> Pixel art looks uneven or blurry.</p>
+<p class="faq-line"><span class="faq-label">Solution:</span> Use camera sizes that scale evenly into the viewport. Example: <span class="inline-code">320x180</span> into <span class="inline-code">1920x1080</span> gives a clean 6x scale.</p>
+</div>
+<div class="faq-item">
+<p class="faq-line"><span class="faq-label">Problem:</span> Zoom looks broken or crops more than expected.</p>
+<p class="faq-line"><span class="faq-label">Solution:</span> Remember that zoom changes how much world the camera sees. Higher zoom means closer view. Set the camera base size first, then apply zoom.</p>
+</div>
+<div class="faq-item">
+<p class="faq-line"><span class="faq-label">Problem:</span> The camera follows the wrong actor or crashes when centering.</p>
+<p class="faq-line"><span class="faq-label">Solution:</span> Make sure the actor variable exists before using it in the block. In the Quick Start example, <span class="inline-code">player</span> means your own actor variable.</p>
+</div>
+<div class="faq-item">
+<p class="faq-line"><span class="faq-label">Problem:</span> A viewport background or border does not appear.</p>
+<p class="faq-line"><span class="faq-label">Solution:</span> Check that the viewport exists first and that alpha is above <span class="inline-code">0</span>. For a fully visible color, use <span class="inline-code">100</span> percent alpha.</p>
+</div>
+<div class="faq-item">
+<p class="faq-line"><span class="faq-label">Problem:</span> The display area is smaller than the screen and there is empty space around it.</p>
+<p class="faq-line"><span class="faq-label">Solution:</span> That can be correct. The Display Area is where the camera output appears. Use background color or background image blocks to control what appears behind it.</p>
+</div>
 </div>
 </div>
 </section>
@@ -2858,17 +3026,17 @@ scripts.BittyCameraBlocks.setCameraSize(120, 135, 1);</pre>
 	and pixel-perfect behavior.
 </p>
 <p>
-	<strong>Planned Development:</strong>
+<strong>Planned Development:</strong>
 </p>
 <ul>
-	<li>Add cached tile/world rendering so bittyBIG can rely less on Stencyl’s live redraw path.</li>
-	<li>Show debug drawing per viewport.</li>
+<li>Add cached tile/world rendering so bittyBIG can rely less on Stencyl’s live redraw path.</li>
+<li>Show debug drawing per viewport.</li>
 </ul>
 </div>
 </section>
 <div class="footer">
-					bittyBIG Dynamic Camera System Documentation<br />
-					&copy; 2026 bittyBIG Studio
+					bittyBIG Dynamic Camera System Documentation<br/>
+					© 2026 bittyBIG Studio
 				</div>
 </div>
 </main>
@@ -3419,12 +3587,25 @@ scripts.BittyCameraBlocks.setCameraSize(120, 135, 1);</pre>
 			return span;
 		}
 
+		function makePreviewReporter(text)
+		{
+			var socket = document.createElement("span");
+			socket.className = "st-input";
+
+			var reporter = document.createElement("span");
+			reporter.className = "st-block blue reporter";
+			reporter.textContent = text;
+
+			socket.appendChild(reporter);
+			return socket;
+		}
+
 		function appendPreviewText(block, text)
 		{
 			block.appendChild(document.createTextNode(text));
 		}
 
-		function addPreviewBlock(holder, colorClass, parts)
+		function addPreviewBlock(holder, colorClass, parts, shapeClass)
 		{
 			var row = document.createElement("div");
 			row.className = "block-row";
@@ -3432,11 +3613,20 @@ scripts.BittyCameraBlocks.setCameraSize(120, 135, 1);</pre>
 			var block = document.createElement("div");
 			block.className = "st-block " + colorClass;
 
+			if(shapeClass != null && shapeClass !== "")
+			{
+				block.className += " " + shapeClass;
+			}
+
 			parts.forEach(function(part)
 			{
 				if(typeof part === "string")
 				{
 					appendPreviewText(block, part);
+				}
+				else if(part != null && typeof part === "object" && part.reporter != null)
+				{
+					block.appendChild(makePreviewReporter(part.reporter));
 				}
 				else
 				{
