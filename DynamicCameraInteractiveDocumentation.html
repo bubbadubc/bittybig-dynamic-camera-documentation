@@ -1,0 +1,3516 @@
+<!DOCTYPE html>
+
+<html lang="en">
+<head>
+<meta charset="utf-8"/>
+<meta content="width=device-width, initial-scale=1.0" name="viewport"/>
+<title>bittyBIG Dynamic Camera System Documentation</title>
+<style>
+		:root
+		{
+			--bg: #f2f2f2;
+			--panel: #ffffff;
+			--panel-2: #f7f7f7;
+			--line: #cccccc;
+			--text: #222222;
+			--muted: #666666;
+			--header: #455a6f;
+			--headerText: #ffffff;
+			--accent: #1c88d9;
+			--accentDark: #1467a6;
+			--accentLight: #d8ecfb;
+			--danger: #d5525d;
+			--dangerDark: #ab3842;
+			--success: #7ab34a;
+			--successDark: #5e9234;
+			--shadow: rgba(0, 0, 0, 0.12);
+			--gold: #ffb52a;
+		}
+
+		*
+		{
+			box-sizing: border-box;
+		}
+
+		html
+		{
+			scroll-behavior: smooth;
+			scroll-padding-top: 72px;
+		}
+
+		[id]
+		{
+			scroll-margin-top: 72px;
+		}
+
+		body
+		{
+			margin: 0;
+			background: var(--bg);
+			color: var(--text);
+			font-family: Arial, Helvetica, sans-serif;
+			line-height: 1.45;
+		}
+
+		a
+		{
+			color: inherit;
+			text-decoration: none;
+		}
+
+		button,
+		input
+		{
+			font: inherit;
+		}
+
+		.app
+		{
+			display: grid;
+			grid-template-columns: 310px minmax(0, 1fr);
+			min-height: 100vh;
+		}
+
+		/* Sidebar */
+		.sidebar
+		{
+			position: sticky;
+			top: 0;
+			height: 100vh;
+			overflow: auto;
+			background: #f7f7f7;
+			border-right: 1px solid #bdbdbd;
+			padding: 0;
+		}
+
+		.sidebar-header
+		{
+			background: var(--header);
+			color: var(--headerText);
+			padding: 16px;
+			border-bottom: 1px solid #394a5c;
+		}
+
+		.sidebar-header h1
+		{
+			margin: 0;
+			font-size: 20px;
+			line-height: 1.15;
+		}
+
+		.sidebar-header .sub
+		{
+			margin-top: 5px;
+			font-size: 12px;
+			opacity: 0.9;
+		}
+
+
+		.nav-group
+		{
+			padding: 12px 14px 4px;
+		}
+
+		.nav-title
+		{
+			font-size: 13px;
+			font-weight: bold;
+			color: #333333;
+			text-transform: uppercase;
+			margin: 0 0 8px;
+		}
+
+		.nav-list
+		{
+			display: grid;
+			gap: 4px;
+			margin-bottom: 8px;
+		}
+
+		.nav-link
+		{
+			display: block;
+			padding: 7px 8px;
+			border-radius: 4px;
+			font-size: 14px;
+			color: #333333;
+		}
+
+		.nav-link:hover,
+		.nav-link.active
+		{
+			background: #dfe8f3;
+			color: #000000;
+		}
+
+		.nav-mini-title
+		{
+			font-size: 11px;
+			font-weight: bold;
+			color: #666666;
+			text-transform: uppercase;
+			padding: 8px 8px 2px;
+		}
+
+		.nav-sub
+		{
+			padding-left: 12px;
+			border-left: 2px solid #d0d0d0;
+			margin-left: 6px;
+		}
+
+		/* Main */
+		.main
+		{
+			min-width: 0;
+		}
+
+		.topbar
+		{
+			background: var(--header);
+			color: var(--headerText);
+			padding: 12px 24px;
+			border-bottom: 1px solid #394a5c;
+		}
+
+		.topbar .title
+		{
+			font-size: 22px;
+			font-weight: bold;
+		}
+
+		.topbar .subtitle
+		{
+			font-size: 13px;
+			margin-top: 4px;
+			opacity: 0.92;
+		}
+		.top-nav
+		{
+			position: sticky;
+			top: 0;
+			z-index: 30;
+			display: flex;
+			flex-wrap: wrap;
+			gap: 8px;
+			padding: 10px 24px;
+			background: #ffffff;
+			border-bottom: 1px solid var(--line);
+			box-shadow: 0 2px 7px rgba(0,0,0,0.08);
+		}
+
+		.top-nav a
+		{
+			display: inline-block;
+			padding: 7px 10px;
+			border-radius: 5px;
+			font-size: 14px;
+			font-weight: bold;
+			color: #333333;
+		}
+
+		.top-nav a:hover
+		{
+			background: #dfe8f3;
+		}
+
+		.left-glossary-nav
+		{
+			position: static;
+			top: auto;
+			width: auto;
+			margin: 12px;
+		}
+
+		.left-glossary-nav .cat
+		{
+			margin-bottom: 18px;
+		}
+
+		.left-glossary-nav .cat-title
+		{
+			font-size: 11px;
+			font-weight: bold;
+			text-transform: uppercase;
+			letter-spacing: 0.04em;
+			color: #ffffff;
+			background: #7c8692;
+			border: 1px solid #67727e;
+			border-radius: 4px;
+			padding: 4px 7px;
+			margin: 12px 0 6px;
+		}
+
+		.left-glossary-nav .cat > .cat-title:first-child
+		{
+			font-size: 14px;
+			background: #455a6f;
+			border-color: #394a5c;
+			padding: 7px 9px;
+			margin: 0 0 8px;
+		}
+
+		.left-glossary-nav a
+		{
+			display: block;
+			padding: 5px 8px;
+			border-radius: 4px;
+			font-size: 14px;
+			color: #333333;
+		}
+
+		.left-glossary-nav a:hover
+		{
+			background: #dfe8f3;
+		}
+
+
+		.content
+		{
+			padding: 24px;
+			max-width: 1300px;
+		}
+
+		.section
+		{
+			background: var(--panel);
+			border: 1px solid var(--line);
+			border-radius: 8px;
+			box-shadow: 0 2px 8px var(--shadow);
+			margin-bottom: 18px;
+			overflow: hidden;
+		}
+
+		.section-header
+		{
+			padding: 18px 20px;
+			border-bottom: 1px solid var(--line);
+			background: var(--panel-2);
+		}
+
+		.section-header h2
+		{
+			margin: 0;
+			font-size: 24px;
+			color: #138a84;
+		}
+
+		.section-body
+		{
+			padding: 20px;
+		}
+
+		p
+		{
+			margin-top: 0;
+		}
+
+		.hero-box
+		{
+			background: linear-gradient(135deg, #5d7389, #455a6f);
+			color: white;
+			padding: 24px;
+			border-radius: 8px;
+			border: 1px solid #394a5c;
+		}
+
+		.hero-box h2
+		{
+			margin: 0 0 10px;
+			font-size: 34px;
+			color: white;
+		}
+
+		.hero-box p
+		{
+			margin: 0 0 16px;
+			font-size: 16px;
+			max-width: 900px;
+		}
+
+		.hero-buttons
+		{
+			display: flex;
+			flex-wrap: wrap;
+			gap: 10px;
+		}
+
+		.btn
+		{
+			display: inline-block;
+			padding: 10px 14px;
+			border-radius: 6px;
+			border: 1px solid rgba(255,255,255,0.22);
+			background: rgba(255,255,255,0.12);
+			color: white;
+			cursor: pointer;
+		}
+
+		.btn:hover
+		{
+			background: rgba(255,255,255,0.22);
+		}
+
+		.grid-2
+		{
+			display: grid;
+			grid-template-columns: 1fr 1fr;
+			gap: 16px;
+		}
+
+		.grid-3
+		{
+			display: grid;
+			grid-template-columns: repeat(3, 1fr);
+			gap: 16px;
+		}
+
+		.grid-4
+		{
+			display: grid;
+			grid-template-columns: repeat(4, 1fr);
+			gap: 16px;
+		}
+
+		.info-card
+		{
+			border: 1px solid var(--line);
+			border-radius: 8px;
+			padding: 16px;
+			background: #fafafa;
+		}
+
+		.info-card h3
+		{
+			margin: 0 0 8px;
+			font-size: 18px;
+		}
+
+		.note
+		{
+			padding: 12px 14px;
+			border-radius: 8px;
+			border: 1px solid #d8d8d8;
+			background: #f9f9f9;
+			margin: 12px 0;
+		}
+
+		.note.good
+		{
+			background: #eef8e7;
+			border-color: #bfd7ac;
+		}
+
+		.note.warn
+		{
+			background: #fff6df;
+			border-color: #e7d49a;
+		}
+
+		.inline-code
+		{
+			display: inline-block;
+			background: #f0f0f0;
+			border: 1px solid #dddddd;
+			padding: 2px 6px;
+			border-radius: 4px;
+			font-family: Consolas, Monaco, "Courier New", monospace;
+			font-size: 0.95em;
+		}
+
+		/* Tabs */
+		.tabs
+		{
+			display: flex;
+			flex-wrap: wrap;
+			gap: 8px;
+			margin-bottom: 16px;
+		}
+
+		.tab-button
+		{
+			padding: 8px 12px;
+			border: 1px solid #bdbdbd;
+			border-radius: 6px;
+			background: #f7f7f7;
+			cursor: pointer;
+		}
+
+		.tab-button.active
+		{
+			background: #dfe8f3;
+			border-color: #9fb8d4;
+			font-weight: bold;
+		}
+
+		.tab-panel
+		{
+			display: none;
+		}
+
+		.tab-panel.active
+		{
+			display: block;
+		}
+
+		/* Stencyl-like block visuals */
+		.block-stack
+		{
+			display: flex;
+			flex-direction: column;
+			gap: 8px;
+			margin: 10px 0 16px;
+		}
+
+		.block-row
+		{
+			display: flex;
+			flex-wrap: wrap;
+			align-items: center;
+			gap: 6px;
+		}
+
+		.st-block
+		{
+			display: inline-flex;
+			flex-wrap: wrap;
+			align-items: center;
+			gap: 6px;
+			min-height: 34px;
+			padding: 7px 10px;
+			border-radius: 6px;
+			color: #ffffff;
+			font-weight: bold;
+			font-size: 13px;
+			line-height: 1.15;
+			box-shadow: inset 0 1px 0 rgba(255,255,255,0.18), 0 1px 1px rgba(0,0,0,0.15);
+			position: relative;
+		}
+
+		.st-block::before
+		{
+			content: "";
+			position: absolute;
+			left: 10px;
+			top: -5px;
+			width: 18px;
+			height: 5px;
+			background: rgba(255,255,255,0.14);
+			border-radius: 4px 4px 0 0;
+		}
+
+		.st-block.blue
+		{
+			background: linear-gradient(#2798ee, #1f7dcc);
+			border: 1px solid #1569aa;
+		}
+
+		.st-block.red
+		{
+			background: linear-gradient(#e66b73, #d24d57);
+			border: 1px solid #b63b44;
+		}
+
+		.st-block.green
+		{
+			background: linear-gradient(#8dc45a, #73a742);
+			border: 1px solid #5e8d32;
+		}
+
+		.st-block.gray
+		{
+			background: linear-gradient(#8f98a3, #7c8692);
+			border: 1px solid #67727e;
+		}
+
+		.st-input,
+		.st-dropdown,
+		.st-text
+		{
+			display: inline-flex;
+			align-items: center;
+			justify-content: center;
+			min-height: 22px;
+			padding: 2px 8px;
+			border-radius: 11px;
+			font-weight: bold;
+			color: #333333;
+			border: 1px solid rgba(0,0,0,0.18);
+			box-shadow: inset 0 1px 0 rgba(255,255,255,0.65);
+		}
+
+		.st-input
+		{
+			min-width: 26px;
+			background: linear-gradient(#ffffff, #e9eef4);
+		}
+
+		.st-dropdown
+		{
+			background: linear-gradient(#fefefe, #dfe6ee);
+			padding-right: 18px;
+			position: relative;
+		}
+
+		.st-dropdown::after
+		{
+			content: "▼";
+			font-size: 9px;
+			position: absolute;
+			right: 6px;
+			top: 50%;
+			transform: translateY(-48%);
+			color: #444444;
+		}
+
+		.st-text
+		{
+			background: linear-gradient(#fff3bf, #ffe08a);
+		}
+
+		.block-card
+		{
+			border: 1px solid var(--line);
+			border-radius: 8px;
+			background: #fafafa;
+			padding: 16px;
+			margin-bottom: 14px;
+		}
+
+		.block-card h3
+		{
+			margin: 0 0 8px;
+			font-size: 19px;
+		}
+
+		.block-meta
+		{
+			font-size: 13px;
+			color: var(--muted);
+			margin-bottom: 10px;
+		}
+
+		.block-desc
+		{
+			margin-bottom: 12px;
+		}
+
+		.code-toggle
+		{
+			display: inline-block;
+			padding: 7px 10px;
+			border-radius: 5px;
+			border: 1px solid #b8c7d8;
+			background: #edf4fb;
+			color: #1d517f;
+			cursor: pointer;
+			font-size: 13px;
+			font-weight: bold;
+			margin-top: 4px;
+		}
+
+		.code-toggle:hover
+		{
+			background: #dfeefa;
+		}
+
+		.code-box
+		{
+			display: block;
+			margin-top: 10px;
+			border: 1px solid #d8d8d8;
+			border-radius: 6px;
+			background: #f6f6f6;
+			padding: 0;
+			overflow: hidden;
+		}
+
+		.code-box.open
+		{
+			display: block;
+		}
+
+		.code-bar
+		{
+			display: flex;
+			justify-content: space-between;
+			align-items: center;
+			background: #ececec;
+			border-bottom: 1px solid #d8d8d8;
+			padding: 8px 10px;
+			font-size: 12px;
+			color: #444444;
+		}
+
+		.copy-btn
+		{
+			padding: 5px 8px;
+			border-radius: 4px;
+			border: 1px solid #bdbdbd;
+			background: #ffffff;
+			cursor: pointer;
+			font-size: 12px;
+		}
+
+		.copy-btn:hover
+		{
+			background: #f2f2f2;
+		}
+
+		pre
+		{
+			margin: 0;
+			padding: 12px;
+			overflow: auto;
+			font-family: Consolas, Monaco, "Courier New", monospace;
+			font-size: 13px;
+			line-height: 1.5;
+		}
+
+		/* Glossary style */
+		.glossary-layout
+		{
+			display: block;
+		}
+
+		.glossary-sidebar
+		{
+			border: 1px solid var(--line);
+			border-radius: 8px;
+			background: #f7f7f7;
+			padding: 12px;
+			align-self: start;
+			position: sticky;
+			top: 18px;
+		}
+
+		.glossary-sidebar h3
+		{
+			margin: 0 0 10px;
+			font-size: 16px;
+		}
+
+		.glossary-sidebar .cat
+		{
+			margin-bottom: 12px;
+		}
+
+		.glossary-sidebar .cat-title
+		{
+			font-size: 13px;
+			font-weight: bold;
+			text-transform: uppercase;
+			color: #444444;
+			margin-bottom: 6px;
+		}
+
+		.glossary-sidebar a
+		{
+			display: block;
+			padding: 5px 6px;
+			border-radius: 4px;
+			font-size: 14px;
+		}
+
+		.glossary-sidebar a:hover
+		{
+			background: #dfe8f3;
+		}
+
+		.left-glossary-nav .cat-title,
+		.left-glossary-nav .cat > .cat-title:first-child
+		{
+			color: #ffffff;
+		}
+
+		.term-list
+		{
+			border: 1px solid var(--line);
+			border-radius: 8px;
+			background: #fafafa;
+			padding: 14px 16px;
+			margin-bottom: 18px;
+		}
+
+		.term-list p
+		{
+			margin: 0 0 8px;
+		}
+
+		.term-list p:last-child
+		{
+			margin-bottom: 0;
+		}
+
+		/* Interactive setup builder */
+		.viewport-demo
+		{
+			border: 1px solid var(--line);
+			border-radius: 8px;
+			background: #fafafa;
+			padding: 16px;
+		}
+
+		.demo-controls
+		{
+			display: grid;
+			grid-template-columns: repeat(auto-fit, minmax(150px, 1fr));
+			gap: 10px;
+			margin-bottom: 14px;
+		}
+
+		.screen-controls
+		{
+			grid-template-columns: repeat(auto-fit, minmax(150px, 220px));
+			margin-top: -4px;
+			padding-top: 10px;
+			border-top: 1px solid #e5e5e5;
+		}
+
+		.screen-controls label
+		{
+			color: #777777;
+		}
+
+		.screen-controls input
+		{
+			background: #f7f7f7;
+		}
+
+		.demo-controls label,
+		.viewport-row label
+		{
+			display: grid;
+			gap: 4px;
+			font-size: 12px;
+			color: #555555;
+		}
+
+		.demo-controls input,
+		.viewport-row input
+		{
+			width: 100%;
+			padding: 8px 9px;
+			border: 1px solid #bebebe;
+			border-radius: 5px;
+			background: #ffffff;
+		}
+
+		.builder-layout
+		{
+			display: grid;
+			grid-template-columns: minmax(0, 1fr) 360px;
+			gap: 16px;
+			align-items: start;
+		}
+
+		.demo-screen
+		{
+			position: relative;
+			width: 100%;
+			aspect-ratio: 16 / 9;
+			background:
+				linear-gradient(45deg, rgba(0,0,0,0.04) 25%, transparent 25%),
+				linear-gradient(-45deg, rgba(0,0,0,0.04) 25%, transparent 25%),
+				linear-gradient(45deg, transparent 75%, rgba(0,0,0,0.04) 75%),
+				linear-gradient(-45deg, transparent 75%, rgba(0,0,0,0.04) 75%);
+			background-size: 24px 24px;
+			background-position: 0 0, 0 12px, 12px -12px, -12px 0px;
+			border: 1px solid #bcbcbc;
+			border-radius: 8px;
+			overflow: hidden;
+		}
+
+		.demo-display-area
+		{
+			position: absolute;
+			border: 2px dashed #1f7dcc;
+			background: rgba(31, 125, 204, 0.08);
+			overflow: hidden;
+		}
+
+		.demo-viewport
+		{
+			position: absolute;
+			border: 2px solid #6ca73c;
+			background: rgba(122, 179, 74, 0.18);
+			color: #294019;
+			display: flex;
+			align-items: center;
+			justify-content: center;
+			font-weight: bold;
+			font-size: 13px;
+			text-align: center;
+			padding: 4px;
+		}
+
+		.demo-readout,
+		.pixel-readout
+		{
+			margin-top: 12px;
+			font-size: 14px;
+			color: #444444;
+		}
+
+		.viewport-editor
+		{
+			border: 1px solid var(--line);
+			border-radius: 8px;
+			background: #ffffff;
+			padding: 12px;
+		}
+
+		.viewport-editor h3,
+		.pixel-panel h3,
+		.generated-code h3
+		{
+			margin: 0 0 10px;
+			font-size: 16px;
+		}
+
+		.viewport-row
+		{
+			display: grid;
+			grid-template-columns: 42px repeat(4, 1fr);
+			gap: 8px;
+			align-items: end;
+			padding: 9px 0;
+			border-top: 1px solid #eeeeee;
+		}
+
+		.viewport-row:first-of-type
+		{
+			border-top: 0;
+			padding-top: 0;
+		}
+
+		.viewport-id
+		{
+			font-weight: bold;
+			font-size: 13px;
+			color: #333333;
+			padding-bottom: 8px;
+		}
+
+		.pixel-panel,
+		.generated-code
+		{
+			margin-top: 14px;
+			border: 1px solid var(--line);
+			border-radius: 8px;
+			background: #ffffff;
+			padding: 12px;
+		}
+
+		.pixel-list
+		{
+			margin: 0;
+			padding-left: 0;
+			list-style: none;
+		}
+
+		.pixel-list li
+		{
+			padding: 4px 0;
+			border-bottom: 1px solid #eeeeee;
+		}
+
+		.pixel-list li:last-child
+		{
+			border-bottom: 0;
+		}
+
+		.generated-code .code-box
+		{
+			display: block;
+			margin-top: 0;
+		}
+
+		.generated-block-preview
+		{
+			padding: 12px;
+			background: #f6f6f6;
+			min-height: 80px;
+		}
+
+		.copy-source
+		{
+			position: absolute;
+			left: -99999px;
+			top: auto;
+			width: 1px;
+			height: 1px;
+			overflow: hidden;
+			white-space: pre;
+		}
+
+
+		/* Balanced FAQ Cards */
+		.faq-list
+		{
+			display: grid;
+			gap: 10px;
+		}
+
+		.faq-item
+		{
+			border: 1px solid #d8d8d8;
+			border-radius: 7px;
+			background: #fafafa;
+			padding: 11px 13px;
+		}
+
+		.faq-line
+		{
+			margin: 0 0 6px;
+		}
+
+		.faq-line:last-child
+		{
+			margin-bottom: 0;
+		}
+
+		.faq-block-image
+		{
+			margin: 8px 0 9px;
+		}
+
+		.faq-list a
+		{
+			color: var(--accentDark);
+			font-weight: bold;
+			text-decoration: underline;
+		}
+
+		.faq-label
+		{
+			display: inline-block;
+			min-width: 68px;
+			font-weight: bold;
+			color: #138a84;
+		}
+
+		/* Footer */
+		.footer
+		{
+			text-align: center;
+			padding: 18px 0 6px;
+			color: #666666;
+			font-size: 13px;
+		}
+
+		/* Mobile */
+		@media (max-width: 1100px)
+		{
+			.app
+			{
+				grid-template-columns: 1fr;
+			}
+
+			.sidebar
+			{
+				position: relative;
+				height: auto;
+			}
+
+			.top-nav
+			{
+				position: relative;
+				top: auto;
+			}
+
+			.glossary-layout
+			{
+				grid-template-columns: 1fr;
+			}
+
+			.glossary-sidebar
+			{
+				position: relative;
+				top: 0;
+			}
+		}
+
+		@media (max-width: 900px)
+		{
+			.grid-2,
+			.grid-3,
+			.grid-4,
+			.demo-controls,
+			.builder-layout
+			{
+				grid-template-columns: 1fr;
+			}
+		}
+	</style>
+</head>
+<body>
+<div class="app">
+<aside class="sidebar">
+<div class="sidebar-header">
+<h1>Block Glossary</h1>
+</div>
+<div class="glossary-sidebar left-glossary-nav">
+<div class="cat">
+<div class="cat-title">Cameras</div>
+<div class="cat-title">Setup</div>
+<a href="#block-init-dynamic-camera-system">Initialize System</a>
+<a href="#block-create-camera">Create Camera</a>
+<a href="#block-render-camera-to-viewport">Render Camera to Viewport</a>
+<a href="#block-set-camera-size">Set Camera Size</a>
+<a href="#block-set-camera-scene-lock">Set Camera Scene Lock</a>
+<a href="#block-remove-camera">Remove Camera</a>
+<div class="cat-title">Presets</div>
+<a href="#block-apply-camera-preset">Apply Camera Preset</a>
+<a href="#block-apply-camera-preset-by-name">Apply Camera Preset by Name</a>
+<div class="cat-title">Position</div>
+<a href="#block-set-camera-center">Set Camera Center</a>
+<a href="#block-set-camera-offsets">Set Camera Offsets</a>
+<a href="#block-set-camera-center-to-actor">Center Camera to Actor</a>
+<div class="cat-title">Movement</div>
+<a href="#block-set-camera-target-center">Set Camera Target Center</a>
+<a href="#block-set-camera-target-center-to-actor">Set Camera Target to Actor</a>
+<a href="#block-set-camera-follow-style">Set Follow Style</a>
+<a href="#block-set-camera-follow-speeds">Set Follow Speeds</a>
+<a href="#block-set-camera-lerp-speed">Set Lerp Speed</a>
+<a href="#block-set-camera-zero-radius">Set Zero Radius</a>
+<div class="cat-title">Rotation</div>
+<a href="#block-set-camera-rotation">Set Camera Rotation</a>
+<a href="#block-get-camera-rotation">Get Camera Rotation</a>
+<a href="#block-reset-camera-rotation">Reset Camera Rotation</a>
+<div class="cat-title">Properties</div>
+<a href="#block-camera-exists">Camera Exists?</a>
+<a href="#block-camera-is-transitioning">Camera Is Transitioning?</a>
+<a href="#block-get-camera-x">Get Camera X</a>
+<a href="#block-get-camera-y">Get Camera Y</a>
+<a href="#block-get-camera-center-x">Get Camera Center X</a>
+<a href="#block-get-camera-center-y">Get Camera Center Y</a>
+<a href="#block-get-camera-width">Get Camera Width</a>
+<a href="#block-get-camera-height">Get Camera Height</a>
+</div>
+<div class="cat">
+<div class="cat-title">Viewports</div>
+<div class="cat-title">Setup</div>
+<a href="#block-create-viewport">Create Viewport</a>
+<a href="#block-set-viewport-rect">Set Viewport Rect</a>
+<a href="#block-set-viewport-position">Set Viewport Position</a>
+<a href="#block-set-viewport-size">Set Viewport Size</a>
+<a href="#block-remove-viewport">Remove Viewport</a>
+<div class="cat-title">Appearance</div>
+<a href="#block-set-viewport-background-color">Viewport Background Color</a>
+<a href="#block-clear-viewport-background">Clear Viewport Background</a>
+<a href="#block-set-viewport-background-enabled">Enable Viewport Background</a>
+<a href="#block-set-viewport-border">Viewport Border</a>
+<a href="#block-set-viewport-scale-mode">Viewport Scale Mode</a>
+<div class="cat-title">Viewport Transforms</div>
+<a href="#block-set-viewport-rotation">Viewport Rotation</a>
+<a href="#block-set-viewport-flip-horizontal">Flip Viewport Horizontally</a>
+<a href="#block-set-viewport-flip-vertical">Flip Viewport Vertically</a>
+<a href="#block-reset-viewport-transform">Reset Viewport Transform</a>
+<div class="cat-title">Properties</div>
+<a href="#block-viewport-exists">Viewport Exists?</a>
+<a href="#block-get-viewport-x">Get Viewport X</a>
+<a href="#block-get-viewport-y">Get Viewport Y</a>
+<a href="#block-get-viewport-width">Get Viewport Width</a>
+<a href="#block-get-viewport-height">Get Viewport Height</a>
+</div>
+<div class="cat">
+<div class="cat-title">Display</div>
+<div class="cat-title">Setup</div>
+<a href="#block-set-display-area-rect">Set Display Area</a>
+<a href="#block-set-display-area-position">Set Display Area Position</a>
+<a href="#block-set-display-area-size">Set Display Area Size</a>
+<div class="cat-title">Background</div>
+<a href="#block-set-background-color-int">Set Background Color</a>
+<a href="#block-set-background-image">Set Background Image</a>
+<a href="#block-clear-background-image">Clear Background Image</a>
+<a href="#block-has-background-image">Has Background Image?</a>
+<div class="cat-title">Properties</div>
+<a href="#block-get-display-area-x">Get Display Area X</a>
+<a href="#block-get-display-area-y">Get Display Area Y</a>
+<a href="#block-get-display-area-width">Get Display Area Width</a>
+<a href="#block-get-display-area-height">Get Display Area Height</a>
+</div>
+<div class="cat">
+<div class="cat-title">Effects</div>
+<div class="cat-title">Zoom</div>
+<a href="#block-set-camera-base-size">Set Camera Base Size</a>
+<a href="#block-set-camera-zoom">Set Zoom</a>
+<a href="#block-set-camera-zoom-advanced">Tween Zoom</a>
+<a href="#block-get-camera-zoom">Get Camera Zoom</a>
+<a href="#block-reset-camera-zoom">Reset Camera Zoom</a>
+<div class="cat-title">Screenshake</div>
+<a href="#block-shake-camera">Shake Camera</a>
+<a href="#block-shake-camera-xy">Shake Camera XY</a>
+<a href="#block-stop-camera-shake">Stop Camera Shake</a>
+</div>
+</div></aside>
+<main class="main">
+<div class="topbar">
+<div class="title">bittyBIG Dynamic Camera System</div>
+<div class="subtitle">Interactive documentation, glossary, examples, and viewport tester</div>
+</div><nav class="top-nav"><a href="#overview">Overview</a><a href="#quick-start">Quick Start</a><a href="#interactive-demo">Viewport Tester</a><a href="#glossary">Block Glossary</a><a href="#troubleshooting">Troubleshooting / FAQ</a><a href="#release-notes">Release Notes</a></nav>
+<div class="content">
+<section class="section doc-section" data-search="overview introduction dynamic camera split screen zoom rotation screenshake viewport tester" id="overview">
+<div class="section-body">
+<div class="hero-box">
+<h2>Dynamic Camera System</h2>
+<p>
+								The bittyBIG Dynamic Camera System gives Stencyl projects a more flexible camera and output pipeline.
+								It supports zoom, tweening, split-screen, picture-in-picture, viewport transforms, camera rotation,
+								screenshake, and pixel-perfect display behavior.
+							</p>
+<div class="hero-buttons">
+<a class="btn" href="#overview">Overview</a>
+<a class="btn" href="#quick-start">Quick Start</a>
+<a class="btn" href="#interactive-demo">Viewport Tester</a>
+<a class="btn" href="#glossary">Block Glossary</a>
+<a class="btn" href="#troubleshooting">Troubleshooting / FAQ</a>
+<a class="btn" href="#release-notes">Release Notes</a>
+</div>
+</div>
+</div>
+</section>
+<section class="section doc-section" data-search="quick start initialize create camera set camera size center actor blocks code" id="quick-start">
+<div class="section-header">
+<h2>Quick Start</h2>
+</div>
+<div class="section-body">
+<p>
+							This is the shortest useful setup: initialize the system, create a camera,
+							and center it on the player.
+						</p>
+<div class="block-stack">
+<div class="block-row">
+<div class="st-block red">
+									Initialize bittyBIG Dynamic Camera System
+								</div>
+</div>
+<div class="block-row">
+<div class="st-block blue">
+									Create Camera ID
+									<span class="st-input">0</span>
+</div>
+</div>
+<div class="block-row">
+<div class="st-block blue">
+									Set Camera Center to Actor
+									<span class="st-text">player</span>
+									for Camera ID
+									<span class="st-input">0</span>
+</div>
+</div>
+</div>
+<div class="note">
+<strong>Tip:</strong> Use Set Camera Size when you want to change how much of the game scene is viewed on the screen. For example, a 320x180 camera on a 1920x1080 canvas gives a clean 6x pixel-perfect view.
+						</div>
+</div>
+</section>
+<section class="section doc-section" data-search="common setups examples split screen picture in picture smaller display area fullscreen" id="common-setups">
+<div class="section-header">
+<h2>Common Setups</h2>
+</div>
+<div class="section-body">
+<div class="note">
+							These examples use a <span class="inline-code">1920x1080</span> canvas. Use Set Camera Size when you want to control how much of the game scene is viewed inside that layout.
+						</div>
+<div class="tabs">
+<button class="tab-button active" data-tab="setup-fullscreen">Full Screen</button>
+<button class="tab-button" data-tab="setup-split">Split Screen</button>
+<button class="tab-button" data-tab="setup-pip">Picture-in-Picture</button>
+<button class="tab-button" data-tab="setup-small-area">Smaller Display Area</button>
+</div>
+<div class="tab-panel active" data-panel="setup-fullscreen">
+<h3>Full-screen pixel-perfect camera</h3>
+<p>Use this when one camera fills the full <span class="inline-code">1920x1080</span> canvas. A <span class="inline-code">320x180</span> camera gives a clean 6x view.</p>
+<div class="block-stack">
+<div class="block-row">
+<div class="st-block red">Initialize bittyBIG Dynamic Camera System</div>
+</div>
+<div class="block-row">
+<div class="st-block blue">Create Camera ID <span class="st-input">0</span></div>
+</div>
+<div class="block-row">
+<div class="st-block blue">Set Camera to Width <span class="st-input">320</span> Height <span class="st-input">180</span> for Camera ID <span class="st-input">0</span></div>
+</div>
+<div class="block-row">
+<div class="st-block blue">Set Camera Center to Actor <span class="st-text">player</span> for Camera ID <span class="st-input">0</span></div>
+</div>
+</div>
+<div class="code-box" id="setup-fullscreen-code">
+<div class="code-bar">
+<span>Equivalent code</span>
+<button class="copy-btn" data-copy-target="setup-fullscreen-pre">Copy</button>
+</div>
+<pre id="setup-fullscreen-pre">scripts.BittyCameraSystem.init();
+
+scripts.BittyCameraBlocks.createCamera(0);
+scripts.BittyCameraBlocks.setCameraSize(320, 180, 0);
+scripts.BittyCameraBlocks.setCameraCenterToActor(player, 0);</pre>
+</div>
+</div>
+<div class="tab-panel" data-panel="setup-split">
+<h3>Two-player left/right split screen</h3>
+<p>For a <span class="inline-code">1920x1080</span> canvas, each half is <span class="inline-code">960x1080</span>. A <span class="inline-code">160x180</span> camera gives each viewport a clean 6x scale.</p>
+<div class="block-stack">
+<div class="block-row">
+<div class="st-block red">Initialize bittyBIG Dynamic Camera System</div>
+</div>
+<div class="block-row">
+<div class="st-block blue">Create Camera ID <span class="st-input">0</span></div>
+</div>
+<div class="block-row">
+<div class="st-block blue">Create Camera ID <span class="st-input">1</span></div>
+</div>
+<div class="block-row">
+<div class="st-block blue">Set Viewport ID <span class="st-input">0</span> to X <span class="st-input">0</span> Y <span class="st-input">0</span> Width <span class="st-input">960</span> Height <span class="st-input">1080</span></div>
+</div>
+<div class="block-row">
+<div class="st-block blue">Set Viewport ID <span class="st-input">1</span> to X <span class="st-input">960</span> Y <span class="st-input">0</span> Width <span class="st-input">960</span> Height <span class="st-input">1080</span></div>
+</div>
+<div class="block-row">
+<div class="st-block blue">Set Camera to Width <span class="st-input">160</span> Height <span class="st-input">180</span> for Camera ID <span class="st-input">0</span></div>
+</div>
+<div class="block-row">
+<div class="st-block blue">Set Camera to Width <span class="st-input">160</span> Height <span class="st-input">180</span> for Camera ID <span class="st-input">1</span></div>
+</div>
+</div>
+<div class="code-box" id="setup-split-code">
+<div class="code-bar">
+<span>Equivalent code</span>
+<button class="copy-btn" data-copy-target="setup-split-pre">Copy</button>
+</div>
+<pre id="setup-split-pre">scripts.BittyCameraSystem.init();
+
+scripts.BittyCameraBlocks.createCamera(0);
+scripts.BittyCameraBlocks.createCamera(1);
+
+scripts.BittyCameraBlocks.setDisplayPortRect(0, 0, 0, 960, 1080);
+scripts.BittyCameraBlocks.setDisplayPortRect(1, 960, 0, 960, 1080);
+
+scripts.BittyCameraBlocks.setCameraSize(160, 180, 0);
+scripts.BittyCameraBlocks.setCameraSize(160, 180, 1);</pre>
+</div>
+</div>
+<div class="tab-panel" data-panel="setup-pip">
+<h3>Picture-in-picture camera</h3>
+<p>Use one main camera and one smaller overlay camera. This example uses a full <span class="inline-code">1920x1080</span> main viewport with a <span class="inline-code">440x248</span> overlay.</p>
+<div class="block-stack">
+<div class="block-row">
+<div class="st-block red">Initialize bittyBIG Dynamic Camera System</div>
+</div>
+<div class="block-row">
+<div class="st-block blue">Create Camera ID <span class="st-input">0</span></div>
+</div>
+<div class="block-row">
+<div class="st-block blue">Create Camera ID <span class="st-input">1</span></div>
+</div>
+<div class="block-row">
+<div class="st-block blue">Set Viewport ID <span class="st-input">0</span> to X <span class="st-input">0</span> Y <span class="st-input">0</span> Width <span class="st-input">1920</span> Height <span class="st-input">1080</span></div>
+</div>
+<div class="block-row">
+<div class="st-block blue">Set Viewport ID <span class="st-input">1</span> to X <span class="st-input">1440</span> Y <span class="st-input">40</span> Width <span class="st-input">440</span> Height <span class="st-input">248</span></div>
+</div>
+<div class="block-row">
+<div class="st-block blue">Set Camera to Width <span class="st-input">320</span> Height <span class="st-input">180</span> for Camera ID <span class="st-input">0</span></div>
+</div>
+<div class="block-row">
+<div class="st-block blue">Set Camera to Width <span class="st-input">110</span> Height <span class="st-input">62</span> for Camera ID <span class="st-input">1</span></div>
+</div>
+</div>
+<div class="code-box" id="setup-pip-code">
+<div class="code-bar">
+<span>Equivalent code</span>
+<button class="copy-btn" data-copy-target="setup-pip-pre">Copy</button>
+</div>
+<pre id="setup-pip-pre">scripts.BittyCameraSystem.init();
+
+scripts.BittyCameraBlocks.createCamera(0);
+scripts.BittyCameraBlocks.createCamera(1);
+
+scripts.BittyCameraBlocks.setDisplayPortRect(0, 0, 0, 1920, 1080);
+scripts.BittyCameraBlocks.setDisplayPortRect(1, 1440, 40, 440, 248);
+
+scripts.BittyCameraBlocks.setCameraSize(320, 180, 0);
+scripts.BittyCameraBlocks.setCameraSize(110, 62, 1);</pre>
+</div>
+</div>
+<div class="tab-panel" data-panel="setup-small-area">
+<h3>Smaller Display Area</h3>
+<p>
+								For a smaller centered-style setup, use a <span class="inline-code">1440x810</span> Display Area. Left/right halves are
+								<span class="inline-code">720x810</span>.
+							</p>
+<div class="block-stack">
+<div class="block-row">
+<div class="st-block red">Initialize bittyBIG Dynamic Camera System</div>
+</div>
+<div class="block-row">
+<div class="st-block blue">Set Display Area to X <span class="st-input">0</span> Y <span class="st-input">0</span> Width <span class="st-input">1440</span> Height <span class="st-input">810</span></div>
+</div>
+<div class="block-row">
+<div class="st-block blue">Set Viewport ID <span class="st-input">0</span> to X <span class="st-input">0</span> Y <span class="st-input">0</span> Width <span class="st-input">720</span> Height <span class="st-input">810</span></div>
+</div>
+<div class="block-row">
+<div class="st-block blue">Set Viewport ID <span class="st-input">1</span> to X <span class="st-input">720</span> Y <span class="st-input">0</span> Width <span class="st-input">720</span> Height <span class="st-input">810</span></div>
+</div>
+</div>
+<div class="code-box" id="setup-small-code">
+<div class="code-bar">
+<span>Equivalent code</span>
+<button class="copy-btn" data-copy-target="setup-small-pre">Copy</button>
+</div>
+<pre id="setup-small-pre">scripts.BittyCameraSystem.init();
+
+scripts.BittyCameraBlocks.setGameAreaRect(0, 0, 1440, 810);
+
+scripts.BittyCameraBlocks.createCamera(0);
+scripts.BittyCameraBlocks.createCamera(1);
+
+scripts.BittyCameraBlocks.setDisplayPortRect(0, 0, 0, 720, 810);
+scripts.BittyCameraBlocks.setDisplayPortRect(1, 720, 0, 720, 810);
+
+scripts.BittyCameraBlocks.setCameraSize(120, 135, 0);
+scripts.BittyCameraBlocks.setCameraSize(120, 135, 1);</pre>
+</div>
+</div>
+</div>
+</section>
+<section class="section doc-section" data-search="interactive viewport tester setup builder display area split screen pip viewport coordinates pixel perfect camera size generated code" id="interactive-demo">
+<div class="section-header">
+<h2>Interactive Viewport Setup Builder</h2>
+</div>
+<div class="section-body">
+<p>
+							Preview what the final layout will look like, then generate setup code for your project.
+							Viewports split the game canvas, not the full screen.
+						</p>
+<div class="viewport-demo">
+<div class="demo-controls">
+<label>
+									Canvas Width
+									<input id="canvasW" min="1" type="number" value="1920"/>
+</label>
+<label>
+									Canvas Height
+									<input id="canvasH" min="1" type="number" value="1080"/>
+</label>
+<label>
+									Camera Width
+									<input id="cameraW" min="1" type="number" value="320"/>
+</label>
+<label>
+									Camera Height
+									<input id="cameraH" min="1" type="number" value="180"/>
+</label>
+<label>
+									Viewports
+									<input id="viewportCount" max="5" min="1" type="number" value="1"/>
+</label>
+</div>
+<div class="demo-controls screen-controls">
+<label>
+									Screen Width
+									<input id="screenW" min="1" type="number" value="1920"/>
+</label>
+<label>
+									Screen Height
+									<input id="screenH" min="1" type="number" value="1080"/>
+</label>
+</div>
+<div class="tabs">
+<button class="tab-button active layout-button" data-layout="full">Full</button>
+<button class="tab-button layout-button" data-layout="left-right">Left / Right Split</button>
+<button class="tab-button layout-button" data-layout="top-bottom">Top / Bottom Split</button>
+<button class="tab-button layout-button" data-layout="four-grid">Four View Grid</button>
+<button class="tab-button layout-button" data-layout="pip">Picture-in-Picture</button>
+</div>
+<div class="builder-layout">
+<div>
+<div class="demo-screen" id="demoScreen">
+<div class="demo-display-area" id="demoDisplayArea"></div>
+</div>
+<div class="demo-readout" id="demoReadout"></div>
+</div>
+<div class="viewport-editor">
+<h3>Viewport Rects</h3>
+<div id="viewportRows"></div>
+</div>
+</div>
+<div class="pixel-panel">
+<h3>Pixel Perfect Sizes</h3>
+<p>
+									These are clean camera sizes based on your canvas size. 1x is the full canvas size.
+								</p>
+<ul class="pixel-list" id="pixelPerfectList"></ul>
+</div>
+<div class="generated-code">
+<h3>Generated Setup Code</h3>
+<div class="tabs generated-code-tabs">
+<button class="tab-button active" data-tab="generated-stencyl-copy-panel">Stencyl Blocks</button>
+<button class="tab-button" data-tab="generated-haxe-code-panel">Haxe Code</button>
+</div>
+<div class="tab-panel active" data-panel="generated-stencyl-copy-panel">
+<div class="code-box open">
+<div class="code-bar">
+<span>Generated Stencyl blocks</span>
+<button class="copy-btn" data-copy-mode="raw" data-copy-target="generatedStencylBlocks">Copy</button>
+</div>
+<div class="generated-block-preview" id="generatedStencylBlockPreview"></div>
+<pre class="copy-source" id="generatedStencylBlocks"></pre>
+</div>
+<div class="note">
+										Copy the blocks directly into your project.
+									</div>
+</div>
+<div class="tab-panel" data-panel="generated-haxe-code-panel">
+<div class="code-box open">
+<div class="code-bar">
+<span>Initial camera and viewport setup</span>
+<button class="copy-btn" data-copy-target="generatedSetupCode">Copy</button>
+</div>
+<pre id="generatedSetupCode"></pre>
+</div>
+</div>
+</div>
+</div>
+</div>
+</section>
+<section class="section doc-section" data-search="glossary blocks reference stencyl style cameras viewports display effects" id="glossary">
+<div class="section-header">
+<h2>Block Glossary</h2>
+</div>
+<div class="section-body">
+<p>
+							This glossary is organized more like Stencyl’s block guide:
+							blocks first, descriptions second, code shown directly under each block.
+						</p>
+<div id="key-terms">
+<h3>Key Terms</h3>
+<div class="term-list">
+<p><strong>Display Area</strong> - The final rectangle where the whole bittyBIG output appears on the screen.</p>
+<p><strong>Viewport</strong> - A rectangle inside the Display Area. It controls where a camera image appears.</p>
+<p><strong>Camera Size</strong> - How much world the camera sees before zoom. This is your low-resolution world view size.</p>
+<p><strong>Zoom</strong> - Changes how much of the world the camera sees. Higher zoom means a closer view.</p>
+<p><strong>Viewport Coordinates</strong> - Based on the current Display Area size.</p>
+</div>
+</div>
+
+
+<div>
+<h3 id="cat-cameras">Cameras</h3>
+<h4>Setup</h4>
+<div class="block-card" id="block-init-dynamic-camera-system">
+<h3>Initialize System</h3>
+<div class="block-meta">Cameras → Setup</div>
+<div class="block-row">
+<div class="st-block red">
+											Initialize bittyBIG Dynamic Camera System
+										</div>
+</div>
+<div class="block-desc">
+										Initializes the bittyBIG dynamic camera, renderer, and display systems in the proper order for the current scene.
+									</div>
+<div class="code-box">
+<div class="code-bar">
+<span>Code</span>
+<button class="copy-btn" data-copy-target="pre-block-init-dynamic-camera-system">Copy</button>
+</div>
+<pre id="pre-block-init-dynamic-camera-system">scripts.BittyCameraSystem.init();</pre>
+</div>
+</div>
+<div class="block-card" id="block-create-camera">
+<h3>Create Camera</h3>
+<div class="block-meta">Cameras → Setup</div>
+<div class="block-row">
+<div class="st-block blue">
+											Create Camera ID <span class="st-input"></span>
+</div>
+</div>
+<div class="block-desc">
+										Creates a new camera with the given camera ID.
+									</div>
+<div class="code-box">
+<div class="code-bar">
+<span>Code</span>
+<button class="copy-btn" data-copy-target="pre-block-create-camera">Copy</button>
+</div>
+<pre id="pre-block-create-camera">scripts.BittyCameraBlocks.createCamera(~);</pre>
+</div>
+</div>
+<div class="block-card" id="block-render-camera-to-viewport">
+<h3>Render Camera to Viewport</h3>
+<div class="block-meta">Cameras → Setup</div>
+<div class="block-row">
+<div class="st-block blue">
+											Render Camera ID <span class="st-input"></span> to Viewport ID <span class="st-input"></span>
+</div>
+</div>
+<div class="block-desc">
+										Draws the render image from the specified camera into the specified Viewport on the Game Image.
+									</div>
+<div class="code-box">
+<div class="code-bar">
+<span>Code</span>
+<button class="copy-btn" data-copy-target="pre-block-render-camera-to-viewport">Copy</button>
+</div>
+<pre id="pre-block-render-camera-to-viewport">scripts.BittyCameraBlocks.renderCameraToDisplayPort(~,~);</pre>
+</div>
+</div>
+<div class="block-card" id="block-set-camera-size">
+<h3>Set Camera Size</h3>
+<div class="block-meta">Cameras → Setup</div>
+<div class="block-row">
+<div class="st-block blue">
+											Set Camera to Width <span class="st-input"></span> Height <span class="st-input"></span> for Camera ID <span class="st-input"></span>
+</div>
+</div>
+<div class="block-desc">
+										Sets the Camera size for the given camera ID.
+									</div>
+<div class="code-box">
+<div class="code-bar">
+<span>Code</span>
+<button class="copy-btn" data-copy-target="pre-block-set-camera-size">Copy</button>
+</div>
+<pre id="pre-block-set-camera-size">scripts.BittyViewports.setViewportSize(~, ~, ~);</pre>
+</div>
+</div>
+<div class="block-card" id="block-set-camera-scene-lock">
+<h3>Set Camera Scene Lock</h3>
+<div class="block-meta">Cameras → Setup</div>
+<div class="block-row">
+<div class="st-block blue">
+											Set Camera ID <span class="st-input"></span> Scene Lock to <span class="st-dropdown">Lock Camera To Scene</span>
+</div>
+</div>
+<div class="block-desc">
+										Locks or unlocks the camera from being limited to the scene bounds.
+									</div>
+<div class="code-box">
+<div class="code-bar">
+<span>Code</span>
+<button class="copy-btn" data-copy-target="pre-block-set-camera-scene-lock">Copy</button>
+</div>
+<pre id="pre-block-set-camera-scene-lock">scripts.BittyCameraBlocks.setCameraSceneLock(~,~);</pre>
+</div>
+</div>
+<div class="block-card" id="block-remove-camera">
+<h3>Remove Camera</h3>
+<div class="block-meta">Cameras → Setup</div>
+<div class="block-row">
+<div class="st-block blue">
+											Remove Camera ID <span class="st-input"></span>
+</div>
+</div>
+<div class="block-desc">
+										Removes the camera with the given ID.
+									</div>
+<div class="code-box">
+<div class="code-bar">
+<span>Code</span>
+<button class="copy-btn" data-copy-target="pre-block-remove-camera">Copy</button>
+</div>
+<pre id="pre-block-remove-camera">scripts.BittyCameraBlocks.removeCamera(~);</pre>
+</div>
+</div>
+<h4>Presets</h4>
+<div class="block-card" id="block-apply-camera-preset">
+<h3>Apply Camera Preset</h3>
+<div class="block-meta">Cameras → Presets</div>
+<div class="block-row">
+<div class="st-block blue">
+											Apply Camera Preset <span class="st-dropdown">Centered</span> to Camera ID <span class="st-input"></span>
+</div>
+</div>
+<div class="block-desc">
+										Applies one of the shipped camera presets to the selected camera.
+									</div>
+<div class="code-box">
+<div class="code-bar">
+<span>Code</span>
+<button class="copy-btn" data-copy-target="pre-block-apply-camera-preset">Copy</button>
+</div>
+<pre id="pre-block-apply-camera-preset">scripts.BittyCameraBlocks.applyCameraPreset(~,~);</pre>
+</div>
+</div>
+<div class="block-card" id="block-apply-camera-preset-by-name">
+<h3>Apply Camera Preset by Name</h3>
+<div class="block-meta">Cameras → Presets</div>
+<div class="block-row">
+<div class="st-block blue">
+											Apply Camera Preset named <span class="st-text"></span> to Camera ID <span class="st-input"></span>
+</div>
+</div>
+<div class="block-desc">
+										Applies any camera preset by name. Use this for custom presets added in BittyCameraPresets.hx.
+									</div>
+<div class="code-box">
+<div class="code-bar">
+<span>Code</span>
+<button class="copy-btn" data-copy-target="pre-block-apply-camera-preset-by-name">Copy</button>
+</div>
+<pre id="pre-block-apply-camera-preset-by-name">scripts.BittyCameraBlocks.applyCameraPreset(~,~);</pre>
+</div>
+</div>
+<h4>Position</h4>
+<div class="block-card" id="block-set-camera-center">
+<h3>Set Camera Center</h3>
+<div class="block-meta">Cameras → Position</div>
+<div class="block-row">
+<div class="st-block blue">
+											Set Camera Center to X <span class="st-input"></span> Y <span class="st-input"></span> for Camera ID <span class="st-input"></span>
+</div>
+</div>
+<div class="block-desc">
+										Sets the camera center position for the given camera ID.
+									</div>
+<div class="code-box">
+<div class="code-bar">
+<span>Code</span>
+<button class="copy-btn" data-copy-target="pre-block-set-camera-center">Copy</button>
+</div>
+<pre id="pre-block-set-camera-center">scripts.BittyViewports.setCameraCenter(~, ~, ~);</pre>
+</div>
+</div>
+<div class="block-card" id="block-set-camera-offsets">
+<h3>Set Camera Offsets</h3>
+<div class="block-meta">Cameras → Position</div>
+<div class="block-row">
+<div class="st-block blue">
+											Set Camera Offset X <span class="st-input"></span> Y <span class="st-input"></span> for Camera ID <span class="st-input"></span>
+</div>
+</div>
+<div class="block-desc">
+										Sets the horizontal and vertical offset used by camera follow movement.
+									</div>
+<div class="code-box">
+<div class="code-bar">
+<span>Code</span>
+<button class="copy-btn" data-copy-target="pre-block-set-camera-offsets">Copy</button>
+</div>
+<pre id="pre-block-set-camera-offsets">scripts.BittyCameraBlocks.setCameraOffsets(~,~,~);</pre>
+</div>
+</div>
+<div class="block-card" id="block-set-camera-center-to-actor">
+<h3>Center Camera to Actor</h3>
+<div class="block-meta">Cameras → Position</div>
+<div class="block-row">
+<div class="st-block blue">
+											Set Camera Center to Actor <span class="st-text"></span> for Camera ID <span class="st-input"></span>
+</div>
+</div>
+<div class="block-desc">
+										Sets Camera Position to Center of Given actor. Removes Jitter from Stencyl's built-in Camera.
+									</div>
+<div class="code-box">
+<div class="code-bar">
+<span>Code</span>
+<button class="copy-btn" data-copy-target="pre-block-set-camera-center-to-actor">Copy</button>
+</div>
+<pre id="pre-block-set-camera-center-to-actor">scripts.BittyCameraBlocks.setCameraCenterToActor(~,~);</pre>
+</div>
+</div>
+<h4>Movement</h4>
+<div class="block-card" id="block-set-camera-target-center">
+<h3>Set Camera Target Center</h3>
+<div class="block-meta">Cameras → Movement</div>
+<div class="block-row">
+<div class="st-block blue">
+											Set Camera Target Center to X <span class="st-input"></span> Y <span class="st-input"></span> for Camera ID <span class="st-input"></span>
+</div>
+</div>
+<div class="block-desc">
+										Sets the point this camera moves toward. Presets and follow settings control how the camera moves toward it.
+									</div>
+<div class="code-box">
+<div class="code-bar">
+<span>Code</span>
+<button class="copy-btn" data-copy-target="pre-block-set-camera-target-center">Copy</button>
+</div>
+<pre id="pre-block-set-camera-target-center">scripts.BittyCameraBlocks.setCameraTargetCenter(~,~,~);</pre>
+</div>
+</div>
+<div class="block-card" id="block-set-camera-target-center-to-actor">
+<h3>Set Camera Target to Actor</h3>
+<div class="block-meta">Cameras → Movement</div>
+<div class="block-row">
+<div class="st-block blue">
+											Set Camera Target Center to Actor <span class="st-text"></span> for Camera ID <span class="st-input"></span>
+</div>
+</div>
+<div class="block-desc">
+										Sets the camera target center to the selected actor. Presets and follow settings control how the camera moves toward it.
+									</div>
+<div class="code-box">
+<div class="code-bar">
+<span>Code</span>
+<button class="copy-btn" data-copy-target="pre-block-set-camera-target-center-to-actor">Copy</button>
+</div>
+<pre id="pre-block-set-camera-target-center-to-actor">scripts.BittyCameraBlocks.setCameraTargetCenterToActor(~,~);</pre>
+</div>
+</div>
+<div class="block-card" id="block-set-camera-follow-style">
+<h3>Set Follow Style</h3>
+<div class="block-meta">Cameras → Movement</div>
+<div class="block-row">
+<div class="st-block blue">
+											Set Follow Style to <span class="st-dropdown">Direct</span> for Camera ID <span class="st-input"></span>
+</div>
+</div>
+<div class="block-desc">
+										Sets the camera follow style. Direct follows the target center directly. Grid-Based follows the center of the grid cell containing the target.
+									</div>
+<div class="code-box">
+<div class="code-bar">
+<span>Code</span>
+<button class="copy-btn" data-copy-target="pre-block-set-camera-follow-style">Copy</button>
+</div>
+<pre id="pre-block-set-camera-follow-style">scripts.BittyCameraBlocks.setCameraFollowStyle(~,~);</pre>
+</div>
+</div>
+<div class="block-card" id="block-set-camera-follow-speeds">
+<h3>Set Follow Speeds</h3>
+<div class="block-meta">Cameras → Movement</div>
+<div class="block-row">
+<div class="st-block blue">
+											Set Follow Speed X <span class="st-input"></span> Y <span class="st-input"></span> for Camera ID <span class="st-input"></span>
+</div>
+</div>
+<div class="block-desc">
+										Sets the horizontal and vertical follow speeds used by camera lerp movement.
+									</div>
+<div class="code-box">
+<div class="code-bar">
+<span>Code</span>
+<button class="copy-btn" data-copy-target="pre-block-set-camera-follow-speeds">Copy</button>
+</div>
+<pre id="pre-block-set-camera-follow-speeds">scripts.BittyCameraBlocks.setCameraFollowSpeeds(~,~,~);</pre>
+</div>
+</div>
+<div class="block-card" id="block-set-camera-lerp-speed">
+<h3>Set Lerp Speed</h3>
+<div class="block-meta">Cameras → Movement</div>
+<div class="block-row">
+<div class="st-block blue">
+											Set Lerp Speed to <span class="st-input"></span> for Camera ID <span class="st-input"></span>
+</div>
+</div>
+<div class="block-desc">
+										Sets how heavily the camera movement is smoothed. Higher values move more slowly.
+									</div>
+<div class="code-box">
+<div class="code-bar">
+<span>Code</span>
+<button class="copy-btn" data-copy-target="pre-block-set-camera-lerp-speed">Copy</button>
+</div>
+<pre id="pre-block-set-camera-lerp-speed">scripts.BittyCameraBlocks.setCameraLerpSpeed(~,~);</pre>
+</div>
+</div>
+<div class="block-card" id="block-set-camera-zero-radius">
+<h3>Set Zero Radius</h3>
+<div class="block-meta">Cameras → Movement</div>
+<div class="block-row">
+<div class="st-block blue">
+											Set Zero Radius to <span class="st-input"></span> for Camera ID <span class="st-input"></span>
+</div>
+</div>
+<div class="block-desc">
+										Sets the snap distance used to finish camera movement cleanly near the target.
+									</div>
+<div class="code-box">
+<div class="code-bar">
+<span>Code</span>
+<button class="copy-btn" data-copy-target="pre-block-set-camera-zero-radius">Copy</button>
+</div>
+<pre id="pre-block-set-camera-zero-radius">scripts.BittyCameraBlocks.setCameraZeroRadius(~,~);</pre>
+</div>
+</div>
+<h4>Rotation</h4>
+<div class="block-card" id="block-set-camera-rotation">
+<h3>Set Camera Rotation</h3>
+<div class="block-meta">Cameras → Rotation</div>
+<div class="block-row">
+<div class="st-block blue">
+											Set Camera ID <span class="st-input"></span> Rotation to <span class="st-input"></span> Degrees
+										</div>
+</div>
+<div class="block-desc">
+										Rotates the world view around the center of the given camera.
+									</div>
+<div class="code-box">
+<div class="code-bar">
+<span>Code</span>
+<button class="copy-btn" data-copy-target="pre-block-set-camera-rotation">Copy</button>
+</div>
+<pre id="pre-block-set-camera-rotation">scripts.BittyCameraBlocks.setCameraRotation(~,~);</pre>
+</div>
+</div>
+<div class="block-card" id="block-get-camera-rotation">
+<h3>Get Camera Rotation</h3>
+<div class="block-meta">Cameras → Rotation</div>
+<div class="block-row">
+<div class="st-block blue">
+											Get Camera ID <span class="st-input"></span> Rotation
+										</div>
+</div>
+<div class="block-desc">
+										Returns the current world-view rotation in degrees for the given camera.
+									</div>
+<div class="code-box">
+<div class="code-bar">
+<span>Code</span>
+<button class="copy-btn" data-copy-target="pre-block-get-camera-rotation">Copy</button>
+</div>
+<pre id="pre-block-get-camera-rotation">scripts.BittyCameraBlocks.getCameraRotation(~)</pre>
+</div>
+</div>
+<div class="block-card" id="block-reset-camera-rotation">
+<h3>Reset Camera Rotation</h3>
+<div class="block-meta">Cameras → Rotation</div>
+<div class="block-row">
+<div class="st-block blue">
+											Reset Rotation for Camera ID <span class="st-input"></span>
+</div>
+</div>
+<div class="block-desc">
+										Resets camera world-view rotation back to 0 degrees.
+									</div>
+<div class="code-box">
+<div class="code-bar">
+<span>Code</span>
+<button class="copy-btn" data-copy-target="pre-block-reset-camera-rotation">Copy</button>
+</div>
+<pre id="pre-block-reset-camera-rotation">scripts.BittyCameraBlocks.resetCameraRotation(~);</pre>
+</div>
+</div>
+<h4>Properties</h4>
+<div class="block-card" id="block-camera-exists">
+<h3>Camera Exists?</h3>
+<div class="block-meta">Cameras → Properties</div>
+<div class="block-row">
+<div class="st-block blue">
+											Camera with ID <span class="st-input"></span> exists
+										</div>
+</div>
+<div class="block-desc">
+										Returns true if a camera with this ID is currently created.
+									</div>
+<div class="code-box">
+<div class="code-bar">
+<span>Code</span>
+<button class="copy-btn" data-copy-target="pre-block-camera-exists">Copy</button>
+</div>
+<pre id="pre-block-camera-exists">scripts.BittyViewports.cameraExists(~)</pre>
+</div>
+</div>
+<div class="block-card" id="block-camera-is-transitioning">
+<h3>Camera Is Transitioning?</h3>
+<div class="block-meta">Cameras → Properties</div>
+<div class="block-row">
+<div class="st-block blue">
+											Camera ID <span class="st-input"></span> is transitioning
+										</div>
+</div>
+<div class="block-desc">
+										Returns true if the camera is still moving toward its target position.
+									</div>
+<div class="code-box">
+<div class="code-bar">
+<span>Code</span>
+<button class="copy-btn" data-copy-target="pre-block-camera-is-transitioning">Copy</button>
+</div>
+<pre id="pre-block-camera-is-transitioning">scripts.BittyCameraBlocks.isCameraTransitioning(~)</pre>
+</div>
+</div>
+<div class="block-card" id="block-get-camera-x">
+<h3>Get Camera X</h3>
+<div class="block-meta">Cameras → Properties</div>
+<div class="block-row">
+<div class="st-block blue">
+											Get Camera X for Camera ID <span class="st-input"></span>
+</div>
+</div>
+<div class="block-desc">
+										Returns the camera X position for the given camera ID.
+									</div>
+<div class="code-box">
+<div class="code-bar">
+<span>Code</span>
+<button class="copy-btn" data-copy-target="pre-block-get-camera-x">Copy</button>
+</div>
+<pre id="pre-block-get-camera-x">scripts.BittyViewports.getCameraX(~)</pre>
+</div>
+</div>
+<div class="block-card" id="block-get-camera-y">
+<h3>Get Camera Y</h3>
+<div class="block-meta">Cameras → Properties</div>
+<div class="block-row">
+<div class="st-block blue">
+											Get Camera Y for Camera ID <span class="st-input"></span>
+</div>
+</div>
+<div class="block-desc">
+										Returns the camera Y position for the given camera ID.
+									</div>
+<div class="code-box">
+<div class="code-bar">
+<span>Code</span>
+<button class="copy-btn" data-copy-target="pre-block-get-camera-y">Copy</button>
+</div>
+<pre id="pre-block-get-camera-y">scripts.BittyViewports.getCameraY(~)</pre>
+</div>
+</div>
+<div class="block-card" id="block-get-camera-center-x">
+<h3>Get Camera Center X</h3>
+<div class="block-meta">Cameras → Properties</div>
+<div class="block-row">
+<div class="st-block blue">
+											Get Camera Center X for Camera ID <span class="st-input"></span>
+</div>
+</div>
+<div class="block-desc">
+										Returns the camera center X position for the given camera ID.
+									</div>
+<div class="code-box">
+<div class="code-bar">
+<span>Code</span>
+<button class="copy-btn" data-copy-target="pre-block-get-camera-center-x">Copy</button>
+</div>
+<pre id="pre-block-get-camera-center-x">scripts.BittyViewports.getCameraCenterX(~)</pre>
+</div>
+</div>
+<div class="block-card" id="block-get-camera-center-y">
+<h3>Get Camera Center Y</h3>
+<div class="block-meta">Cameras → Properties</div>
+<div class="block-row">
+<div class="st-block blue">
+											Get Camera Center Y for Camera ID <span class="st-input"></span>
+</div>
+</div>
+<div class="block-desc">
+										Returns the camera center Y position for the given camera ID.
+									</div>
+<div class="code-box">
+<div class="code-bar">
+<span>Code</span>
+<button class="copy-btn" data-copy-target="pre-block-get-camera-center-y">Copy</button>
+</div>
+<pre id="pre-block-get-camera-center-y">scripts.BittyViewports.getCameraCenterY(~)</pre>
+</div>
+</div>
+<div class="block-card" id="block-get-camera-width">
+<h3>Get Camera Width</h3>
+<div class="block-meta">Cameras → Properties</div>
+<div class="block-row">
+<div class="st-block blue">
+											Get Camera Width for Camera ID <span class="st-input"></span>
+</div>
+</div>
+<div class="block-desc">
+										Returns the Camera width for the given camera ID.
+									</div>
+<div class="code-box">
+<div class="code-bar">
+<span>Code</span>
+<button class="copy-btn" data-copy-target="pre-block-get-camera-width">Copy</button>
+</div>
+<pre id="pre-block-get-camera-width">scripts.BittyViewports.getViewportWidth(~)</pre>
+</div>
+</div>
+<div class="block-card" id="block-get-camera-height">
+<h3>Get Camera Height</h3>
+<div class="block-meta">Cameras → Properties</div>
+<div class="block-row">
+<div class="st-block blue">
+											Get Camera Height for Camera ID <span class="st-input"></span>
+</div>
+</div>
+<div class="block-desc">
+										Returns the Camera height for the given camera ID.
+									</div>
+<div class="code-box">
+<div class="code-bar">
+<span>Code</span>
+<button class="copy-btn" data-copy-target="pre-block-get-camera-height">Copy</button>
+</div>
+<pre id="pre-block-get-camera-height">scripts.BittyViewports.getViewportHeight(~)</pre>
+</div>
+</div>
+<h3 id="cat-viewports">Viewports</h3>
+<h4>Setup</h4>
+<div class="block-card" id="block-create-viewport">
+<h3>Create Viewport</h3>
+<div class="block-meta">Viewports → Setup</div>
+<div class="block-row">
+<div class="st-block blue">
+											Create Viewport ID <span class="st-input"></span> at X <span class="st-input"></span> Y <span class="st-input"></span> with Width <span class="st-input"></span> and Height <span class="st-input"></span>
+</div>
+</div>
+<div class="block-desc">
+										Creates a Viewport that defines where a camera image will be drawn on the Game Image.
+									</div>
+<div class="code-box">
+<div class="code-bar">
+<span>Code</span>
+<button class="copy-btn" data-copy-target="pre-block-create-viewport">Copy</button>
+</div>
+<pre id="pre-block-create-viewport">scripts.BittyCameraBlocks.createDisplayPort(~,~,~,~,~);</pre>
+</div>
+</div>
+<div class="block-card" id="block-set-viewport-rect">
+<h3>Set Viewport Rect</h3>
+<div class="block-meta">Viewports → Setup</div>
+<div class="block-row">
+<div class="st-block blue">
+											Set Viewport ID <span class="st-input"></span> to X <span class="st-input"></span> Y <span class="st-input"></span> Width <span class="st-input"></span> Height <span class="st-input"></span>
+</div>
+</div>
+<div class="block-desc">
+										Sets the full rectangle of the given Viewport.
+									</div>
+<div class="code-box">
+<div class="code-bar">
+<span>Code</span>
+<button class="copy-btn" data-copy-target="pre-block-set-viewport-rect">Copy</button>
+</div>
+<pre id="pre-block-set-viewport-rect">scripts.BittyCameraBlocks.setDisplayPortRect(~,~,~,~,~);</pre>
+</div>
+</div>
+<div class="block-card" id="block-set-viewport-position">
+<h3>Set Viewport Position</h3>
+<div class="block-meta">Viewports → Setup</div>
+<div class="block-row">
+<div class="st-block blue">
+											Set Viewport ID <span class="st-input"></span> Position to X <span class="st-input"></span> Y <span class="st-input"></span>
+</div>
+</div>
+<div class="block-desc">
+										Sets the position of the given Viewport.
+									</div>
+<div class="code-box">
+<div class="code-bar">
+<span>Code</span>
+<button class="copy-btn" data-copy-target="pre-block-set-viewport-position">Copy</button>
+</div>
+<pre id="pre-block-set-viewport-position">scripts.BittyCameraBlocks.setDisplayPortPosition(~,~,~);</pre>
+</div>
+</div>
+<div class="block-card" id="block-set-viewport-size">
+<h3>Set Viewport Size</h3>
+<div class="block-meta">Viewports → Setup</div>
+<div class="block-row">
+<div class="st-block blue">
+											Set Viewport ID <span class="st-input"></span> Size to Width <span class="st-input"></span> Height <span class="st-input"></span>
+</div>
+</div>
+<div class="block-desc">
+										Sets the size of the given Viewport.
+									</div>
+<div class="code-box">
+<div class="code-bar">
+<span>Code</span>
+<button class="copy-btn" data-copy-target="pre-block-set-viewport-size">Copy</button>
+</div>
+<pre id="pre-block-set-viewport-size">scripts.BittyCameraBlocks.setDisplayPortSize(~,~,~);</pre>
+</div>
+</div>
+<div class="block-card" id="block-remove-viewport">
+<h3>Remove Viewport</h3>
+<div class="block-meta">Viewports → Setup</div>
+<div class="block-row">
+<div class="st-block blue">
+											Remove Viewport ID <span class="st-input"></span>
+</div>
+</div>
+<div class="block-desc">
+										Removes the Viewport entry for the given ID.
+									</div>
+<div class="code-box">
+<div class="code-bar">
+<span>Code</span>
+<button class="copy-btn" data-copy-target="pre-block-remove-viewport">Copy</button>
+</div>
+<pre id="pre-block-remove-viewport">scripts.BittyCameraBlocks.removeDisplayPort(~);</pre>
+</div>
+</div>
+<h4>Appearance</h4>
+<div class="block-card" id="block-set-viewport-background-color">
+<h3>Viewport Background Color</h3>
+<div class="block-meta">Viewports → Appearance</div>
+<div class="block-row">
+<div class="st-block blue">
+											Set Viewport ID <span class="st-input"></span> Background Color to <span class="st-input" style="min-width:52px; background:#000000; color:#ffffff;"></span> Alpha <span class="st-input"></span> percent
+										</div>
+</div>
+<div class="block-desc">
+										Fills the given viewport before drawing the camera image.
+									</div>
+<div class="code-box">
+<div class="code-bar">
+<span>Code</span>
+<button class="copy-btn" data-copy-target="pre-block-set-viewport-background-color">Copy</button>
+</div>
+<pre id="pre-block-set-viewport-background-color">scripts.BittyCameraBlocks.setDisplayPortBackgroundColor(~,~,~);</pre>
+</div>
+</div>
+<div class="block-card" id="block-clear-viewport-background">
+<h3>Clear Viewport Background</h3>
+<div class="block-meta">Viewports → Appearance</div>
+<div class="block-row">
+<div class="st-block blue">
+											Clear Background for Viewport ID <span class="st-input"></span>
+</div>
+</div>
+<div class="block-desc">
+										Disables the background fill for the given viewport.
+									</div>
+<div class="code-box">
+<div class="code-bar">
+<span>Code</span>
+<button class="copy-btn" data-copy-target="pre-block-clear-viewport-background">Copy</button>
+</div>
+<pre id="pre-block-clear-viewport-background">scripts.BittyCameraBlocks.clearDisplayPortBackground(~);</pre>
+</div>
+</div>
+<div class="block-card" id="block-set-viewport-background-enabled">
+<h3>Enable Viewport Background</h3>
+<div class="block-meta">Viewports → Appearance</div>
+<div class="block-row">
+<div class="st-block blue">
+											Set Viewport ID <span class="st-input"></span> Background to <span class="st-dropdown">On</span>
+</div>
+</div>
+<div class="block-desc">
+										Turns the viewport background fill on or off.
+									</div>
+<div class="code-box">
+<div class="code-bar">
+<span>Code</span>
+<button class="copy-btn" data-copy-target="pre-block-set-viewport-background-enabled">Copy</button>
+</div>
+<pre id="pre-block-set-viewport-background-enabled">scripts.BittyCameraBlocks.setDisplayPortBackgroundEnabled(~,~);</pre>
+</div>
+</div>
+<div class="block-card" id="block-set-viewport-border">
+<h3>Viewport Border</h3>
+<div class="block-meta">Viewports → Appearance</div>
+<div class="block-row">
+<div class="st-block blue">
+											Add Border Thickness <span class="st-input"></span> Color <span class="st-input" style="min-width:52px; background:#000000; color:#ffffff;"></span> Alpha <span class="st-input"></span> percent to Viewport ID <span class="st-input"></span>
+</div>
+</div>
+<div class="block-desc">
+										Draws a colored border over the specified Viewport.
+									</div>
+<div class="code-box">
+<div class="code-bar">
+<span>Code</span>
+<button class="copy-btn" data-copy-target="pre-block-set-viewport-border">Copy</button>
+</div>
+<pre id="pre-block-set-viewport-border">scripts.BittyCameraBlocks.setDisplayPortBorder(~,~,~,~);</pre>
+</div>
+</div>
+<div class="block-card" id="block-set-viewport-scale-mode">
+<h3>Viewport Scale Mode</h3>
+<div class="block-meta">Viewports → Appearance</div>
+<div class="block-row">
+<div class="st-block blue">
+											Set Viewport ID <span class="st-input"></span> Scale Mode to <span class="st-dropdown">Pixel Perfect</span>
+</div>
+</div>
+<div class="block-desc">
+										Sets how the viewport image is presented. Pixel Perfect keeps the current direct pixel-perfect rendering path. Scale to Fit uniformly scales the render image into the viewport.
+									</div>
+<div class="code-box">
+<div class="code-bar">
+<span>Code</span>
+<button class="copy-btn" data-copy-target="pre-block-set-viewport-scale-mode">Copy</button>
+</div>
+<pre id="pre-block-set-viewport-scale-mode">scripts.BittyCameraBlocks.setDisplayPortScaleMode(~,~);</pre>
+</div>
+</div>
+<h4>Viewport Transforms</h4>
+<div class="block-card" id="block-set-viewport-rotation">
+<h3>Viewport Rotation</h3>
+<div class="block-meta">Viewports → Viewport Transforms</div>
+<div class="block-row">
+<div class="st-block blue">
+											Set Viewport ID <span class="st-input"></span> Rotation to <span class="st-input"></span> Degrees
+										</div>
+</div>
+<div class="block-desc">
+										Rotates the camera image inside the given viewport.
+									</div>
+<div class="code-box">
+<div class="code-bar">
+<span>Code</span>
+<button class="copy-btn" data-copy-target="pre-block-set-viewport-rotation">Copy</button>
+</div>
+<pre id="pre-block-set-viewport-rotation">scripts.BittyCameraBlocks.setDisplayPortRotation(~,~);</pre>
+</div>
+</div>
+<div class="block-card" id="block-set-viewport-flip-horizontal">
+<h3>Flip Viewport Horizontally</h3>
+<div class="block-meta">Viewports → Viewport Transforms</div>
+<div class="block-row">
+<div class="st-block blue">
+											Set Viewport ID <span class="st-input"></span> Flip Horizontal to <span class="st-dropdown">On</span>
+</div>
+</div>
+<div class="block-desc">
+										Flips the camera image horizontally inside the given viewport.
+									</div>
+<div class="code-box">
+<div class="code-bar">
+<span>Code</span>
+<button class="copy-btn" data-copy-target="pre-block-set-viewport-flip-horizontal">Copy</button>
+</div>
+<pre id="pre-block-set-viewport-flip-horizontal">scripts.BittyCameraBlocks.setDisplayPortFlipHorizontal(~,~);</pre>
+</div>
+</div>
+<div class="block-card" id="block-set-viewport-flip-vertical">
+<h3>Flip Viewport Vertically</h3>
+<div class="block-meta">Viewports → Viewport Transforms</div>
+<div class="block-row">
+<div class="st-block blue">
+											Set Viewport ID <span class="st-input"></span> Flip Vertical to <span class="st-dropdown">On</span>
+</div>
+</div>
+<div class="block-desc">
+										Flips the camera image vertically inside the given viewport.
+									</div>
+<div class="code-box">
+<div class="code-bar">
+<span>Code</span>
+<button class="copy-btn" data-copy-target="pre-block-set-viewport-flip-vertical">Copy</button>
+</div>
+<pre id="pre-block-set-viewport-flip-vertical">scripts.BittyCameraBlocks.setDisplayPortFlipVertical(~,~);</pre>
+</div>
+</div>
+<div class="block-card" id="block-reset-viewport-transform">
+<h3>Reset Viewport Transform</h3>
+<div class="block-meta">Viewports → Viewport Transforms</div>
+<div class="block-row">
+<div class="st-block blue">
+											Reset Transform for Viewport ID <span class="st-input"></span>
+</div>
+</div>
+<div class="block-desc">
+										Resets viewport rotation and flipping back to normal.
+									</div>
+<div class="code-box">
+<div class="code-bar">
+<span>Code</span>
+<button class="copy-btn" data-copy-target="pre-block-reset-viewport-transform">Copy</button>
+</div>
+<pre id="pre-block-reset-viewport-transform">scripts.BittyCameraBlocks.resetDisplayPortTransform(~);</pre>
+</div>
+</div>
+<h4>Properties</h4>
+<div class="block-card" id="block-viewport-exists">
+<h3>Viewport Exists?</h3>
+<div class="block-meta">Viewports → Properties</div>
+<div class="block-row">
+<div class="st-block blue">
+											Viewport ID <span class="st-input"></span> exists
+										</div>
+</div>
+<div class="block-desc">
+										Returns true if a Viewport with this ID currently exists.
+									</div>
+<div class="code-box">
+<div class="code-bar">
+<span>Code</span>
+<button class="copy-btn" data-copy-target="pre-block-viewport-exists">Copy</button>
+</div>
+<pre id="pre-block-viewport-exists">scripts.BittyCameraBlocks.displayPortExists(~)</pre>
+</div>
+</div>
+<div class="block-card" id="block-get-viewport-x">
+<h3>Get Viewport X</h3>
+<div class="block-meta">Viewports → Properties</div>
+<div class="block-row">
+<div class="st-block blue">
+											Get Viewport X for ID <span class="st-input"></span>
+</div>
+</div>
+<div class="block-desc">
+										Returns the X position of the given Viewport.
+									</div>
+<div class="code-box">
+<div class="code-bar">
+<span>Code</span>
+<button class="copy-btn" data-copy-target="pre-block-get-viewport-x">Copy</button>
+</div>
+<pre id="pre-block-get-viewport-x">scripts.BittyCameraBlocks.getDisplayPortX(~)</pre>
+</div>
+</div>
+<div class="block-card" id="block-get-viewport-y">
+<h3>Get Viewport Y</h3>
+<div class="block-meta">Viewports → Properties</div>
+<div class="block-row">
+<div class="st-block blue">
+											Get Viewport Y for ID <span class="st-input"></span>
+</div>
+</div>
+<div class="block-desc">
+										Returns the Y position of the given Viewport.
+									</div>
+<div class="code-box">
+<div class="code-bar">
+<span>Code</span>
+<button class="copy-btn" data-copy-target="pre-block-get-viewport-y">Copy</button>
+</div>
+<pre id="pre-block-get-viewport-y">scripts.BittyCameraBlocks.getDisplayPortY(~)</pre>
+</div>
+</div>
+<div class="block-card" id="block-get-viewport-width">
+<h3>Get Viewport Width</h3>
+<div class="block-meta">Viewports → Properties</div>
+<div class="block-row">
+<div class="st-block blue">
+											Get Viewport Width for ID <span class="st-input"></span>
+</div>
+</div>
+<div class="block-desc">
+										Returns the width of the given Viewport.
+									</div>
+<div class="code-box">
+<div class="code-bar">
+<span>Code</span>
+<button class="copy-btn" data-copy-target="pre-block-get-viewport-width">Copy</button>
+</div>
+<pre id="pre-block-get-viewport-width">scripts.BittyCameraBlocks.getDisplayPortWidth(~)</pre>
+</div>
+</div>
+<div class="block-card" id="block-get-viewport-height">
+<h3>Get Viewport Height</h3>
+<div class="block-meta">Viewports → Properties</div>
+<div class="block-row">
+<div class="st-block blue">
+											Get Viewport Height for ID <span class="st-input"></span>
+</div>
+</div>
+<div class="block-desc">
+										Returns the height of the given Viewport.
+									</div>
+<div class="code-box">
+<div class="code-bar">
+<span>Code</span>
+<button class="copy-btn" data-copy-target="pre-block-get-viewport-height">Copy</button>
+</div>
+<pre id="pre-block-get-viewport-height">scripts.BittyCameraBlocks.getDisplayPortHeight(~)</pre>
+</div>
+</div>
+<h3 id="cat-display">Display</h3>
+<h4>Setup</h4>
+<div class="block-card" id="block-set-display-area-rect">
+<h3>Set Display Area</h3>
+<div class="block-meta">Display → Setup</div>
+<div class="block-row">
+<div class="st-block blue">
+											Set Display Area to X <span class="st-input"></span> Y <span class="st-input"></span> Width <span class="st-input"></span> Height <span class="st-input"></span>
+</div>
+</div>
+<div class="block-desc">
+										Sets the full rectangle of the Display Area.
+									</div>
+<div class="code-box">
+<div class="code-bar">
+<span>Code</span>
+<button class="copy-btn" data-copy-target="pre-block-set-display-area-rect">Copy</button>
+</div>
+<pre id="pre-block-set-display-area-rect">scripts.BittyCameraBlocks.setGameAreaRect(~,~,~,~);</pre>
+</div>
+</div>
+<div class="block-card" id="block-set-display-area-position">
+<h3>Set Display Area Position</h3>
+<div class="block-meta">Display → Setup</div>
+<div class="block-row">
+<div class="st-block blue">
+											Set Display Area Position to X <span class="st-input"></span> Y <span class="st-input"></span>
+</div>
+</div>
+<div class="block-desc">
+										Sets the position of the Display Area on the Canvas.
+									</div>
+<div class="code-box">
+<div class="code-bar">
+<span>Code</span>
+<button class="copy-btn" data-copy-target="pre-block-set-display-area-position">Copy</button>
+</div>
+<pre id="pre-block-set-display-area-position">scripts.BittyCameraBlocks.setGameAreaPosition(~,~);</pre>
+</div>
+</div>
+<div class="block-card" id="block-set-display-area-size">
+<h3>Set Display Area Size</h3>
+<div class="block-meta">Display → Setup</div>
+<div class="block-row">
+<div class="st-block blue">
+											Set Display Area Size to Width <span class="st-input"></span> Height <span class="st-input"></span>
+</div>
+</div>
+<div class="block-desc">
+										Sets the size of the Display Area on the Canvas.
+									</div>
+<div class="code-box">
+<div class="code-bar">
+<span>Code</span>
+<button class="copy-btn" data-copy-target="pre-block-set-display-area-size">Copy</button>
+</div>
+<pre id="pre-block-set-display-area-size">scripts.BittyCameraBlocks.setGameAreaSize(~,~);</pre>
+</div>
+</div>
+<h4>Background</h4>
+<div class="block-card" id="block-set-background-color-int">
+<h3>Set Background Color</h3>
+<div class="block-meta">Display → Background</div>
+<div class="block-row">
+<div class="st-block blue">
+											Set Background Color to <span class="st-input" style="min-width:52px; background:#000000; color:#ffffff;"></span> Alpha <span class="st-input"></span> percent
+										</div>
+</div>
+<div class="block-desc">
+										Sets the background color using Stencyl's color picker plus alpha percent.
+									</div>
+<div class="code-box">
+<div class="code-bar">
+<span>Code</span>
+<button class="copy-btn" data-copy-target="pre-block-set-background-color-int">Copy</button>
+</div>
+<pre id="pre-block-set-background-color-int">scripts.BittyCameraBlocks.setBackgroundColorInt(~,~);</pre>
+</div>
+</div>
+<div class="block-card" id="block-set-background-image">
+<h3>Set Background Image</h3>
+<div class="block-meta">Display → Background</div>
+<div class="block-row">
+<div class="st-block blue">
+											Set Background Image to <span class="st-text"></span>
+</div>
+</div>
+<div class="block-desc">
+										Sets the Background Image used behind the final Game Image render.
+									</div>
+<div class="code-box">
+<div class="code-bar">
+<span>Code</span>
+<button class="copy-btn" data-copy-target="pre-block-set-background-image">Copy</button>
+</div>
+<pre id="pre-block-set-background-image">scripts.BittyCameraBlocks.setBackgroundImage(~);</pre>
+</div>
+</div>
+<div class="block-card" id="block-clear-background-image">
+<h3>Clear Background Image</h3>
+<div class="block-meta">Display → Background</div>
+<div class="block-row">
+<div class="st-block blue">
+											Clear Background Image
+										</div>
+</div>
+<div class="block-desc">
+										Removes the current background image and uses background color only.
+									</div>
+<div class="code-box">
+<div class="code-bar">
+<span>Code</span>
+<button class="copy-btn" data-copy-target="pre-block-clear-background-image">Copy</button>
+</div>
+<pre id="pre-block-clear-background-image">scripts.BittyCameraBlocks.clearBackgroundImage();</pre>
+</div>
+</div>
+<div class="block-card" id="block-has-background-image">
+<h3>Has Background Image?</h3>
+<div class="block-meta">Display → Background</div>
+<div class="block-row">
+<div class="st-block blue">
+											Has Background Image
+										</div>
+</div>
+<div class="block-desc">
+										Returns true if a background image is currently assigned.
+									</div>
+<div class="code-box">
+<div class="code-bar">
+<span>Code</span>
+<button class="copy-btn" data-copy-target="pre-block-has-background-image">Copy</button>
+</div>
+<pre id="pre-block-has-background-image">scripts.BittyCameraBlocks.hasBackgroundImage()</pre>
+</div>
+</div>
+<h4>Properties</h4>
+<div class="block-card" id="block-get-display-area-x">
+<h3>Get Display Area X</h3>
+<div class="block-meta">Display → Properties</div>
+<div class="block-row">
+<div class="st-block blue">
+											Get Display Area X
+										</div>
+</div>
+<div class="block-desc">
+										Returns the X position of the Display Area.
+									</div>
+<div class="code-box">
+<div class="code-bar">
+<span>Code</span>
+<button class="copy-btn" data-copy-target="pre-block-get-display-area-x">Copy</button>
+</div>
+<pre id="pre-block-get-display-area-x">scripts.BittyCameraBlocks.getGameAreaX()</pre>
+</div>
+</div>
+<div class="block-card" id="block-get-display-area-y">
+<h3>Get Display Area Y</h3>
+<div class="block-meta">Display → Properties</div>
+<div class="block-row">
+<div class="st-block blue">
+											Get Display Area Y
+										</div>
+</div>
+<div class="block-desc">
+										Returns the Y position of the Display Area.
+									</div>
+<div class="code-box">
+<div class="code-bar">
+<span>Code</span>
+<button class="copy-btn" data-copy-target="pre-block-get-display-area-y">Copy</button>
+</div>
+<pre id="pre-block-get-display-area-y">scripts.BittyCameraBlocks.getGameAreaY()</pre>
+</div>
+</div>
+<div class="block-card" id="block-get-display-area-width">
+<h3>Get Display Area Width</h3>
+<div class="block-meta">Display → Properties</div>
+<div class="block-row">
+<div class="st-block blue">
+											Get Display Area Width
+										</div>
+</div>
+<div class="block-desc">
+										Returns the width of the Display Area.
+									</div>
+<div class="code-box">
+<div class="code-bar">
+<span>Code</span>
+<button class="copy-btn" data-copy-target="pre-block-get-display-area-width">Copy</button>
+</div>
+<pre id="pre-block-get-display-area-width">scripts.BittyCameraBlocks.getGameAreaWidth()</pre>
+</div>
+</div>
+<div class="block-card" id="block-get-display-area-height">
+<h3>Get Display Area Height</h3>
+<div class="block-meta">Display → Properties</div>
+<div class="block-row">
+<div class="st-block blue">
+											Get Display Area Height
+										</div>
+</div>
+<div class="block-desc">
+										Returns the height of the Display Area.
+									</div>
+<div class="code-box">
+<div class="code-bar">
+<span>Code</span>
+<button class="copy-btn" data-copy-target="pre-block-get-display-area-height">Copy</button>
+</div>
+<pre id="pre-block-get-display-area-height">scripts.BittyCameraBlocks.getGameAreaHeight()</pre>
+</div>
+</div>
+<h3 id="cat-effects">Effects</h3>
+<h4>Zoom</h4>
+<div class="block-card" id="block-set-camera-base-size">
+<h3>Set Camera Base Size</h3>
+<div class="block-meta">Effects → Zoom</div>
+<div class="block-row">
+<div class="st-block blue">
+											Set Base Size to Width <span class="st-input"></span> Height <span class="st-input"></span> for Camera ID <span class="st-input"></span>
+</div>
+</div>
+<div class="block-desc">
+										Sets the base camera size used when calculating zoom. Zoom 1 uses this size.
+									</div>
+<div class="code-box">
+<div class="code-bar">
+<span>Code</span>
+<button class="copy-btn" data-copy-target="pre-block-set-camera-base-size">Copy</button>
+</div>
+<pre id="pre-block-set-camera-base-size">scripts.BittyCameraBlocks.setCameraBaseSize(~,~,~);</pre>
+</div>
+</div>
+<div class="block-card" id="block-set-camera-zoom">
+<h3>Set Zoom</h3>
+<div class="block-meta">Effects → Zoom</div>
+<div class="block-row">
+<div class="st-block blue">
+											Set Zoom to <span class="st-input"></span> for Camera ID <span class="st-input"></span>
+</div>
+</div>
+<div class="block-desc">
+										Sets the zoom for the given camera. 1 is normal, 2 is zoomed in 2x, and 0.5 is zoomed out 2x.
+									</div>
+<div class="code-box">
+<div class="code-bar">
+<span>Code</span>
+<button class="copy-btn" data-copy-target="pre-block-set-camera-zoom">Copy</button>
+</div>
+<pre id="pre-block-set-camera-zoom">scripts.BittyCameraBlocks.setCameraZoom(~,~);</pre>
+</div>
+</div>
+<div class="block-card" id="block-set-camera-zoom-advanced">
+<h3>Tween Zoom</h3>
+<div class="block-meta">Effects → Zoom</div>
+<div class="block-row">
+<div class="st-block blue">
+											Set Zoom to <span class="st-input"></span> over <span class="st-input"></span> seconds using <span class="st-dropdown">Linear</span> for Camera ID <span class="st-input"></span>
+</div>
+</div>
+<div class="block-desc">
+										Smoothly changes the camera zoom using the selected easing mode.
+									</div>
+<div class="code-box">
+<div class="code-bar">
+<span>Code</span>
+<button class="copy-btn" data-copy-target="pre-block-set-camera-zoom-advanced">Copy</button>
+</div>
+<pre id="pre-block-set-camera-zoom-advanced">scripts.BittyCameraBlocks.setCameraZoomAdvanced(~,~,~,~);</pre>
+</div>
+</div>
+<div class="block-card" id="block-get-camera-zoom">
+<h3>Get Camera Zoom</h3>
+<div class="block-meta">Effects → Zoom</div>
+<div class="block-row">
+<div class="st-block blue">
+											Get Camera Zoom for Camera ID <span class="st-input"></span>
+</div>
+</div>
+<div class="block-desc">
+										Returns the current zoom value for the given camera.
+									</div>
+<div class="code-box">
+<div class="code-bar">
+<span>Code</span>
+<button class="copy-btn" data-copy-target="pre-block-get-camera-zoom">Copy</button>
+</div>
+<pre id="pre-block-get-camera-zoom">scripts.BittyCameraBlocks.getCameraZoom(~)</pre>
+</div>
+</div>
+<div class="block-card" id="block-reset-camera-zoom">
+<h3>Reset Camera Zoom</h3>
+<div class="block-meta">Effects → Zoom</div>
+<div class="block-row">
+<div class="st-block blue">
+											Reset Camera Zoom for Camera ID <span class="st-input"></span>
+</div>
+</div>
+<div class="block-desc">
+										Resets the camera zoom back to 1.
+									</div>
+<div class="code-box">
+<div class="code-bar">
+<span>Code</span>
+<button class="copy-btn" data-copy-target="pre-block-reset-camera-zoom">Copy</button>
+</div>
+<pre id="pre-block-reset-camera-zoom">scripts.BittyCameraBlocks.resetCameraZoom(~);</pre>
+</div>
+</div>
+<h4>Screenshake</h4>
+<div class="block-card" id="block-shake-camera">
+<h3>Shake Camera</h3>
+<div class="block-meta">Effects → Screenshake</div>
+<div class="block-row">
+<div class="st-block blue">
+											Shake Camera ID <span class="st-input"></span> with Strength <span class="st-input"></span> for <span class="st-input"></span> seconds
+										</div>
+</div>
+<div class="block-desc">
+										Shakes the camera view for the given camera ID.
+									</div>
+<div class="code-box">
+<div class="code-bar">
+<span>Code</span>
+<button class="copy-btn" data-copy-target="pre-block-shake-camera">Copy</button>
+</div>
+<pre id="pre-block-shake-camera">scripts.BittyCameraBlocks.shakeCamera(~,~,~);</pre>
+</div>
+</div>
+<div class="block-card" id="block-shake-camera-xy">
+<h3>Shake Camera XY</h3>
+<div class="block-meta">Effects → Screenshake</div>
+<div class="block-row">
+<div class="st-block blue">
+											Shake Camera ID <span class="st-input"></span> with Strength X <span class="st-input"></span> Y <span class="st-input"></span> for <span class="st-input"></span> seconds
+										</div>
+</div>
+<div class="block-desc">
+										Shakes the camera view with separate horizontal and vertical strengths.
+									</div>
+<div class="code-box">
+<div class="code-bar">
+<span>Code</span>
+<button class="copy-btn" data-copy-target="pre-block-shake-camera-xy">Copy</button>
+</div>
+<pre id="pre-block-shake-camera-xy">scripts.BittyCameraBlocks.shakeCameraXY(~,~,~,~);</pre>
+</div>
+</div>
+<div class="block-card" id="block-stop-camera-shake">
+<h3>Stop Camera Shake</h3>
+<div class="block-meta">Effects → Screenshake</div>
+<div class="block-row">
+<div class="st-block blue">
+											Stop Shaking Camera ID <span class="st-input"></span>
+</div>
+</div>
+<div class="block-desc">
+										Stops any active screen shake for the given camera ID.
+									</div>
+<div class="code-box">
+<div class="code-bar">
+<span>Code</span>
+<button class="copy-btn" data-copy-target="pre-block-stop-camera-shake">Copy</button>
+</div>
+<pre id="pre-block-stop-camera-shake">scripts.BittyCameraBlocks.stopCameraShake(~);</pre>
+</div>
+</div>
+</div>
+
+</div>
+</section>
+<section class="section doc-section" data-search="troubleshooting faq beginner common problems initialize scene viewport too large too small wrong scale wrong size split screen camera zoom background" id="troubleshooting">
+<div class="section-header">
+<h2>Troubleshooting / FAQ</h2>
+</div>
+<div class="section-body">
+<p>
+	These are the common first-time problems and quick fixes. Start here when something looks wrong before digging into the deep technical cave. The cave has bats. Probably Haxe bats.
+</p>
+<div class="faq-list">
+	<div class="faq-item">
+		<p class="faq-line"><span class="faq-label">Problem:</span> Nothing appears, or the camera system acts like it does not exist.</p>
+		<div class="block-row faq-block-image">
+			<div class="st-block red">Initialize bittyBIG Dynamic Camera System</div>
+		</div>
+		<p class="faq-line"><span class="faq-label">Solution:</span> Begin every scene with this block before using any camera, viewport, display, zoom, rotation, or screenshake blocks.</p>
+	</div>
+
+	<div class="faq-item">
+		<p class="faq-line"><span class="faq-label">Problem:</span> A camera was created, but it is not showing in the right place.</p>
+		<div class="block-row faq-block-image">
+			<div class="st-block blue">
+				Render Camera ID
+				<span class="st-input"></span>
+				to Viewport ID
+				<span class="st-input"></span>
+			</div>
+		</div>
+		<p class="faq-line"><span class="faq-label">Solution:</span> Make sure the camera is rendered to a viewport. Use this block after creating the camera and viewport.</p>
+	</div>
+
+	<div class="faq-item">
+		<p class="faq-line"><span class="faq-label">Problem:</span> The viewport is too large, too small, or off-screen.</p>
+		<p class="faq-line"><span class="faq-label">Solution:</span> Use Display Area units. If the Display Area is <span class="inline-code">960x540</span>, a left-half viewport is <span class="inline-code">0, 0, 480, 540</span>. Use the <a href="#interactive-demo">Viewport Tester</a> for help.</p>
+	</div>
+
+	<div class="faq-item">
+		<p class="faq-line"><span class="faq-label">Problem:</span> The camera shows too much or too little of the world.</p>
+		<p class="faq-line"><span class="faq-label">Solution:</span> Change <strong>Camera Size</strong>, not Viewport Size. Camera Size controls how much world the camera sees before zoom.</p>
+	</div>
+
+	<div class="faq-item">
+		<p class="faq-line"><span class="faq-label">Problem:</span> Split-screen math feels wrong.</p>
+		<p class="faq-line"><span class="faq-label">Solution:</span> Split the Display Area, not the screen. For a <span class="inline-code">720x405</span> Display Area, left/right split uses <span class="inline-code">360x405</span> for each viewport.</p>
+	</div>
+
+	<div class="faq-item">
+		<p class="faq-line"><span class="faq-label">Problem:</span> Pixel art looks uneven or blurry.</p>
+		<p class="faq-line"><span class="faq-label">Solution:</span> Use camera sizes that scale evenly into the viewport. Example: <span class="inline-code">320x180</span> into <span class="inline-code">1920x1080</span> gives a clean 6x scale.</p>
+	</div>
+
+	<div class="faq-item">
+		<p class="faq-line"><span class="faq-label">Problem:</span> Zoom looks broken or crops more than expected.</p>
+		<p class="faq-line"><span class="faq-label">Solution:</span> Remember that zoom changes how much world the camera sees. Higher zoom means closer view. Set the camera base size first, then apply zoom.</p>
+	</div>
+
+	<div class="faq-item">
+		<p class="faq-line"><span class="faq-label">Problem:</span> The camera follows the wrong actor or crashes when centering.</p>
+		<p class="faq-line"><span class="faq-label">Solution:</span> Make sure the actor variable exists before using it in the block. In the Quick Start example, <span class="inline-code">player</span> means your own actor variable.</p>
+	</div>
+
+	<div class="faq-item">
+		<p class="faq-line"><span class="faq-label">Problem:</span> A viewport background or border does not appear.</p>
+		<p class="faq-line"><span class="faq-label">Solution:</span> Check that the viewport exists first and that alpha is above <span class="inline-code">0</span>. For a fully visible color, use <span class="inline-code">100</span> percent alpha.</p>
+	</div>
+
+
+	<div class="faq-item">
+		<p class="faq-line"><span class="faq-label">Problem:</span> The display area is smaller than the screen and there is empty space around it.</p>
+		<p class="faq-line"><span class="faq-label">Solution:</span> That can be correct. The Display Area is where the camera output appears. Use background color or background image blocks to control what appears behind it.</p>
+	</div>
+</div>
+</div>
+</section>
+<section class="section doc-section" data-search="release notes v 1.0 planned development cached tile world renderer html5 seams" id="release-notes">
+<div class="section-header">
+<h2>Release Notes v 1.0</h2>
+</div>
+<div class="section-body">
+<p>
+	This release focuses on camera, viewport, display, zoom, rotation, screenshake, multi-viewport support,
+	and pixel-perfect behavior.
+</p>
+<p>
+	<strong>Planned Development:</strong>
+</p>
+<ul>
+	<li>Add cached tile/world rendering so bittyBIG can rely less on Stencyl’s live redraw path.</li>
+	<li>Show debug drawing per viewport.</li>
+</ul>
+</div>
+</section>
+<div class="footer">
+					bittyBIG Dynamic Camera System Documentation<br />
+					&copy; 2026 bittyBIG Studio
+				</div>
+</div>
+</main>
+</div>
+<script>
+
+		/* Copy buttons */
+		function setCopyButtonStatus(button, text)
+		{
+			var oldText = button.getAttribute("data-default-text");
+
+			if(oldText == null || oldText === "")
+			{
+				oldText = button.textContent;
+				button.setAttribute("data-default-text", oldText);
+			}
+
+			button.textContent = text;
+
+			setTimeout(function()
+			{
+				button.textContent = oldText;
+			}, 900);
+		}
+
+		function escapeClipboardHTML(text)
+		{
+			return text
+				.replace(/&/g, "&amp;")
+				.replace(/</g, "&lt;")
+				.replace(/>/g, "&gt;")
+				.replace(/"/g, "&quot;");
+		}
+
+		function fallbackCopyText(text)
+		{
+			var textArea = document.createElement("textarea");
+			textArea.value = text;
+			textArea.setAttribute("readonly", "readonly");
+			textArea.setAttribute("wrap", "off");
+			textArea.style.position = "fixed";
+			textArea.style.left = "-9999px";
+			textArea.style.top = "0";
+			textArea.style.whiteSpace = "pre";
+			document.body.appendChild(textArea);
+			textArea.focus();
+			textArea.select();
+
+			var copied = false;
+
+			try
+			{
+				copied = document.execCommand("copy");
+			}
+			catch(error)
+			{
+				copied = false;
+			}
+
+			document.body.removeChild(textArea);
+			return copied;
+		}
+
+		function copyFormattedTextToClipboard(text, button)
+		{
+			var html = "<pre style=\"white-space: pre; font-family: Consolas, Monaco, 'Courier New', monospace;\">" + escapeClipboardHTML(text) + "</pre>";
+
+			if(navigator.clipboard != null && window.ClipboardItem != null && window.isSecureContext)
+			{
+				var clipboardItem = new ClipboardItem({
+					"text/plain": new Blob([text], { type: "text/plain" }),
+					"text/html": new Blob([html], { type: "text/html" })
+				});
+
+				navigator.clipboard.write([clipboardItem]).then(function()
+				{
+					setCopyButtonStatus(button, "Copied");
+				}).catch(function()
+				{
+					if(fallbackCopyText(text))
+					{
+						setCopyButtonStatus(button, "Copied");
+					}
+					else
+					{
+						setCopyButtonStatus(button, "Copy Failed");
+					}
+				});
+
+				return;
+			}
+
+			if(navigator.clipboard != null && window.isSecureContext)
+			{
+				navigator.clipboard.writeText(text).then(function()
+				{
+					setCopyButtonStatus(button, "Copied");
+				}).catch(function()
+				{
+					if(fallbackCopyText(text))
+					{
+						setCopyButtonStatus(button, "Copied");
+					}
+					else
+					{
+						setCopyButtonStatus(button, "Copy Failed");
+					}
+				});
+
+				return;
+			}
+
+			if(fallbackCopyText(text))
+			{
+				setCopyButtonStatus(button, "Copied");
+			}
+			else
+			{
+				setCopyButtonStatus(button, "Copy Failed");
+			}
+		}
+
+		document.querySelectorAll(".copy-btn").forEach(function(button)
+		{
+			button.addEventListener("click", function()
+			{
+				var targetID = button.getAttribute("data-copy-target");
+				var target = document.getElementById(targetID);
+				if(target == null) return;
+
+				var copyMode = button.getAttribute("data-copy-mode");
+				var copyText = "";
+
+				if(copyMode === "raw")
+				{
+					copyText = target.textContent;
+				}
+				else
+				{
+					copyText = target.innerText;
+				}
+
+				copyFormattedTextToClipboard(copyText, button);
+			});
+		});
+
+		/* Tabs */
+		document.querySelectorAll("[data-tab]").forEach(function(button)
+		{
+			button.addEventListener("click", function()
+			{
+				var tabName = button.getAttribute("data-tab");
+				var wrap = button.closest(".section-body");
+				if(wrap == null) return;
+
+				wrap.querySelectorAll("[data-tab]").forEach(function(btn)
+				{
+					btn.classList.remove("active");
+				});
+
+				wrap.querySelectorAll("[data-panel]").forEach(function(panel)
+				{
+					panel.classList.remove("active");
+				});
+
+				button.classList.add("active");
+
+				var panel = wrap.querySelector('[data-panel="' + tabName + '"]');
+				if(panel != null)
+				{
+					panel.classList.add("active");
+				}
+			});
+		});
+
+		/* Sidebar active link */
+		var navLinks = document.querySelectorAll(".nav-link");
+		var docSections = document.querySelectorAll(".doc-section");
+
+		function updateActiveNav()
+		{
+			var currentID = "";
+
+			docSections.forEach(function(section)
+			{
+				if(section.style.display === "none") return;
+
+				var rect = section.getBoundingClientRect();
+				if(rect.top <= 160 && rect.bottom > 160)
+				{
+					currentID = section.id;
+				}
+			});
+
+			navLinks.forEach(function(link)
+			{
+				var href = link.getAttribute("href");
+				if(href === "#" + currentID)
+				{
+					link.classList.add("active");
+				}
+				else
+				{
+					link.classList.remove("active");
+				}
+			});
+		}
+
+		window.addEventListener("scroll", updateActiveNav);
+		updateActiveNav();
+
+		/* Interactive viewport setup builder */
+		var currentLayout = "full";
+		var viewportData = [
+			{ x: 0, y: 0, w: 1920, h: 1080 },
+			{ x: 960, y: 0, w: 960, h: 1080 },
+			{ x: 0, y: 540, w: 960, h: 540 },
+			{ x: 960, y: 540, w: 960, h: 540 },
+			{ x: 1440, y: 40, w: 440, h: 248 }
+		];
+
+		document.querySelectorAll(".layout-button").forEach(function(button)
+		{
+			button.addEventListener("click", function()
+			{
+				document.querySelectorAll(".layout-button").forEach(function(btn)
+				{
+					btn.classList.remove("active");
+				});
+
+				button.classList.add("active");
+				currentLayout = button.getAttribute("data-layout");
+				applyAutoLayout(currentLayout);
+			});
+		});
+
+		["screenW", "screenH", "canvasW", "canvasH", "cameraW", "cameraH", "viewportCount"].forEach(function(id)
+		{
+			var input = document.getElementById(id);
+			if(input == null) return;
+
+			input.addEventListener("input", function()
+			{
+				if(id === "viewportCount")
+				{
+					clampViewportCount();
+					renderViewportRows();
+				}
+
+				renderViewportDemo();
+			});
+		});
+
+		function getNum(id, fallback)
+		{
+			var field = document.getElementById(id);
+			if(field == null) return fallback;
+
+			var value = parseFloat(field.value);
+			if(isNaN(value)) return fallback;
+			return value;
+		}
+
+		function setNum(id, value)
+		{
+			var field = document.getElementById(id);
+			if(field == null) return;
+			field.value = Math.round(value);
+		}
+
+		function getScreenWidth()
+		{
+			return Math.max(1, getNum("screenW", 1920));
+		}
+
+		function getScreenHeight()
+		{
+			return Math.max(1, getNum("screenH", 1080));
+		}
+
+		function getCanvasWidth()
+		{
+			return Math.max(1, getNum("canvasW", 1920));
+		}
+
+		function getCanvasHeight()
+		{
+			return Math.max(1, getNum("canvasH", 1080));
+		}
+
+		function getCameraWidth()
+		{
+			return Math.max(1, getNum("cameraW", 320));
+		}
+
+		function getCameraHeight()
+		{
+			return Math.max(1, getNum("cameraH", 180));
+		}
+
+		function getViewportCount()
+		{
+			var count = Math.round(getNum("viewportCount", 1));
+			if(count < 1) count = 1;
+			if(count > 5) count = 5;
+			return count;
+		}
+
+		function clampViewportCount()
+		{
+			setNum("viewportCount", getViewportCount());
+		}
+
+		function setViewportCount(value)
+		{
+			var count = value;
+			if(count < 1) count = 1;
+			if(count > 5) count = 5;
+			setNum("viewportCount", count);
+		}
+
+		function applyAutoLayout(layout)
+		{
+			var w = getCanvasWidth();
+			var h = getCanvasHeight();
+
+			if(layout === "full")
+			{
+				setViewportCount(1);
+				viewportData[0] = { x: 0, y: 0, w: w, h: h };
+			}
+			else if(layout === "left-right")
+			{
+				setViewportCount(2);
+				viewportData[0] = { x: 0, y: 0, w: w / 2, h: h };
+				viewportData[1] = { x: w / 2, y: 0, w: w / 2, h: h };
+			}
+			else if(layout === "top-bottom")
+			{
+				setViewportCount(2);
+				viewportData[0] = { x: 0, y: 0, w: w, h: h / 2 };
+				viewportData[1] = { x: 0, y: h / 2, w: w, h: h / 2 };
+			}
+			else if(layout === "four-grid")
+			{
+				setViewportCount(4);
+				viewportData[0] = { x: 0, y: 0, w: w / 2, h: h / 2 };
+				viewportData[1] = { x: w / 2, y: 0, w: w / 2, h: h / 2 };
+				viewportData[2] = { x: 0, y: h / 2, w: w / 2, h: h / 2 };
+				viewportData[3] = { x: w / 2, y: h / 2, w: w / 2, h: h / 2 };
+			}
+			else if(layout === "pip")
+			{
+				setViewportCount(2);
+				var pipW = Math.round(w * 0.25);
+				var pipH = Math.round(h * 0.25);
+				var pipX = Math.max(0, w - pipW - 20);
+				var pipY = 20;
+
+				viewportData[0] = { x: 0, y: 0, w: w, h: h };
+				viewportData[1] = { x: pipX, y: pipY, w: pipW, h: pipH };
+			}
+
+			renderViewportRows();
+			renderViewportDemo();
+		}
+
+		function renderViewportRows()
+		{
+			var holder = document.getElementById("viewportRows");
+			if(holder == null) return;
+
+			holder.innerHTML = "";
+
+			var count = getViewportCount();
+			var canvasW = getCanvasWidth();
+			var canvasH = getCanvasHeight();
+
+			for(var i = 0; i < count; i++)
+			{
+				if(viewportData[i] == null)
+				{
+					viewportData[i] = { x: 0, y: 0, w: canvasW, h: canvasH };
+				}
+
+				var row = document.createElement("div");
+				row.className = "viewport-row";
+				row.innerHTML =
+					'<div class="viewport-id">ID ' + i + '</div>' +
+					'<label>X<input type="number" data-viewport-index="' + i + '" data-viewport-field="x" value="' + Math.round(viewportData[i].x) + '" /></label>' +
+					'<label>Y<input type="number" data-viewport-index="' + i + '" data-viewport-field="y" value="' + Math.round(viewportData[i].y) + '" /></label>' +
+					'<label>Width<input type="number" data-viewport-index="' + i + '" data-viewport-field="w" value="' + Math.round(viewportData[i].w) + '" /></label>' +
+					'<label>Height<input type="number" data-viewport-index="' + i + '" data-viewport-field="h" value="' + Math.round(viewportData[i].h) + '" /></label>';
+
+				holder.appendChild(row);
+			}
+
+			holder.querySelectorAll("input").forEach(function(input)
+			{
+				input.addEventListener("input", function()
+				{
+					var index = parseInt(input.getAttribute("data-viewport-index"), 10);
+					var field = input.getAttribute("data-viewport-field");
+					var value = parseFloat(input.value);
+					if(isNaN(value)) value = 0;
+
+					if(viewportData[index] == null)
+					{
+						viewportData[index] = { x: 0, y: 0, w: canvasW, h: canvasH };
+					}
+
+					viewportData[index][field] = value;
+					renderViewportDemo();
+				});
+			});
+		}
+
+		function renderViewportDemo()
+		{
+			var screenW = getScreenWidth();
+			var screenH = getScreenHeight();
+			var canvasW = getCanvasWidth();
+			var canvasH = getCanvasHeight();
+			var cameraW = getCameraWidth();
+			var cameraH = getCameraHeight();
+			var count = getViewportCount();
+
+			var displayArea = document.getElementById("demoDisplayArea");
+			var readout = document.getElementById("demoReadout");
+			if(displayArea == null || readout == null) return;
+
+			displayArea.innerHTML = "";
+			displayArea.style.left = "0%";
+			displayArea.style.top = "0%";
+			displayArea.style.width = (canvasW / screenW * 100) + "%";
+			displayArea.style.height = (canvasH / screenH * 100) + "%";
+
+			var ports = [];
+
+			for(var i = 0; i < count; i++)
+			{
+				if(viewportData[i] == null)
+				{
+					viewportData[i] = { x: 0, y: 0, w: canvasW, h: canvasH };
+				}
+
+				ports.push({
+					name: "Viewport " + i,
+					x: viewportData[i].x,
+					y: viewportData[i].y,
+					w: Math.max(1, viewportData[i].w),
+					h: Math.max(1, viewportData[i].h)
+				});
+			}
+
+			ports.forEach(function(port)
+			{
+				var div = document.createElement("div");
+				div.className = "demo-viewport";
+				div.style.left = (port.x / canvasW * 100) + "%";
+				div.style.top = (port.y / canvasH * 100) + "%";
+				div.style.width = (port.w / canvasW * 100) + "%";
+				div.style.height = (port.h / canvasH * 100) + "%";
+				div.innerText = port.name + "\n" + Math.round(port.w) + "x" + Math.round(port.h);
+				displayArea.appendChild(div);
+			});
+
+			var lines = ports.map(function(port, i)
+			{
+				return "setDisplayPortRect(" + i + ", " + Math.round(port.x) + ", " + Math.round(port.y) + ", " + Math.round(port.w) + ", " + Math.round(port.h) + ")";
+			});
+
+			readout.innerHTML =
+				"<strong>Screen Size:</strong> " + Math.round(screenW) + "x" + Math.round(screenH) +
+				"<br><strong>Canvas / Display Area:</strong> 0, 0, " + Math.round(canvasW) + ", " + Math.round(canvasH) +
+				"<br><strong>Camera Size:</strong> " + Math.round(cameraW) + "x" + Math.round(cameraH) +
+				"<br><strong>Viewport Rects:</strong><br>" + lines.join("<br>");
+
+			renderPixelPerfect(canvasW, canvasH, cameraW, cameraH, ports);
+			renderGeneratedCode(canvasW, canvasH, cameraW, cameraH, ports);
+		}
+
+		function renderPixelPerfect(canvasW, canvasH, cameraW, cameraH, ports)
+		{
+			var list = document.getElementById("pixelPerfectList");
+			if(list == null) return;
+
+			list.innerHTML = "";
+
+			var pixelSizes = [
+				{ label: "1x", divisor: 1 },
+				{ label: "1/2", divisor: 2 },
+				{ label: "1/3", divisor: 3 },
+				{ label: "1/4", divisor: 4 },
+				{ label: "1/6", divisor: 6 }
+			];
+
+			pixelSizes.forEach(function(size)
+			{
+				var li = document.createElement("li");
+				li.innerHTML = "<strong>" + size.label + "</strong> - " + Math.round(canvasW / size.divisor) + "x" + Math.round(canvasH / size.divisor);
+				list.appendChild(li);
+			});
+
+		}
+
+		function renderGeneratedCode(canvasW, canvasH, cameraW, cameraH, ports)
+		{
+			var code = document.getElementById("generatedSetupCode");
+			var stencylBlocks = document.getElementById("generatedStencylBlocks");
+			if(code == null) return;
+
+			var lines = [];
+			lines.push("scripts.BittyCameraSystem.init();");
+			lines.push("");
+			lines.push("// Canvas / Display Area uses the canvas size. Viewports split inside this rectangle.");
+			lines.push("scripts.BittyCameraBlocks.setGameAreaRect(0, 0, " + Math.round(canvasW) + ", " + Math.round(canvasH) + ");");
+			lines.push("");
+
+			ports.forEach(function(port, i)
+			{
+				lines.push("scripts.BittyCameraBlocks.createCamera(" + i + ");");
+				lines.push("scripts.BittyCameraBlocks.createDisplayPort(" + i + ", " + Math.round(port.x) + ", " + Math.round(port.y) + ", " + Math.round(port.w) + ", " + Math.round(port.h) + ");");
+				lines.push("scripts.BittyCameraBlocks.renderCameraToDisplayPort(" + i + ", " + i + ");");
+				lines.push("scripts.BittyCameraBlocks.setCameraSize(" + Math.round(cameraW) + ", " + Math.round(cameraH) + ", " + i + ");");
+
+				if(i < ports.length - 1)
+				{
+					lines.push("");
+				}
+			});
+
+			code.innerText = lines.join("\n");
+
+			if(stencylBlocks != null)
+			{
+				stencylBlocks.textContent = buildStencylCopyBlocks(canvasW, canvasH, cameraW, cameraH, ports);
+			}
+
+			renderGeneratedStencylBlockPreview(canvasW, canvasH, cameraW, cameraH, ports);
+		}
+
+		function makePreviewInput(value)
+		{
+			var span = document.createElement("span");
+			span.className = "st-input";
+			span.textContent = Math.round(value);
+			return span;
+		}
+
+		function appendPreviewText(block, text)
+		{
+			block.appendChild(document.createTextNode(text));
+		}
+
+		function addPreviewBlock(holder, colorClass, parts)
+		{
+			var row = document.createElement("div");
+			row.className = "block-row";
+
+			var block = document.createElement("div");
+			block.className = "st-block " + colorClass;
+
+			parts.forEach(function(part)
+			{
+				if(typeof part === "string")
+				{
+					appendPreviewText(block, part);
+				}
+				else
+				{
+					block.appendChild(makePreviewInput(part));
+				}
+			});
+
+			row.appendChild(block);
+			holder.appendChild(row);
+		}
+
+		function renderGeneratedStencylBlockPreview(canvasW, canvasH, cameraW, cameraH, ports)
+		{
+			var preview = document.getElementById("generatedStencylBlockPreview");
+			if(preview == null) return;
+
+			preview.innerHTML = "";
+
+			addPreviewBlock(preview, "red", ["Initialize bittyBIG Dynamic Camera System"]);
+			addPreviewBlock(preview, "blue", ["Set Display Area to X", 0, "Y", 0, "Width", canvasW, "Height", canvasH]);
+
+			ports.forEach(function(port, i)
+			{
+				addPreviewBlock(preview, "blue", ["Create Camera ID", i]);
+				addPreviewBlock(preview, "blue", ["Create Viewport ID", i, "at X", port.x, "Y", port.y, "with Width", port.w, "Height", port.h]);
+				addPreviewBlock(preview, "blue", ["Render Camera ID", i, "to Viewport ID", i]);
+				addPreviewBlock(preview, "blue", ["Set Camera to Width", cameraW, "Height", cameraH, "for Camera ID", i]);
+			});
+		}
+
+		function blockInt(id, value, indent)
+		{
+			return indent + '<int id="' + id + '" val="' + Math.round(value) + '"/>';
+		}
+
+		function buildActionBlock(tag, values)
+		{
+			var lines = [];
+			lines.push('        <' + tag + ' comment="false" x="0" y="0">');
+
+			for(var i = 0; i < values.length; i++)
+			{
+				lines.push(blockInt(i, values[i], '            '));
+			}
+
+			lines.push('        </' + tag + '>');
+			return lines.join("\n");
+		}
+
+		function buildStencylCopyBlocks(canvasW, canvasH, cameraW, cameraH, ports)
+		{
+			var lines = [];
+			lines.push('<?xml version="1.0" encoding="UTF-8" standalone="no"?>');
+			lines.push('<copy format="1">');
+			lines.push('    <group eventID="-1" id="-1">');
+			lines.push('        <bbcam-init-dynamic-camera-system comment="false" x="0" y="0"/>');
+			lines.push(buildActionBlock('bbcam-set-display-area-rect', [0, 0, canvasW, canvasH]));
+
+			ports.forEach(function(port, i)
+			{
+				lines.push(buildActionBlock('bbcam-create-camera', [i]));
+				lines.push(buildActionBlock('bbcam-create-viewport', [i, port.x, port.y, port.w, port.h]));
+				lines.push(buildActionBlock('bbcam-render-camera-to-viewport', [i, i]));
+				lines.push(buildActionBlock('bbcam-set-camera-size', [cameraW, cameraH, i]));
+			});
+
+			lines.push('    </group>');
+			lines.push('</copy>');
+			return lines.join("\n");
+		}
+
+		renderViewportRows();
+		renderViewportDemo();
+
+	</script>
+</body>
+</html>
