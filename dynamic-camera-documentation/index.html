@@ -484,11 +484,11 @@
 			display: flex;
 			flex-direction: column;
 			align-items: flex-start;
-			gap: 2px;
-			margin: 10px 0 16px;
+			gap: 0;
+			margin: 8px 0 14px;
 			overflow-x: auto;
 			overflow-y: visible;
-			padding: 8px 10px 14px 4px;
+			padding: 6px 8px 10px 4px;
 		}
 
 		.block-row
@@ -512,13 +512,13 @@
 			display: inline-flex;
 			flex-wrap: nowrap;
 			align-items: center;
-			gap: 6px;
-			min-height: 27px;
-			padding: 4px 10px 5px;
+			gap: 4px;
+			min-height: 22px;
+			padding: 3px 8px 4px;
 			color: #ffffff;
 			font-family: Arial, Helvetica, sans-serif;
 			font-weight: 800;
-			font-size: 12px;
+			font-size: 11px;
 			line-height: 1;
 			white-space: nowrap;
 			position: relative;
@@ -553,10 +553,10 @@
 		{
 			content: "";
 			position: absolute;
-			left: 32px;
+			left: 28px;
 			top: -1px;
-			width: 28px;
-			height: 8px;
+			width: 22px;
+			height: 6px;
 			background: var(--blockCutout);
 			border-left: 1px solid var(--blockDark);
 			border-right: 1px solid var(--blockDark);
@@ -569,10 +569,10 @@
 		{
 			content: "";
 			position: absolute;
-			left: 32px;
-			bottom: -9px;
-			width: 28px;
-			height: 9px;
+			left: 28px;
+			bottom: -6px;
+			width: 22px;
+			height: 6px;
 			background: linear-gradient(to bottom, var(--blockMid) 0%, var(--blockBottom) 100%);
 			border-left: 1px solid var(--blockDark);
 			border-right: 1px solid var(--blockDark);
@@ -583,7 +583,8 @@
 
 
 		/* When command blocks are stacked, the upper block's bottom connector should appear inside the lower block's top notch. */
-		.block-stack .block-row + .block-row .st-block::before
+		.block-stack .block-row + .block-row .st-block::before,
+		.generated-block-preview .block-row + .block-row .st-block::before
 		{
 			background: linear-gradient(to bottom, #0f91dd 0%, #0575bd 100%);
 			border-left-color: #005c9a;
@@ -591,7 +592,8 @@
 			border-bottom-color: #004a7c;
 		}
 
-		.block-stack .block-row:has(.st-block.blue) + .block-row .st-block::before
+		.block-stack .block-row:has(.st-block.blue) + .block-row .st-block::before,
+		.generated-block-preview .block-row:has(.st-block.blue) + .block-row .st-block::before
 		{
 			background: linear-gradient(to bottom, #0f91dd 0%, #0575bd 100%);
 			border-left-color: #005c9a;
@@ -599,7 +601,8 @@
 			border-bottom-color: #004a7c;
 		}
 
-		.block-stack .block-row:has(.st-block.red) + .block-row .st-block::before
+		.block-stack .block-row:has(.st-block.red) + .block-row .st-block::before,
+		.generated-block-preview .block-row:has(.st-block.red) + .block-row .st-block::before
 		{
 			background: linear-gradient(to bottom, #dc555e 0%, #bf3944 100%);
 			border-left-color: #9d2630;
@@ -607,7 +610,8 @@
 			border-bottom-color: #862029;
 		}
 
-		.block-stack .block-row:has(.st-block.green) + .block-row .st-block::before
+		.block-stack .block-row:has(.st-block.green) + .block-row .st-block::before,
+		.generated-block-preview .block-row:has(.st-block.green) + .block-row .st-block::before
 		{
 			background: linear-gradient(to bottom, #75ad42 0%, #5e9230 100%);
 			border-left-color: #4e7b27;
@@ -615,7 +619,8 @@
 			border-bottom-color: #3f681e;
 		}
 
-		.block-stack .block-row:has(.st-block.gray) + .block-row .st-block::before
+		.block-stack .block-row:has(.st-block.gray) + .block-row .st-block::before,
+		.generated-block-preview .block-row:has(.st-block.gray) + .block-row .st-block::before
 		{
 			background: linear-gradient(to bottom, #808b97 0%, #66717e 100%);
 			border-left-color: #53606c;
@@ -657,9 +662,9 @@
 
 		.st-block.reporter
 		{
-			min-height: 24px;
-			padding: 4px 11px 5px;
-			border-radius: 14px;
+			min-height: 20px;
+			padding: 3px 9px 4px;
+			border-radius: 12px;
 			box-shadow:
 				inset 0 1px 0 rgba(255,255,255,0.34),
 				inset 0 -1px 0 rgba(0,0,0,0.18),
@@ -674,8 +679,8 @@
 
 		.st-block.boolean
 		{
-			min-height: 25px;
-			padding: 4px 18px 5px;
+			min-height: 21px;
+			padding: 3px 15px 4px;
 			border-radius: 0;
 			clip-path: polygon(12px 0, calc(100% - 12px) 0, 100% 50%, calc(100% - 12px) 100%, 12px 100%, 0 50%);
 		}
@@ -693,9 +698,9 @@
 			display: inline-flex;
 			align-items: center;
 			justify-content: center;
-			min-height: 21px;
-			padding: 1px 7px;
-			border-radius: 7px;
+			min-height: 18px;
+			padding: 1px 6px;
+			border-radius: 6px;
 			font-weight: 800;
 			color: #222222;
 			border: 1px solid #8a8a8a;
@@ -709,13 +714,13 @@
 
 		.st-input
 		{
-			min-width: 26px;
+			min-width: 22px;
 			background: linear-gradient(#ffffff, #e8e8e8);
 		}
 
 		.st-dropdown
 		{
-			min-width: 36px;
+			min-width: 32px;
 			background: linear-gradient(#ffffff, #e5e5e5);
 			padding-right: 20px;
 			position: relative;
@@ -744,7 +749,7 @@
 		.st-dropdown .st-block.reporter,
 		.st-text .st-block.reporter
 		{
-			margin: -2px -6px;
+			margin: -2px -5px;
 		}
 
 		.st-input:has(.st-block.reporter),
@@ -793,7 +798,12 @@
 		{
 			font-size: 13px;
 			color: var(--muted);
-			margin-bottom: 10px;
+			margin-bottom: 4px;
+		}
+
+		.block-card > .block-row
+		{
+			margin: -2px 0 14px;
 		}
 
 		.block-desc
@@ -1134,7 +1144,7 @@
 
 		.generated-block-preview
 		{
-			padding: 12px;
+			padding: 10px;
 			background: #f6f6f6;
 			min-height: 80px;
 		}
@@ -1274,6 +1284,8 @@
 <div class="cat-title">Position</div>
 <a href="#block-set-camera-center">Set Camera Center</a>
 <a href="#block-set-camera-offsets">Set Camera Offsets</a>
+<a href="#block-get-camera-offset-x">Get Camera Offset X</a>
+<a href="#block-get-camera-offset-y">Get Camera Offset Y</a>
 <a href="#block-set-camera-center-to-actor">Center Camera to Actor</a>
 <div class="cat-title">Movement</div>
 <a href="#block-set-camera-target-center">Set Camera Target Center</a>
@@ -1357,7 +1369,7 @@
 <div class="topbar">
 <div class="title">bittyBIG Dynamic Camera System</div>
 <div class="subtitle">Interactive documentation, glossary, examples, and viewport tester</div>
-</div><nav class="top-nav"><a href="#overview">Overview</a><a href="#quick-start">Quick Start</a><a href="#interactive-demo">Viewport Tester</a><a href="#glossary">Block Glossary</a><a href="#troubleshooting">Troubleshooting / FAQ</a><a href="#release-notes">Release Notes</a><a href="https://discord.gg/BR3WJM4zfG">Support</a></nav>
+</div><nav class="top-nav"><a href="#overview">Overview</a><a href="#project-setup">Project Setup</a><a href="#quick-start">Quick Start Guide</a><a href="#interactive-demo">Viewport Tester</a><a href="#glossary">Block Glossary</a><a href="#troubleshooting">Troubleshooting / FAQ</a><a href="#release-notes">Release Notes</a><a href="https://discord.gg/BR3WJM4zfG">Support</a></nav>
 <div class="content">
 <section class="section doc-section" data-search="overview introduction dynamic camera split screen zoom rotation screenshake viewport tester" id="overview">
 <div class="section-body">
@@ -1369,7 +1381,8 @@
 								screenshake, and pixel-perfect display behavior.
 							</p>
 <div class="hero-buttons">
-<a class="btn" href="#quick-start">Quick Start</a>
+<a class="btn" href="#project-setup">Project Setup</a>
+<a class="btn" href="#quick-start">Quick Start Guide</a>
 <a class="btn" href="#interactive-demo">Viewport Tester</a>
 <a class="btn" href="#glossary">Block Glossary</a>
 <a class="btn" href="#troubleshooting">Troubleshooting / FAQ</a>
@@ -1379,39 +1392,106 @@
 </div>
 </div>
 </section>
-<section class="section doc-section" data-search="quick start initialize create camera set camera size center actor blocks code" id="quick-start">
+<section class="section doc-section" data-search="project setup stencyl settings display screen size advanced antialiasing pixel snapping project scales fullscreen scale to fit letterbox openfl html5 resizable upscale downscale" id="project-setup">
 <div class="section-header">
-<h2>Quick Start</h2>
+<h2>Project Setup in Stencyl</h2>
 </div>
 <div class="section-body">
 <p>
-							This is the shortest useful setup: initialize the system, create a camera,
-							and center it on the player.
-						</p>
-<div class="block-stack">
-<div class="block-row">
-<div class="st-block red">
-									Initialize bittyBIG Dynamic Camera System
-								</div>
+	Before adding camera blocks, set the project up so Stencyl, your art scale, and the camera output are all speaking the same language. Otherwise the camera system works, but the project settings quietly wear fake glasses and pretend they are helping.
+</p>
+<div class="grid-2">
+<div class="info-card">
+<h3>1. Create and enable</h3>
+<ol>
+<li>Create a new Stencyl project.</li>
+<li>Enable the <strong>bittyBIG Dynamic Camera System</strong> extension.</li>
+<li>Restart/open the project if Stencyl needs to reload extension blocks.</li>
+</ol>
 </div>
-<div class="block-row">
-<div class="st-block blue">
-									Create Camera ID
-									<span class="st-input">0</span>
+<div class="info-card">
+<h3>2. Set the screen size</h3>
+<ol>
+<li>Go to <strong>Game Settings → Settings → Display</strong>.</li>
+<li>Set <strong>Screen Size</strong> to the output size you want Stencyl to present.</li>
+<li>For a 320x240 pixel-art target, use <span class="inline-code">320x240</span> unless you intentionally want a larger canvas/window.</li>
+</ol>
 </div>
 </div>
-<div class="block-row">
-<div class="st-block blue">
-									Set Camera Center to Actor
-									<span class="st-text">player</span>
-									for Camera ID
-									<span class="st-input">0</span>
+<div class="note good">
+<strong>Camera sizing rule:</strong> for upscaling, the target camera size should be less than or equal to the Stencyl screen size. For downscaling, the target camera size should be greater than or equal to the Stencyl screen size, and your art should be high-resolution enough to survive being reduced.
 </div>
+<div class="grid-2">
+<div class="info-card">
+<h3>3. Pixel-art settings</h3>
+<p>Go to <strong>Game Settings → Settings → Advanced</strong>.</p>
+<ul>
+<li>Set <strong>Antialiasing</strong> to <strong>Off</strong>.</li>
+<li>Set <strong>Pixel-Snapping</strong> to <strong>Off</strong> if you want sprites to move smoothly with the camera instead of jittering on the pixel grid.</li>
+</ul>
+</div>
+<div class="info-card">
+<h3>4. Project scales</h3>
+<p>For the most common pixel-art/upscale workflow:</p>
+<ul>
+<li>Keep <strong>Project Scales</strong> at <strong>1x</strong>.</li>
+<li>Disable the other scales.</li>
+<li>Set <strong>Default Scale</strong> to <strong>1x</strong>.</li>
+</ul>
 </div>
 </div>
 <div class="note">
-<strong>Tip:</strong> Use Set Camera Size when you want to change how much of the game scene is viewed on the screen. For example, a 320x180 camera on a 1920x1080 canvas gives a clean 6x pixel-perfect view.
-						</div>
+<strong>Downscaling workflow:</strong> do not rely on Stencyl project scales for this. Import high-resolution art at <span class="inline-code">1x</span>, then let the camera system downscale the final view. This keeps the camera pipeline in control instead of letting Stencyl and the camera both try to perform the same function.
+</div>
+<div class="info-card">
+<h3>5. Platform fullscreen/window behavior</h3>
+<p>
+	For Windows, Web, and Mobile exports, fullscreen behavior should be based around <strong>Scale to Fit / Letterbox</strong> style output. When the Stencyl screen size, camera size, and scaling target match cleanly, windowed mode and fullscreen mode behave predictably.
+</p>
+</div>
+<div class="note warn">
+<strong>HTML5 resizable window tip:</strong> in <strong>Game Settings → Settings → Advanced → OpenFL Settings</strong>, you can add this line for HTML5 builds:
+<div class="code-box open">
+<div class="code-bar">
+<span>OpenFL Settings</span>
+<button class="copy-btn" data-copy-target="pre-html5-resizable-window">Copy</button>
+</div>
+<pre id="pre-html5-resizable-window">&lt;window resizable="true" if="html5" /&gt;</pre>
+</div>
+</div>
+</div>
+</section>
+<section class="section doc-section" data-search="quick start guide initialize create camera set camera size center actor blocks code project setup first camera test" id="quick-start">
+<div class="section-header">
+<h2>Quick Start Guide</h2>
+</div>
+<div class="section-body">
+<p>
+	Once the project settings are clean, start with this setup and confirm the camera is drawing before adding presets, zoom, split-screen, or anything fancy.
+</p>
+<div class="block-stack">
+<div class="block-row">
+<div class="st-block red">Initialize bittyBIG Dynamic Camera System</div>
+</div>
+<div class="block-row">
+<div class="st-block blue">Create Camera ID <span class="st-input">0</span></div>
+</div>
+<div class="block-row">
+<div class="st-block blue">Set Camera to Width <span class="st-input">320</span> Height <span class="st-input">240</span> for Camera ID <span class="st-input">0</span></div>
+</div>
+<div class="block-row">
+<div class="st-block blue">Set Camera Center to Actor <span class="st-text">player</span> for Camera ID <span class="st-input">0</span></div>
+</div>
+</div>
+<div class="note good">
+<strong>What this proves:</strong> the camera system is initialized, Camera ID <span class="inline-code">0</span> exists, the camera has a known view size, and the camera is centered on your player actor variable.
+</div>
+<div class="note">
+<strong>Camera size tip:</strong> use <strong>Set Camera Size</strong> when you want to change how much of the game scene is viewed on screen. For example, a <span class="inline-code">320x180</span> camera on a <span class="inline-code">1920x1080</span> canvas gives a clean <span class="inline-code">6x</span> pixel-perfect view. A <span class="inline-code">320x240</span> camera is a good first test for a <span class="inline-code">320x240</span> Stencyl screen.
+</div>
+<div class="note warn">
+<strong>Debug note:</strong> if actors disappear, die, or stop updating when they leave Stencyl’s normal camera view, check your actor/behavior logic for “kill when off-screen” or similar cleanup behavior. That is separate from the Dynamic Camera System.
+</div>
 </div>
 </section>
 <section class="section doc-section" data-search="common setups examples split screen picture in picture smaller display area fullscreen" id="common-setups">
@@ -1431,7 +1511,12 @@
 <div class="tab-panel active" data-panel="setup-fullscreen">
 <h3>Full-screen pixel-perfect camera</h3>
 <p>Use this when one camera fills the full <span class="inline-code">1920x1080</span> canvas. A <span class="inline-code">320x180</span> camera gives a clean 6x view.</p>
-<div class="block-stack">
+
+<div class="code-box" id="setup-fullscreen-stencyl-code">
+<div class="code-bar">
+<span>Stencyl block copy data</span>
+<button class="copy-btn" data-copy-mode="raw" data-copy-target="setup-fullscreen-stencyl-pre">Copy</button>
+</div><div class="generated-block-preview">
 <div class="block-row">
 <div class="st-block red">Initialize bittyBIG Dynamic Camera System</div>
 </div>
@@ -1445,6 +1530,22 @@
 <div class="st-block blue">Set Camera Center to Actor <span class="st-text">player</span> for Camera ID <span class="st-input">0</span></div>
 </div>
 </div>
+<pre class="copy-source" id="setup-fullscreen-stencyl-pre">&lt;?xml version="1.0" encoding="UTF-8" standalone="no"?&gt;
+&lt;copy format="1"&gt;
+    &lt;group eventID="-1" id="-1"&gt;
+        &lt;bbcam-init-dynamic-camera-system comment="false" x="0" y="0"/&gt;
+        &lt;bbcam-create-camera comment="false" x="0" y="0"&gt;
+            &lt;int id="0" val="0"/&gt;
+        &lt;/bbcam-create-camera&gt;
+        &lt;bbcam-set-camera-size comment="false" x="0" y="0"&gt;
+            &lt;int id="0" val="320"/&gt;
+            &lt;int id="1" val="180"/&gt;
+            &lt;int id="2" val="0"/&gt;
+        &lt;/bbcam-set-camera-size&gt;
+    &lt;/group&gt;
+&lt;/copy&gt;</pre>
+</div>
+<div class="note">After pasting, add your own <strong>Set Camera Center to Actor</strong> block using your player actor or variable.</div>
 <div class="code-box" id="setup-fullscreen-code">
 <div class="code-bar">
 <span>Equivalent code</span>
@@ -1460,7 +1561,12 @@ scripts.BittyCameraBlocks.setCameraCenterToActor(player, 0);</pre>
 <div class="tab-panel" data-panel="setup-split">
 <h3>Two-player left/right split screen</h3>
 <p>For a <span class="inline-code">1920x1080</span> canvas, each half is <span class="inline-code">960x1080</span>. A <span class="inline-code">160x180</span> camera gives each viewport a clean 6x scale.</p>
-<div class="block-stack">
+
+<div class="code-box" id="setup-split-stencyl-code">
+<div class="code-bar">
+<span>Stencyl block copy data</span>
+<button class="copy-btn" data-copy-mode="raw" data-copy-target="setup-split-stencyl-pre">Copy</button>
+</div><div class="generated-block-preview">
 <div class="block-row">
 <div class="st-block red">Initialize bittyBIG Dynamic Camera System</div>
 </div>
@@ -1483,6 +1589,43 @@ scripts.BittyCameraBlocks.setCameraCenterToActor(player, 0);</pre>
 <div class="st-block blue">Set Camera to Width <span class="st-input">160</span> Height <span class="st-input">180</span> for Camera ID <span class="st-input">1</span></div>
 </div>
 </div>
+<pre class="copy-source" id="setup-split-stencyl-pre">&lt;?xml version="1.0" encoding="UTF-8" standalone="no"?&gt;
+&lt;copy format="1"&gt;
+    &lt;group eventID="-1" id="-1"&gt;
+        &lt;bbcam-init-dynamic-camera-system comment="false" x="0" y="0"/&gt;
+        &lt;bbcam-create-camera comment="false" x="0" y="0"&gt;
+            &lt;int id="0" val="0"/&gt;
+        &lt;/bbcam-create-camera&gt;
+        &lt;bbcam-create-camera comment="false" x="0" y="0"&gt;
+            &lt;int id="0" val="1"/&gt;
+        &lt;/bbcam-create-camera&gt;
+        &lt;bbcam-set-viewport-rect comment="false" x="0" y="0"&gt;
+            &lt;int id="0" val="0"/&gt;
+            &lt;int id="1" val="0"/&gt;
+            &lt;int id="2" val="0"/&gt;
+            &lt;int id="3" val="960"/&gt;
+            &lt;int id="4" val="1080"/&gt;
+        &lt;/bbcam-set-viewport-rect&gt;
+        &lt;bbcam-set-viewport-rect comment="false" x="0" y="0"&gt;
+            &lt;int id="0" val="1"/&gt;
+            &lt;int id="1" val="960"/&gt;
+            &lt;int id="2" val="0"/&gt;
+            &lt;int id="3" val="960"/&gt;
+            &lt;int id="4" val="1080"/&gt;
+        &lt;/bbcam-set-viewport-rect&gt;
+        &lt;bbcam-set-camera-size comment="false" x="0" y="0"&gt;
+            &lt;int id="0" val="160"/&gt;
+            &lt;int id="1" val="180"/&gt;
+            &lt;int id="2" val="0"/&gt;
+        &lt;/bbcam-set-camera-size&gt;
+        &lt;bbcam-set-camera-size comment="false" x="0" y="0"&gt;
+            &lt;int id="0" val="160"/&gt;
+            &lt;int id="1" val="180"/&gt;
+            &lt;int id="2" val="1"/&gt;
+        &lt;/bbcam-set-camera-size&gt;
+    &lt;/group&gt;
+&lt;/copy&gt;</pre>
+</div>
 <div class="code-box" id="setup-split-code">
 <div class="code-bar">
 <span>Equivalent code</span>
@@ -1503,7 +1646,12 @@ scripts.BittyCameraBlocks.setCameraSize(160, 180, 1);</pre>
 <div class="tab-panel" data-panel="setup-pip">
 <h3>Picture-in-picture camera</h3>
 <p>Use one main camera and one smaller overlay camera. This example uses a full <span class="inline-code">1920x1080</span> main viewport with a <span class="inline-code">440x248</span> overlay.</p>
-<div class="block-stack">
+
+<div class="code-box" id="setup-pip-stencyl-code">
+<div class="code-bar">
+<span>Stencyl block copy data</span>
+<button class="copy-btn" data-copy-mode="raw" data-copy-target="setup-pip-stencyl-pre">Copy</button>
+</div><div class="generated-block-preview">
 <div class="block-row">
 <div class="st-block red">Initialize bittyBIG Dynamic Camera System</div>
 </div>
@@ -1525,6 +1673,43 @@ scripts.BittyCameraBlocks.setCameraSize(160, 180, 1);</pre>
 <div class="block-row">
 <div class="st-block blue">Set Camera to Width <span class="st-input">110</span> Height <span class="st-input">62</span> for Camera ID <span class="st-input">1</span></div>
 </div>
+</div>
+<pre class="copy-source" id="setup-pip-stencyl-pre">&lt;?xml version="1.0" encoding="UTF-8" standalone="no"?&gt;
+&lt;copy format="1"&gt;
+    &lt;group eventID="-1" id="-1"&gt;
+        &lt;bbcam-init-dynamic-camera-system comment="false" x="0" y="0"/&gt;
+        &lt;bbcam-create-camera comment="false" x="0" y="0"&gt;
+            &lt;int id="0" val="0"/&gt;
+        &lt;/bbcam-create-camera&gt;
+        &lt;bbcam-create-camera comment="false" x="0" y="0"&gt;
+            &lt;int id="0" val="1"/&gt;
+        &lt;/bbcam-create-camera&gt;
+        &lt;bbcam-set-viewport-rect comment="false" x="0" y="0"&gt;
+            &lt;int id="0" val="0"/&gt;
+            &lt;int id="1" val="0"/&gt;
+            &lt;int id="2" val="0"/&gt;
+            &lt;int id="3" val="1920"/&gt;
+            &lt;int id="4" val="1080"/&gt;
+        &lt;/bbcam-set-viewport-rect&gt;
+        &lt;bbcam-set-viewport-rect comment="false" x="0" y="0"&gt;
+            &lt;int id="0" val="1"/&gt;
+            &lt;int id="1" val="1440"/&gt;
+            &lt;int id="2" val="40"/&gt;
+            &lt;int id="3" val="440"/&gt;
+            &lt;int id="4" val="248"/&gt;
+        &lt;/bbcam-set-viewport-rect&gt;
+        &lt;bbcam-set-camera-size comment="false" x="0" y="0"&gt;
+            &lt;int id="0" val="320"/&gt;
+            &lt;int id="1" val="180"/&gt;
+            &lt;int id="2" val="0"/&gt;
+        &lt;/bbcam-set-camera-size&gt;
+        &lt;bbcam-set-camera-size comment="false" x="0" y="0"&gt;
+            &lt;int id="0" val="110"/&gt;
+            &lt;int id="1" val="62"/&gt;
+            &lt;int id="2" val="1"/&gt;
+        &lt;/bbcam-set-camera-size&gt;
+    &lt;/group&gt;
+&lt;/copy&gt;</pre>
 </div>
 <div class="code-box" id="setup-pip-code">
 <div class="code-bar">
@@ -1549,7 +1734,12 @@ scripts.BittyCameraBlocks.setCameraSize(110, 62, 1);</pre>
 								For a smaller centered-style setup, use a <span class="inline-code">1440x810</span> Display Area. Left/right halves are
 								<span class="inline-code">720x810</span>.
 							</p>
-<div class="block-stack">
+
+<div class="code-box" id="setup-small-stencyl-code">
+<div class="code-bar">
+<span>Stencyl block copy data</span>
+<button class="copy-btn" data-copy-mode="raw" data-copy-target="setup-small-stencyl-pre">Copy</button>
+</div><div class="generated-block-preview">
 <div class="block-row">
 <div class="st-block red">Initialize bittyBIG Dynamic Camera System</div>
 </div>
@@ -1562,6 +1752,49 @@ scripts.BittyCameraBlocks.setCameraSize(110, 62, 1);</pre>
 <div class="block-row">
 <div class="st-block blue">Set Viewport ID <span class="st-input">1</span> to X <span class="st-input">720</span> Y <span class="st-input">0</span> Width <span class="st-input">720</span> Height <span class="st-input">810</span></div>
 </div>
+</div>
+<pre class="copy-source" id="setup-small-stencyl-pre">&lt;?xml version="1.0" encoding="UTF-8" standalone="no"?&gt;
+&lt;copy format="1"&gt;
+    &lt;group eventID="-1" id="-1"&gt;
+        &lt;bbcam-init-dynamic-camera-system comment="false" x="0" y="0"/&gt;
+        &lt;bbcam-set-display-area-rect comment="false" x="0" y="0"&gt;
+            &lt;int id="0" val="0"/&gt;
+            &lt;int id="1" val="0"/&gt;
+            &lt;int id="2" val="1440"/&gt;
+            &lt;int id="3" val="810"/&gt;
+        &lt;/bbcam-set-display-area-rect&gt;
+        &lt;bbcam-create-camera comment="false" x="0" y="0"&gt;
+            &lt;int id="0" val="0"/&gt;
+        &lt;/bbcam-create-camera&gt;
+        &lt;bbcam-create-camera comment="false" x="0" y="0"&gt;
+            &lt;int id="0" val="1"/&gt;
+        &lt;/bbcam-create-camera&gt;
+        &lt;bbcam-set-viewport-rect comment="false" x="0" y="0"&gt;
+            &lt;int id="0" val="0"/&gt;
+            &lt;int id="1" val="0"/&gt;
+            &lt;int id="2" val="0"/&gt;
+            &lt;int id="3" val="720"/&gt;
+            &lt;int id="4" val="810"/&gt;
+        &lt;/bbcam-set-viewport-rect&gt;
+        &lt;bbcam-set-viewport-rect comment="false" x="0" y="0"&gt;
+            &lt;int id="0" val="1"/&gt;
+            &lt;int id="1" val="720"/&gt;
+            &lt;int id="2" val="0"/&gt;
+            &lt;int id="3" val="720"/&gt;
+            &lt;int id="4" val="810"/&gt;
+        &lt;/bbcam-set-viewport-rect&gt;
+        &lt;bbcam-set-camera-size comment="false" x="0" y="0"&gt;
+            &lt;int id="0" val="120"/&gt;
+            &lt;int id="1" val="135"/&gt;
+            &lt;int id="2" val="0"/&gt;
+        &lt;/bbcam-set-camera-size&gt;
+        &lt;bbcam-set-camera-size comment="false" x="0" y="0"&gt;
+            &lt;int id="0" val="120"/&gt;
+            &lt;int id="1" val="135"/&gt;
+            &lt;int id="2" val="1"/&gt;
+        &lt;/bbcam-set-camera-size&gt;
+    &lt;/group&gt;
+&lt;/copy&gt;</pre>
 </div>
 <div class="code-box" id="setup-small-code">
 <div class="code-bar">
@@ -1596,20 +1829,20 @@ scripts.BittyCameraBlocks.setCameraSize(120, 135, 1);</pre>
 <div class="viewport-demo">
 <div class="demo-controls">
 <label>
+									Canvas X
+									<input id="canvasX" type="number" value="0"/>
+</label>
+<label>
+									Canvas Y
+									<input id="canvasY" type="number" value="0"/>
+</label>
+<label>
 									Canvas Width
 									<input id="canvasW" min="1" type="number" value="1920"/>
 </label>
 <label>
 									Canvas Height
 									<input id="canvasH" min="1" type="number" value="1080"/>
-</label>
-<label>
-									Camera Width
-									<input id="cameraW" min="1" type="number" value="320"/>
-</label>
-<label>
-									Camera Height
-									<input id="cameraH" min="1" type="number" value="180"/>
 </label>
 <label>
 									Viewports
@@ -1646,7 +1879,7 @@ scripts.BittyCameraBlocks.setCameraSize(120, 135, 1);</pre>
 </div>
 </div>
 <div class="pixel-panel">
-<h3>Pixel Perfect Sizes</h3>
+<h3>Suggested Pixel Perfect Camera Sizes</h3>
 <p>
 									These are clean camera sizes based on your canvas size. 1x is the full canvas size.
 								</p>
@@ -1896,6 +2129,44 @@ scripts.BittyCameraBlocks.setCameraSize(120, 135, 1);</pre>
 <button class="copy-btn" data-copy-target="pre-block-set-camera-offsets">Copy</button>
 </div>
 <pre id="pre-block-set-camera-offsets">scripts.BittyCameraBlocks.setCameraOffsets(~,~,~);</pre>
+</div>
+</div>
+<div class="block-card" id="block-get-camera-offset-x">
+<h3>Get Camera Offset X</h3>
+<div class="block-meta">Cameras → Position</div>
+<div class="block-row">
+<div class="st-block blue reporter">
+											Get Camera Offset X for Camera ID <span class="st-input"></span>
+</div>
+</div>
+<div class="block-desc">
+										Returns the current horizontal camera offset for the given camera ID.
+									</div>
+<div class="code-box">
+<div class="code-bar">
+<span>Code</span>
+<button class="copy-btn" data-copy-target="pre-block-get-camera-offset-x">Copy</button>
+</div>
+<pre id="pre-block-get-camera-offset-x">scripts.BittyCameraBlocks.getCameraOffsetX(~)</pre>
+</div>
+</div>
+<div class="block-card" id="block-get-camera-offset-y">
+<h3>Get Camera Offset Y</h3>
+<div class="block-meta">Cameras → Position</div>
+<div class="block-row">
+<div class="st-block blue reporter">
+											Get Camera Offset Y for Camera ID <span class="st-input"></span>
+</div>
+</div>
+<div class="block-desc">
+										Returns the current vertical camera offset for the given camera ID.
+									</div>
+<div class="code-box">
+<div class="code-bar">
+<span>Code</span>
+<button class="copy-btn" data-copy-target="pre-block-get-camera-offset-y">Copy</button>
+</div>
+<pre id="pre-block-get-camera-offset-y">scripts.BittyCameraBlocks.getCameraOffsetY(~)</pre>
 </div>
 </div>
 <div class="block-card" id="block-set-camera-center-to-actor">
@@ -3033,6 +3304,10 @@ scripts.BittyCameraBlocks.setCameraSize(120, 135, 1);</pre>
 <p class="faq-line"><span class="faq-label">Solution:</span> Make sure the actor variable exists before using it in the block. In the Quick Start example, <span class="inline-code">player</span> means your own actor variable.</p>
 </div>
 <div class="faq-item">
+<p class="faq-line"><span class="faq-label">Problem:</span> Actors disappear, die, or stop updating when outside Stencyl’s built-in camera view.</p>
+<p class="faq-line"><span class="faq-label">Solution:</span> Check actor behaviors for off-screen cleanup, kill-when-off-camera logic, or visibility-based simulation changes. The Dynamic Camera System can show a different view than Stencyl’s default camera.</p>
+</div>
+<div class="faq-item">
 <p class="faq-line"><span class="faq-label">Problem:</span> A viewport background or border does not appear.</p>
 <p class="faq-line"><span class="faq-label">Solution:</span> Check that the viewport exists first and that alpha is above <span class="inline-code">0</span>. For a fully visible color, use <span class="inline-code">100</span> percent alpha.</p>
 </div>
@@ -3300,7 +3575,7 @@ scripts.BittyCameraBlocks.setCameraSize(120, 135, 1);</pre>
 			});
 		});
 
-		["screenW", "screenH", "canvasW", "canvasH", "cameraW", "cameraH", "viewportCount"].forEach(function(id)
+		["screenW", "screenH", "canvasX", "canvasY", "canvasW", "canvasH", "viewportCount"].forEach(function(id)
 		{
 			var input = document.getElementById(id);
 			if(input == null) return;
@@ -3344,6 +3619,16 @@ scripts.BittyCameraBlocks.setCameraSize(120, 135, 1);</pre>
 			return Math.max(1, getNum("screenH", 1080));
 		}
 
+		function getCanvasX()
+		{
+			return getNum("canvasX", 0);
+		}
+
+		function getCanvasY()
+		{
+			return getNum("canvasY", 0);
+		}
+
 		function getCanvasWidth()
 		{
 			return Math.max(1, getNum("canvasW", 1920));
@@ -3354,15 +3639,6 @@ scripts.BittyCameraBlocks.setCameraSize(120, 135, 1);</pre>
 			return Math.max(1, getNum("canvasH", 1080));
 		}
 
-		function getCameraWidth()
-		{
-			return Math.max(1, getNum("cameraW", 320));
-		}
-
-		function getCameraHeight()
-		{
-			return Math.max(1, getNum("cameraH", 180));
-		}
 
 		function getViewportCount()
 		{
@@ -3485,10 +3761,10 @@ scripts.BittyCameraBlocks.setCameraSize(120, 135, 1);</pre>
 		{
 			var screenW = getScreenWidth();
 			var screenH = getScreenHeight();
+			var canvasX = getCanvasX();
+			var canvasY = getCanvasY();
 			var canvasW = getCanvasWidth();
 			var canvasH = getCanvasHeight();
-			var cameraW = getCameraWidth();
-			var cameraH = getCameraHeight();
 			var count = getViewportCount();
 
 			var displayArea = document.getElementById("demoDisplayArea");
@@ -3496,8 +3772,8 @@ scripts.BittyCameraBlocks.setCameraSize(120, 135, 1);</pre>
 			if(displayArea == null || readout == null) return;
 
 			displayArea.innerHTML = "";
-			displayArea.style.left = "0%";
-			displayArea.style.top = "0%";
+			displayArea.style.left = (canvasX / screenW * 100) + "%";
+			displayArea.style.top = (canvasY / screenH * 100) + "%";
 			displayArea.style.width = (canvasW / screenW * 100) + "%";
 			displayArea.style.height = (canvasH / screenH * 100) + "%";
 
@@ -3538,15 +3814,14 @@ scripts.BittyCameraBlocks.setCameraSize(120, 135, 1);</pre>
 
 			readout.innerHTML =
 				"<strong>Screen Size:</strong> " + Math.round(screenW) + "x" + Math.round(screenH) +
-				"<br><strong>Canvas / Display Area:</strong> 0, 0, " + Math.round(canvasW) + ", " + Math.round(canvasH) +
-				"<br><strong>Camera Size:</strong> " + Math.round(cameraW) + "x" + Math.round(cameraH) +
+				"<br><strong>Canvas / Display Area:</strong> " + Math.round(canvasX) + ", " + Math.round(canvasY) + ", " + Math.round(canvasW) + ", " + Math.round(canvasH) +
 				"<br><strong>Viewport Rects:</strong><br>" + lines.join("<br>");
 
-			renderPixelPerfect(canvasW, canvasH, cameraW, cameraH, ports);
-			renderGeneratedCode(canvasW, canvasH, cameraW, cameraH, ports);
+			renderPixelPerfect(canvasW, canvasH, ports);
+			renderGeneratedCode(canvasX, canvasY, canvasW, canvasH, ports);
 		}
 
-		function renderPixelPerfect(canvasW, canvasH, cameraW, cameraH, ports)
+		function renderPixelPerfect(canvasW, canvasH, ports)
 		{
 			var list = document.getElementById("pixelPerfectList");
 			if(list == null) return;
@@ -3570,7 +3845,7 @@ scripts.BittyCameraBlocks.setCameraSize(120, 135, 1);</pre>
 
 		}
 
-		function renderGeneratedCode(canvasW, canvasH, cameraW, cameraH, ports)
+		function renderGeneratedCode(canvasX, canvasY, canvasW, canvasH, ports)
 		{
 			var code = document.getElementById("generatedSetupCode");
 			var stencylBlocks = document.getElementById("generatedStencylBlocks");
@@ -3580,7 +3855,7 @@ scripts.BittyCameraBlocks.setCameraSize(120, 135, 1);</pre>
 			lines.push("scripts.BittyCameraSystem.init();");
 			lines.push("");
 			lines.push("// Canvas / Display Area uses the canvas size. Viewports split inside this rectangle.");
-			lines.push("scripts.BittyCameraBlocks.setGameAreaRect(0, 0, " + Math.round(canvasW) + ", " + Math.round(canvasH) + ");");
+			lines.push("scripts.BittyCameraBlocks.setGameAreaRect(" + Math.round(canvasX) + ", " + Math.round(canvasY) + ", " + Math.round(canvasW) + ", " + Math.round(canvasH) + ");");
 			lines.push("");
 
 			ports.forEach(function(port, i)
@@ -3588,7 +3863,6 @@ scripts.BittyCameraBlocks.setCameraSize(120, 135, 1);</pre>
 				lines.push("scripts.BittyCameraBlocks.createCamera(" + i + ");");
 				lines.push("scripts.BittyCameraBlocks.createDisplayPort(" + i + ", " + Math.round(port.x) + ", " + Math.round(port.y) + ", " + Math.round(port.w) + ", " + Math.round(port.h) + ");");
 				lines.push("scripts.BittyCameraBlocks.renderCameraToDisplayPort(" + i + ", " + i + ");");
-				lines.push("scripts.BittyCameraBlocks.setCameraSize(" + Math.round(cameraW) + ", " + Math.round(cameraH) + ", " + i + ");");
 
 				if(i < ports.length - 1)
 				{
@@ -3600,10 +3874,10 @@ scripts.BittyCameraBlocks.setCameraSize(120, 135, 1);</pre>
 
 			if(stencylBlocks != null)
 			{
-				stencylBlocks.textContent = buildStencylCopyBlocks(canvasW, canvasH, cameraW, cameraH, ports);
+				stencylBlocks.textContent = buildStencylCopyBlocks(canvasX, canvasY, canvasW, canvasH, ports);
 			}
 
-			renderGeneratedStencylBlockPreview(canvasW, canvasH, cameraW, cameraH, ports);
+			renderGeneratedStencylBlockPreview(canvasX, canvasY, canvasW, canvasH, ports);
 		}
 
 		function makePreviewInput(value)
@@ -3665,7 +3939,7 @@ scripts.BittyCameraBlocks.setCameraSize(120, 135, 1);</pre>
 			holder.appendChild(row);
 		}
 
-		function renderGeneratedStencylBlockPreview(canvasW, canvasH, cameraW, cameraH, ports)
+		function renderGeneratedStencylBlockPreview(canvasX, canvasY, canvasW, canvasH, ports)
 		{
 			var preview = document.getElementById("generatedStencylBlockPreview");
 			if(preview == null) return;
@@ -3673,14 +3947,13 @@ scripts.BittyCameraBlocks.setCameraSize(120, 135, 1);</pre>
 			preview.innerHTML = "";
 
 			addPreviewBlock(preview, "red", ["Initialize bittyBIG Dynamic Camera System"]);
-			addPreviewBlock(preview, "blue", ["Set Display Area to X", 0, "Y", 0, "Width", canvasW, "Height", canvasH]);
+			addPreviewBlock(preview, "blue", ["Set Display Area to X", canvasX, "Y", canvasY, "Width", canvasW, "Height", canvasH]);
 
 			ports.forEach(function(port, i)
 			{
 				addPreviewBlock(preview, "blue", ["Create Camera ID", i]);
 				addPreviewBlock(preview, "blue", ["Create Viewport ID", i, "at X", port.x, "Y", port.y, "with Width", port.w, "Height", port.h]);
 				addPreviewBlock(preview, "blue", ["Render Camera ID", i, "to Viewport ID", i]);
-				addPreviewBlock(preview, "blue", ["Set Camera to Width", cameraW, "Height", cameraH, "for Camera ID", i]);
 			});
 		}
 
@@ -3703,21 +3976,20 @@ scripts.BittyCameraBlocks.setCameraSize(120, 135, 1);</pre>
 			return lines.join("\n");
 		}
 
-		function buildStencylCopyBlocks(canvasW, canvasH, cameraW, cameraH, ports)
+		function buildStencylCopyBlocks(canvasX, canvasY, canvasW, canvasH, ports)
 		{
 			var lines = [];
 			lines.push('<?xml version="1.0" encoding="UTF-8" standalone="no"?>');
 			lines.push('<copy format="1">');
 			lines.push('    <group eventID="-1" id="-1">');
 			lines.push('        <bbcam-init-dynamic-camera-system comment="false" x="0" y="0"/>');
-			lines.push(buildActionBlock('bbcam-set-display-area-rect', [0, 0, canvasW, canvasH]));
+			lines.push(buildActionBlock('bbcam-set-display-area-rect', [canvasX, canvasY, canvasW, canvasH]));
 
 			ports.forEach(function(port, i)
 			{
 				lines.push(buildActionBlock('bbcam-create-camera', [i]));
 				lines.push(buildActionBlock('bbcam-create-viewport', [i, port.x, port.y, port.w, port.h]));
 				lines.push(buildActionBlock('bbcam-render-camera-to-viewport', [i, i]));
-				lines.push(buildActionBlock('bbcam-set-camera-size', [cameraW, cameraH, i]));
 			});
 
 			lines.push('    </group>');
