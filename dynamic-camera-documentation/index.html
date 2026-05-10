@@ -1320,6 +1320,7 @@
 <a href="#block-set-viewport-background-color">Viewport Background Color</a>
 <a href="#block-clear-viewport-background">Clear Viewport Background</a>
 <a href="#block-set-viewport-background-enabled">Enable Viewport Background</a>
+<a href="#block-set-viewport-border-sides">Viewport Border Sides</a>
 <a href="#block-set-viewport-border">Viewport Border</a>
 <a href="#block-set-viewport-scale-mode">Viewport Scale Mode</a>
 <div class="cat-title">Viewport Transforms</div>
@@ -1340,6 +1341,9 @@
 <a href="#block-set-display-area-rect">Set Display Area</a>
 <a href="#block-set-display-area-position">Set Display Area Position</a>
 <a href="#block-set-display-area-size">Set Display Area Size</a>
+<div class="cat-title">Appearance</div>
+<a href="#block-set-display-area-border-sides">Display Area Border Sides</a>
+<a href="#block-set-display-area-border">Display Area Border</a>
 <div class="cat-title">Background</div>
 <a href="#block-set-background-color-int">Set Background Color</a>
 <a href="#block-set-background-image">Set Background Image</a>
@@ -1369,7 +1373,7 @@
 <div class="topbar">
 <div class="title">bittyBIG Dynamic Camera System</div>
 <div class="subtitle">Interactive documentation, glossary, examples, and viewport tester</div>
-</div><nav class="top-nav"><a href="#overview">Overview</a><a href="#project-setup">Project Setup</a><a href="#quick-start">Quick Start Guide</a><a href="#interactive-demo">Viewport Tester</a><a href="#glossary">Block Glossary</a><a href="#troubleshooting">Troubleshooting / FAQ</a><a href="#release-notes">Release Notes</a><a href="https://discord.gg/BR3WJM4zfG">Support</a></nav>
+</div><nav class="top-nav"><a href="#overview">Overview</a><a href="#project-setup">Project Setup</a><a href="#quick-start">Quick Start Guide</a><a href="#scene-setup">Scene Setup</a><a href="#interactive-demo">Viewport Tester</a><a href="#glossary">Block Glossary</a><a href="#troubleshooting">FAQs</a><a href="#release-notes">Release Notes</a><a href="https://discord.gg/BR3WJM4zfG">Support</a></nav>
 <div class="content">
 <section class="section doc-section" data-search="overview introduction dynamic camera split screen zoom rotation screenshake viewport tester" id="overview">
 <div class="section-body">
@@ -1383,9 +1387,10 @@
 <div class="hero-buttons">
 <a class="btn" href="#project-setup">Project Setup</a>
 <a class="btn" href="#quick-start">Quick Start Guide</a>
+<a class="btn" href="#scene-setup">Scene Setup</a>
 <a class="btn" href="#interactive-demo">Viewport Tester</a>
 <a class="btn" href="#glossary">Block Glossary</a>
-<a class="btn" href="#troubleshooting">Troubleshooting / FAQ</a>
+<a class="btn" href="#troubleshooting">FAQs</a>
 <a class="btn" href="#release-notes">Release Notes</a>
 <a class="btn" href="https://discord.gg/BR3WJM4zfG">Support</a>
 </div>
@@ -1491,6 +1496,60 @@
 </div>
 <div class="note warn">
 <strong>Debug note:</strong> if actors disappear, die, or stop updating when they leave Stencyl’s normal camera view, check your actor/behavior logic for “kill when off-screen” or similar cleanup behavior. That is separate from the Dynamic Camera System.
+</div>
+</div>
+</section>
+<section class="section doc-section" data-search="scene setup layers ui game render parallax background layers scroll factor stencyl editor final composite overlay" id="scene-setup">
+<div class="section-header">
+<h2>Scene Setup</h2>
+</div>
+<div class="section-body">
+<p>
+	The Dynamic Camera System renders your Stencyl scene into a final composite image, then displays that image on a reserved layer. A little scene setup keeps Stencyl layers, parallax backgrounds, and UI overlays behaving predictably.
+</p>
+<div class="grid-2">
+<div class="info-card">
+<h3>1. Make a layer named UI</h3>
+<p>
+	Create a Stencyl layer named <span class="inline-code">UI</span> in every scene that needs screen overlays. This name is reserved by the camera system.
+</p>
+<ul>
+<li>Set the <span class="inline-code">UI</span> layer scroll factors to <span class="inline-code">0, 0</span>.</li>
+<li>Put HUD actors, text, icons, menus, and screen-space overlays on this layer.</li>
+<li>Position UI objects as screen/HUD objects, not world objects.</li>
+</ul>
+</div>
+<div class="info-card">
+<h3>2. Keep UI above every other layer</h3>
+<p>
+	The <span class="inline-code">UI</span> layer is not copied into the camera render. It stays as a normal Stencyl layer and should be kept above every other layer in the scene so it draws over the final game image.
+</p>
+<ul>
+<li>Use <span class="inline-code">UI</span> for things that should not move with the camera.</li>
+<li>Use the <span class="inline-code">UI</span> layer only for final screen overlays.</li>
+<li>Do not use <span class="inline-code">UI</span> for gameplay actors that belong inside the camera view.</li>
+<li>If you add layers at runtime, make sure <span class="inline-code">UI</span> stays on top afterward.</li>
+</ul>
+</div>
+</div>
+<div class="grid-2">
+<div class="info-card">
+<h3>3. Background and parallax layers</h3>
+<p>
+	Stencyl background layers can stay in the normal scene layer stack. Custom scroll factors are supported, so parallax backgrounds should move according to their layer settings.
+</p>
+<ul>
+<li>Place background layers wherever they belong in the scene order.</li>
+<li>Layers above your gameplay layer can still render into the camera image.</li>
+<li>Parallax layers should use their normal Stencyl background/custom scroll settings.</li>
+</ul>
+</div>
+</div>
+<div class="note good">
+<strong>How it works:</strong> normal scene layers, world layers, and parallax layers are rendered into the final game image on a reserved layer called <span class="inline-code">GameRender</span>. The <span class="inline-code">UI</span> layer is then rendered on top as the final HUD/menu overlay.
+</div>
+<div class="note warn">
+<strong>Common mistake:</strong> if a UI actor does not appear to stay on screen, check that it is on the <span class="inline-code">UI</span> layer, that the layer scroll factor is <span class="inline-code">0, 0</span>, and that the actor is positioned like a screen overlay instead of regular world scenery.
 </div>
 </div>
 </section>
@@ -1824,7 +1883,7 @@ scripts.BittyCameraBlocks.setCameraSize(120, 135, 1);</pre>
 <div class="section-body">
 <p>
 							Preview what the final layout will look like, then generate setup code for your project.
-							Viewports split the game canvas, not the full screen.
+							Viewports split the game canvas, not the full screen. Camera Size controls how much of the world each generated camera sees.
 						</p>
 <div class="viewport-demo">
 <div class="demo-controls">
@@ -1857,6 +1916,14 @@ scripts.BittyCameraBlocks.setCameraSize(120, 135, 1);</pre>
 <label>
 									Screen Height
 									<input id="screenH" min="1" type="number" value="1080"/>
+</label>
+<label>
+									Camera Width
+									<input id="cameraW" min="1" type="number" value="320"/>
+</label>
+<label>
+									Camera Height
+									<input id="cameraH" min="1" type="number" value="180"/>
 </label>
 </div>
 <div class="tabs">
@@ -1901,7 +1968,7 @@ scripts.BittyCameraBlocks.setCameraSize(120, 135, 1);</pre>
 <pre class="copy-source" id="generatedStencylBlocks"></pre>
 </div>
 <div class="note">
-										Copy the blocks directly into your project.
+										Copy the blocks directly into your project. The generated setup includes Display Area, Viewport, Camera Size, and Render Camera to Viewport blocks.
 									</div>
 </div>
 <div class="tab-panel" data-panel="generated-haxe-code-panel">
@@ -2669,6 +2736,25 @@ scripts.BittyCameraBlocks.setCameraSize(120, 135, 1);</pre>
 <pre id="pre-block-set-viewport-background-enabled">scripts.BittyCameraBlocks.setDisplayPortBackgroundEnabled(~,~);</pre>
 </div>
 </div>
+<div class="block-card" id="block-set-viewport-border-sides">
+<h3>Viewport Border Sides</h3>
+<div class="block-meta">Viewports → Appearance</div>
+<div class="block-row">
+<div class="st-block blue">
+											Add Border Thickness T <span class="st-input"></span> B <span class="st-input"></span> L <span class="st-input"></span> R <span class="st-input"></span> Color <span class="st-input" style="min-width:52px; background:#000000; color:#ffffff;"></span> Alpha <span class="st-input"></span> percent to Viewport ID <span class="st-input"></span>
+</div>
+</div>
+<div class="block-desc">
+										Draws a colored border over the specified Viewport with separate thickness values for each side.
+									</div>
+<div class="code-box">
+<div class="code-bar">
+<span>Code</span>
+<button class="copy-btn" data-copy-target="pre-block-set-viewport-border-sides">Copy</button>
+</div>
+<pre id="pre-block-set-viewport-border-sides">scripts.BittyCameraBlocks.setDisplayPortBorderSides(~,~,~,~,~,~,~);</pre>
+</div>
+</div>
 <div class="block-card" id="block-set-viewport-border">
 <h3>Viewport Border</h3>
 <div class="block-meta">Viewports → Appearance</div>
@@ -2937,6 +3023,45 @@ scripts.BittyCameraBlocks.setCameraSize(120, 135, 1);</pre>
 <button class="copy-btn" data-copy-target="pre-block-set-display-area-size">Copy</button>
 </div>
 <pre id="pre-block-set-display-area-size">scripts.BittyCameraBlocks.setGameAreaSize(~,~);</pre>
+</div>
+</div>
+<h4>Appearance</h4>
+<div class="block-card" id="block-set-display-area-border-sides">
+<h3>Display Area Border Sides</h3>
+<div class="block-meta">Display → Appearance</div>
+<div class="block-row">
+<div class="st-block blue">
+											Add Border Thickness T <span class="st-input"></span> B <span class="st-input"></span> L <span class="st-input"></span> R <span class="st-input"></span> Color <span class="st-input" style="min-width:52px; background:#000000; color:#ffffff;"></span> Alpha <span class="st-input"></span> percent to Display Area
+</div>
+</div>
+<div class="block-desc">
+										Draws a colored border over the Display Area with separate thickness values for each side.
+									</div>
+<div class="code-box">
+<div class="code-bar">
+<span>Code</span>
+<button class="copy-btn" data-copy-target="pre-block-set-display-area-border-sides">Copy</button>
+</div>
+<pre id="pre-block-set-display-area-border-sides">scripts.BittyCameraBlocks.setGameAreaBorderSides(~,~,~,~,~,~);</pre>
+</div>
+</div>
+<div class="block-card" id="block-set-display-area-border">
+<h3>Display Area Border</h3>
+<div class="block-meta">Display → Appearance</div>
+<div class="block-row">
+<div class="st-block blue">
+											Add Border Thickness <span class="st-input"></span> Color <span class="st-input" style="min-width:52px; background:#000000; color:#ffffff;"></span> Alpha <span class="st-input"></span> percent to Display Area
+</div>
+</div>
+<div class="block-desc">
+										Draws a colored border over the Display Area using the same thickness on all sides.
+									</div>
+<div class="code-box">
+<div class="code-bar">
+<span>Code</span>
+<button class="copy-btn" data-copy-target="pre-block-set-display-area-border">Copy</button>
+</div>
+<pre id="pre-block-set-display-area-border">scripts.BittyCameraBlocks.setGameAreaBorder(~,~,~);</pre>
 </div>
 </div>
 <h4>Background</h4>
@@ -3253,7 +3378,7 @@ scripts.BittyCameraBlocks.setCameraSize(120, 135, 1);</pre>
 </section>
 <section class="section doc-section" data-search="troubleshooting faq beginner common problems initialize scene viewport too large too small wrong scale wrong size split screen camera zoom background" id="troubleshooting">
 <div class="section-header">
-<h2>Troubleshooting / FAQ</h2>
+<h2>FAQs</h2>
 </div>
 <div class="section-body">
 <p>
@@ -3575,7 +3700,7 @@ scripts.BittyCameraBlocks.setCameraSize(120, 135, 1);</pre>
 			});
 		});
 
-		["screenW", "screenH", "canvasX", "canvasY", "canvasW", "canvasH", "viewportCount"].forEach(function(id)
+		["screenW", "screenH", "cameraW", "cameraH", "canvasX", "canvasY", "canvasW", "canvasH", "viewportCount"].forEach(function(id)
 		{
 			var input = document.getElementById(id);
 			if(input == null) return;
@@ -3617,6 +3742,16 @@ scripts.BittyCameraBlocks.setCameraSize(120, 135, 1);</pre>
 		function getScreenHeight()
 		{
 			return Math.max(1, getNum("screenH", 1080));
+		}
+
+		function getCameraWidth()
+		{
+			return Math.max(1, getNum("cameraW", 320));
+		}
+
+		function getCameraHeight()
+		{
+			return Math.max(1, getNum("cameraH", 180));
 		}
 
 		function getCanvasX()
@@ -3765,6 +3900,8 @@ scripts.BittyCameraBlocks.setCameraSize(120, 135, 1);</pre>
 			var canvasY = getCanvasY();
 			var canvasW = getCanvasWidth();
 			var canvasH = getCanvasHeight();
+			var cameraW = getCameraWidth();
+			var cameraH = getCameraHeight();
 			var count = getViewportCount();
 
 			var displayArea = document.getElementById("demoDisplayArea");
@@ -3814,11 +3951,12 @@ scripts.BittyCameraBlocks.setCameraSize(120, 135, 1);</pre>
 
 			readout.innerHTML =
 				"<strong>Screen Size:</strong> " + Math.round(screenW) + "x" + Math.round(screenH) +
+				"<br><strong>Camera Size:</strong> " + Math.round(cameraW) + "x" + Math.round(cameraH) +
 				"<br><strong>Canvas / Display Area:</strong> " + Math.round(canvasX) + ", " + Math.round(canvasY) + ", " + Math.round(canvasW) + ", " + Math.round(canvasH) +
 				"<br><strong>Viewport Rects:</strong><br>" + lines.join("<br>");
 
 			renderPixelPerfect(canvasW, canvasH, ports);
-			renderGeneratedCode(canvasX, canvasY, canvasW, canvasH, ports);
+			renderGeneratedCode(canvasX, canvasY, canvasW, canvasH, cameraW, cameraH, ports);
 		}
 
 		function renderPixelPerfect(canvasW, canvasH, ports)
@@ -3845,7 +3983,7 @@ scripts.BittyCameraBlocks.setCameraSize(120, 135, 1);</pre>
 
 		}
 
-		function renderGeneratedCode(canvasX, canvasY, canvasW, canvasH, ports)
+		function renderGeneratedCode(canvasX, canvasY, canvasW, canvasH, cameraW, cameraH, ports)
 		{
 			var code = document.getElementById("generatedSetupCode");
 			var stencylBlocks = document.getElementById("generatedStencylBlocks");
@@ -3862,6 +4000,7 @@ scripts.BittyCameraBlocks.setCameraSize(120, 135, 1);</pre>
 			{
 				lines.push("scripts.BittyCameraBlocks.createCamera(" + i + ");");
 				lines.push("scripts.BittyCameraBlocks.createDisplayPort(" + i + ", " + Math.round(port.x) + ", " + Math.round(port.y) + ", " + Math.round(port.w) + ", " + Math.round(port.h) + ");");
+				lines.push("scripts.BittyViewports.setViewportSize(" + Math.round(cameraW) + ", " + Math.round(cameraH) + ", " + i + ");");
 				lines.push("scripts.BittyCameraBlocks.renderCameraToDisplayPort(" + i + ", " + i + ");");
 
 				if(i < ports.length - 1)
@@ -3874,10 +4013,10 @@ scripts.BittyCameraBlocks.setCameraSize(120, 135, 1);</pre>
 
 			if(stencylBlocks != null)
 			{
-				stencylBlocks.textContent = buildStencylCopyBlocks(canvasX, canvasY, canvasW, canvasH, ports);
+				stencylBlocks.textContent = buildStencylCopyBlocks(canvasX, canvasY, canvasW, canvasH, cameraW, cameraH, ports);
 			}
 
-			renderGeneratedStencylBlockPreview(canvasX, canvasY, canvasW, canvasH, ports);
+			renderGeneratedStencylBlockPreview(canvasX, canvasY, canvasW, canvasH, cameraW, cameraH, ports);
 		}
 
 		function makePreviewInput(value)
@@ -3939,7 +4078,7 @@ scripts.BittyCameraBlocks.setCameraSize(120, 135, 1);</pre>
 			holder.appendChild(row);
 		}
 
-		function renderGeneratedStencylBlockPreview(canvasX, canvasY, canvasW, canvasH, ports)
+		function renderGeneratedStencylBlockPreview(canvasX, canvasY, canvasW, canvasH, cameraW, cameraH, ports)
 		{
 			var preview = document.getElementById("generatedStencylBlockPreview");
 			if(preview == null) return;
@@ -3953,6 +4092,7 @@ scripts.BittyCameraBlocks.setCameraSize(120, 135, 1);</pre>
 			{
 				addPreviewBlock(preview, "blue", ["Create Camera ID", i]);
 				addPreviewBlock(preview, "blue", ["Create Viewport ID", i, "at X", port.x, "Y", port.y, "with Width", port.w, "Height", port.h]);
+				addPreviewBlock(preview, "blue", ["Set Camera to Width", cameraW, "Height", cameraH, "for Camera ID", i]);
 				addPreviewBlock(preview, "blue", ["Render Camera ID", i, "to Viewport ID", i]);
 			});
 		}
@@ -3976,7 +4116,7 @@ scripts.BittyCameraBlocks.setCameraSize(120, 135, 1);</pre>
 			return lines.join("\n");
 		}
 
-		function buildStencylCopyBlocks(canvasX, canvasY, canvasW, canvasH, ports)
+		function buildStencylCopyBlocks(canvasX, canvasY, canvasW, canvasH, cameraW, cameraH, ports)
 		{
 			var lines = [];
 			lines.push('<?xml version="1.0" encoding="UTF-8" standalone="no"?>');
@@ -3989,6 +4129,7 @@ scripts.BittyCameraBlocks.setCameraSize(120, 135, 1);</pre>
 			{
 				lines.push(buildActionBlock('bbcam-create-camera', [i]));
 				lines.push(buildActionBlock('bbcam-create-viewport', [i, port.x, port.y, port.w, port.h]));
+				lines.push(buildActionBlock('bbcam-set-camera-size', [cameraW, cameraH, i]));
 				lines.push(buildActionBlock('bbcam-render-camera-to-viewport', [i, i]));
 			});
 
