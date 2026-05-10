@@ -1320,7 +1320,6 @@
 <a href="#block-set-viewport-background-color">Viewport Background Color</a>
 <a href="#block-clear-viewport-background">Clear Viewport Background</a>
 <a href="#block-set-viewport-background-enabled">Enable Viewport Background</a>
-<a href="#block-set-viewport-border-sides">Viewport Border Sides</a>
 <a href="#block-set-viewport-border">Viewport Border</a>
 <a href="#block-set-viewport-scale-mode">Viewport Scale Mode</a>
 <div class="cat-title">Viewport Transforms</div>
@@ -1341,9 +1340,6 @@
 <a href="#block-set-display-area-rect">Set Display Area</a>
 <a href="#block-set-display-area-position">Set Display Area Position</a>
 <a href="#block-set-display-area-size">Set Display Area Size</a>
-<div class="cat-title">Appearance</div>
-<a href="#block-set-display-area-border-sides">Display Area Border Sides</a>
-<a href="#block-set-display-area-border">Display Area Border</a>
 <div class="cat-title">Background</div>
 <a href="#block-set-background-color-int">Set Background Color</a>
 <a href="#block-set-background-image">Set Background Image</a>
@@ -1883,7 +1879,7 @@ scripts.BittyCameraBlocks.setCameraSize(120, 135, 1);</pre>
 <div class="section-body">
 <p>
 							Preview what the final layout will look like, then generate setup code for your project.
-							Viewports split the game canvas, not the full screen. Camera Size controls how much of the world each generated camera sees.
+							Viewports split the game canvas, not the full screen.
 						</p>
 <div class="viewport-demo">
 <div class="demo-controls">
@@ -1916,14 +1912,6 @@ scripts.BittyCameraBlocks.setCameraSize(120, 135, 1);</pre>
 <label>
 									Screen Height
 									<input id="screenH" min="1" type="number" value="1080"/>
-</label>
-<label>
-									Camera Width
-									<input id="cameraW" min="1" type="number" value="320"/>
-</label>
-<label>
-									Camera Height
-									<input id="cameraH" min="1" type="number" value="180"/>
 </label>
 </div>
 <div class="tabs">
@@ -1968,7 +1956,7 @@ scripts.BittyCameraBlocks.setCameraSize(120, 135, 1);</pre>
 <pre class="copy-source" id="generatedStencylBlocks"></pre>
 </div>
 <div class="note">
-										Copy the blocks directly into your project. The generated setup includes Display Area, Viewport, Camera Size, and Render Camera to Viewport blocks.
+										Copy the blocks directly into your project.
 									</div>
 </div>
 <div class="tab-panel" data-panel="generated-haxe-code-panel">
@@ -2736,25 +2724,6 @@ scripts.BittyCameraBlocks.setCameraSize(120, 135, 1);</pre>
 <pre id="pre-block-set-viewport-background-enabled">scripts.BittyCameraBlocks.setDisplayPortBackgroundEnabled(~,~);</pre>
 </div>
 </div>
-<div class="block-card" id="block-set-viewport-border-sides">
-<h3>Viewport Border Sides</h3>
-<div class="block-meta">Viewports → Appearance</div>
-<div class="block-row">
-<div class="st-block blue">
-											Add Border Thickness T <span class="st-input"></span> B <span class="st-input"></span> L <span class="st-input"></span> R <span class="st-input"></span> Color <span class="st-input" style="min-width:52px; background:#000000; color:#ffffff;"></span> Alpha <span class="st-input"></span> percent to Viewport ID <span class="st-input"></span>
-</div>
-</div>
-<div class="block-desc">
-										Draws a colored border over the specified Viewport with separate thickness values for each side.
-									</div>
-<div class="code-box">
-<div class="code-bar">
-<span>Code</span>
-<button class="copy-btn" data-copy-target="pre-block-set-viewport-border-sides">Copy</button>
-</div>
-<pre id="pre-block-set-viewport-border-sides">scripts.BittyCameraBlocks.setDisplayPortBorderSides(~,~,~,~,~,~,~);</pre>
-</div>
-</div>
 <div class="block-card" id="block-set-viewport-border">
 <h3>Viewport Border</h3>
 <div class="block-meta">Viewports → Appearance</div>
@@ -3023,45 +2992,6 @@ scripts.BittyCameraBlocks.setCameraSize(120, 135, 1);</pre>
 <button class="copy-btn" data-copy-target="pre-block-set-display-area-size">Copy</button>
 </div>
 <pre id="pre-block-set-display-area-size">scripts.BittyCameraBlocks.setGameAreaSize(~,~);</pre>
-</div>
-</div>
-<h4>Appearance</h4>
-<div class="block-card" id="block-set-display-area-border-sides">
-<h3>Display Area Border Sides</h3>
-<div class="block-meta">Display → Appearance</div>
-<div class="block-row">
-<div class="st-block blue">
-											Add Border Thickness T <span class="st-input"></span> B <span class="st-input"></span> L <span class="st-input"></span> R <span class="st-input"></span> Color <span class="st-input" style="min-width:52px; background:#000000; color:#ffffff;"></span> Alpha <span class="st-input"></span> percent to Display Area
-</div>
-</div>
-<div class="block-desc">
-										Draws a colored border over the Display Area with separate thickness values for each side.
-									</div>
-<div class="code-box">
-<div class="code-bar">
-<span>Code</span>
-<button class="copy-btn" data-copy-target="pre-block-set-display-area-border-sides">Copy</button>
-</div>
-<pre id="pre-block-set-display-area-border-sides">scripts.BittyCameraBlocks.setGameAreaBorderSides(~,~,~,~,~,~);</pre>
-</div>
-</div>
-<div class="block-card" id="block-set-display-area-border">
-<h3>Display Area Border</h3>
-<div class="block-meta">Display → Appearance</div>
-<div class="block-row">
-<div class="st-block blue">
-											Add Border Thickness <span class="st-input"></span> Color <span class="st-input" style="min-width:52px; background:#000000; color:#ffffff;"></span> Alpha <span class="st-input"></span> percent to Display Area
-</div>
-</div>
-<div class="block-desc">
-										Draws a colored border over the Display Area using the same thickness on all sides.
-									</div>
-<div class="code-box">
-<div class="code-bar">
-<span>Code</span>
-<button class="copy-btn" data-copy-target="pre-block-set-display-area-border">Copy</button>
-</div>
-<pre id="pre-block-set-display-area-border">scripts.BittyCameraBlocks.setGameAreaBorder(~,~,~);</pre>
 </div>
 </div>
 <h4>Background</h4>
@@ -3443,22 +3373,98 @@ scripts.BittyCameraBlocks.setCameraSize(120, 135, 1);</pre>
 </div>
 </div>
 </section>
-<section class="section doc-section" data-search="release notes v 1.0 planned development cached tile world renderer html5 seams" id="release-notes">
+<section class="section doc-section" data-search="release notes v 1.0 development trail planned future features cached backgrounds tile world renderer animated backgrounds html5 seams debug drawing per viewport jitter camera suite" id="release-notes">
 <div class="section-header">
 <h2>Release Notes v 1.0</h2>
 </div>
 <div class="section-body">
 <p>
-	This release focuses on camera, viewport, display, zoom, rotation, screenshake, multi-viewport support,
-	and pixel-perfect behavior.
-</p>
-<p>
-<strong>Planned Development:</strong>
+	Version 1.0 is the first release-ready version of the bittyBIG Dynamic Camera System. It includes:
 </p>
 <ul>
-<li>Add cached tile/world rendering so bittyBIG can rely less on Stencyl’s live redraw path.</li>
-<li>Show debug drawing per viewport.</li>
+<li>custom cameras</li>
+<li>camera sizing</li>
+<li>actor centering</li>
+<li>target movement</li>
+<li>smoothing</li>
+<li>camera offsets</li>
+<li>grid-based movement</li>
+<li>camera presets</li>
+<li>zoom</li>
+<li>tweened zoom</li>
+<li>camera rotation</li>
+<li>screenshake</li>
+<li>camera transition checks</li>
+<li>viewport layout</li>
+<li>split-screen support</li>
+<li>picture-in-picture support</li>
+<li>viewport backgrounds</li>
+<li>viewport borders</li>
+<li>viewport transforms</li>
+<li>display area control</li>
+<li>background color support</li>
+<li>background image support</li>
+<li>unlocked cameras</li>
+<li>pixel-perfect display behavior</li>
 </ul>
+<h3>Development Trail</h3>
+<div class="term-list">
+<p>
+	The Dynamic Camera System started with a simple practical problem: remove camera jitter from Stencyl projects while keeping the normal Stencyl workflow intact. My larger goal is to help put Stencyl on the map by proving it can power a polished, modern-feeling hit game when paired with the right tools.
+</p>
+<p>
+	Over time, that small fix grew into a full rendering and camera control pipeline.
+</p>
+<p>
+	The project still keeps Stencyl as the editor with the familiar block system, actor workflow, scene setup tool, and asset pipeline. 
+</p>
+<p>
+	Version 1.0 is the first release-ready baseline: a flexible camera suite built from the original jitter-removal goal, now ready for real projects.
+</p>
+</div>
+<h3>Planned Future Features</h3>
+<div class="term-list">
+<p><strong>Cached Background Renderer</strong></p>
+<ul>
+<li>Cache static background images so bittyBIG can draw them using its own camera and parallax math.</li>
+<li><strong>Goal:</strong> reduce background pixel snapping caused by Stencyl's render path and give backgrounds smoother camera movement.</li>
+</ul>
+<p><strong>Cached Tile / World Renderer</strong></p>
+<ul>
+<li>Cache static tile and world layers at scene load, then render from those cached images instead of relying on Stencyl's live layer redraw path.</li>
+<li><strong>Goal:</strong> reduce dependency on Stencyl's built-in camera, improve consistency across viewports, and prepare the renderer for stronger HTML5 output.</li>
+</ul>
+<p><strong>Manual Rebuild Blocks</strong></p>
+<ul>
+<li>Add blocks that let users manually rebuild cached backgrounds, tile layers, or world layers when something changes.</li>
+<li><strong>Goal:</strong> support scenes where mostly-static layers occasionally need to update without forcing everything to stay live-rendered forever.</li>
+</ul>
+<p><strong>Dirty-Region Updates</strong></p>
+<ul>
+<li>Update only the changed areas of cached layers instead of rebuilding the full cached image.</li>
+<li><strong>Goal:</strong> support larger scenes and runtime edits with less redraw cost.</li>
+</ul>
+<p><strong>Animated / Dynamic Background Support</strong></p>
+<ul>
+<li>Support animated backgrounds, dynamic background layers, and other background effects after the static cached background path is stable.</li>
+<li><strong>Goal:</strong> keep the smooth bittyBIG-controlled background movement while still allowing more active scene presentation.</li>
+</ul>
+<p><strong>HTML5 Tile Seam Improvements</strong></p>
+<ul>
+<li>Add rendering support for duplicated 1px tile borders or equivalent seam protection around cached tiles.</li>
+<li><strong>Goal:</strong> reduce visible seams during smooth HTML5 camera movement without forcing the camera to snap.</li>
+</ul>
+<p><strong>Per-Viewport Debug Drawing</strong></p>
+<ul>
+<li>Add optional debug drawing for each viewport and camera.</li>
+<li><strong>Goal:</strong> make it easier to see camera bounds, viewport rectangles, centers, targets, offsets, and split-screen behavior while testing.</li>
+</ul>
+<p><strong>Renderer Independence</strong></p>
+<ul>
+<li>Continue moving static rendering responsibilities into bittyBIG while keeping Stencyl as the editor, actor, block, scene, and asset workflow.</li>
+<li><strong>Goal:</strong> let bittyBIG control runtime camera/output behavior more completely without abandoning the Stencyl creation pipeline.</li>
+</ul>
+</div>
 </div>
 </section>
 <div class="footer">
@@ -3700,7 +3706,7 @@ scripts.BittyCameraBlocks.setCameraSize(120, 135, 1);</pre>
 			});
 		});
 
-		["screenW", "screenH", "cameraW", "cameraH", "canvasX", "canvasY", "canvasW", "canvasH", "viewportCount"].forEach(function(id)
+		["screenW", "screenH", "canvasX", "canvasY", "canvasW", "canvasH", "viewportCount"].forEach(function(id)
 		{
 			var input = document.getElementById(id);
 			if(input == null) return;
@@ -3742,16 +3748,6 @@ scripts.BittyCameraBlocks.setCameraSize(120, 135, 1);</pre>
 		function getScreenHeight()
 		{
 			return Math.max(1, getNum("screenH", 1080));
-		}
-
-		function getCameraWidth()
-		{
-			return Math.max(1, getNum("cameraW", 320));
-		}
-
-		function getCameraHeight()
-		{
-			return Math.max(1, getNum("cameraH", 180));
 		}
 
 		function getCanvasX()
@@ -3900,8 +3896,6 @@ scripts.BittyCameraBlocks.setCameraSize(120, 135, 1);</pre>
 			var canvasY = getCanvasY();
 			var canvasW = getCanvasWidth();
 			var canvasH = getCanvasHeight();
-			var cameraW = getCameraWidth();
-			var cameraH = getCameraHeight();
 			var count = getViewportCount();
 
 			var displayArea = document.getElementById("demoDisplayArea");
@@ -3951,12 +3945,11 @@ scripts.BittyCameraBlocks.setCameraSize(120, 135, 1);</pre>
 
 			readout.innerHTML =
 				"<strong>Screen Size:</strong> " + Math.round(screenW) + "x" + Math.round(screenH) +
-				"<br><strong>Camera Size:</strong> " + Math.round(cameraW) + "x" + Math.round(cameraH) +
 				"<br><strong>Canvas / Display Area:</strong> " + Math.round(canvasX) + ", " + Math.round(canvasY) + ", " + Math.round(canvasW) + ", " + Math.round(canvasH) +
 				"<br><strong>Viewport Rects:</strong><br>" + lines.join("<br>");
 
 			renderPixelPerfect(canvasW, canvasH, ports);
-			renderGeneratedCode(canvasX, canvasY, canvasW, canvasH, cameraW, cameraH, ports);
+			renderGeneratedCode(canvasX, canvasY, canvasW, canvasH, ports);
 		}
 
 		function renderPixelPerfect(canvasW, canvasH, ports)
@@ -3983,7 +3976,7 @@ scripts.BittyCameraBlocks.setCameraSize(120, 135, 1);</pre>
 
 		}
 
-		function renderGeneratedCode(canvasX, canvasY, canvasW, canvasH, cameraW, cameraH, ports)
+		function renderGeneratedCode(canvasX, canvasY, canvasW, canvasH, ports)
 		{
 			var code = document.getElementById("generatedSetupCode");
 			var stencylBlocks = document.getElementById("generatedStencylBlocks");
@@ -4000,7 +3993,6 @@ scripts.BittyCameraBlocks.setCameraSize(120, 135, 1);</pre>
 			{
 				lines.push("scripts.BittyCameraBlocks.createCamera(" + i + ");");
 				lines.push("scripts.BittyCameraBlocks.createDisplayPort(" + i + ", " + Math.round(port.x) + ", " + Math.round(port.y) + ", " + Math.round(port.w) + ", " + Math.round(port.h) + ");");
-				lines.push("scripts.BittyViewports.setViewportSize(" + Math.round(cameraW) + ", " + Math.round(cameraH) + ", " + i + ");");
 				lines.push("scripts.BittyCameraBlocks.renderCameraToDisplayPort(" + i + ", " + i + ");");
 
 				if(i < ports.length - 1)
@@ -4013,10 +4005,10 @@ scripts.BittyCameraBlocks.setCameraSize(120, 135, 1);</pre>
 
 			if(stencylBlocks != null)
 			{
-				stencylBlocks.textContent = buildStencylCopyBlocks(canvasX, canvasY, canvasW, canvasH, cameraW, cameraH, ports);
+				stencylBlocks.textContent = buildStencylCopyBlocks(canvasX, canvasY, canvasW, canvasH, ports);
 			}
 
-			renderGeneratedStencylBlockPreview(canvasX, canvasY, canvasW, canvasH, cameraW, cameraH, ports);
+			renderGeneratedStencylBlockPreview(canvasX, canvasY, canvasW, canvasH, ports);
 		}
 
 		function makePreviewInput(value)
@@ -4078,7 +4070,7 @@ scripts.BittyCameraBlocks.setCameraSize(120, 135, 1);</pre>
 			holder.appendChild(row);
 		}
 
-		function renderGeneratedStencylBlockPreview(canvasX, canvasY, canvasW, canvasH, cameraW, cameraH, ports)
+		function renderGeneratedStencylBlockPreview(canvasX, canvasY, canvasW, canvasH, ports)
 		{
 			var preview = document.getElementById("generatedStencylBlockPreview");
 			if(preview == null) return;
@@ -4092,7 +4084,6 @@ scripts.BittyCameraBlocks.setCameraSize(120, 135, 1);</pre>
 			{
 				addPreviewBlock(preview, "blue", ["Create Camera ID", i]);
 				addPreviewBlock(preview, "blue", ["Create Viewport ID", i, "at X", port.x, "Y", port.y, "with Width", port.w, "Height", port.h]);
-				addPreviewBlock(preview, "blue", ["Set Camera to Width", cameraW, "Height", cameraH, "for Camera ID", i]);
 				addPreviewBlock(preview, "blue", ["Render Camera ID", i, "to Viewport ID", i]);
 			});
 		}
@@ -4116,7 +4107,7 @@ scripts.BittyCameraBlocks.setCameraSize(120, 135, 1);</pre>
 			return lines.join("\n");
 		}
 
-		function buildStencylCopyBlocks(canvasX, canvasY, canvasW, canvasH, cameraW, cameraH, ports)
+		function buildStencylCopyBlocks(canvasX, canvasY, canvasW, canvasH, ports)
 		{
 			var lines = [];
 			lines.push('<?xml version="1.0" encoding="UTF-8" standalone="no"?>');
@@ -4129,7 +4120,6 @@ scripts.BittyCameraBlocks.setCameraSize(120, 135, 1);</pre>
 			{
 				lines.push(buildActionBlock('bbcam-create-camera', [i]));
 				lines.push(buildActionBlock('bbcam-create-viewport', [i, port.x, port.y, port.w, port.h]));
-				lines.push(buildActionBlock('bbcam-set-camera-size', [cameraW, cameraH, i]));
 				lines.push(buildActionBlock('bbcam-render-camera-to-viewport', [i, i]));
 			});
 
